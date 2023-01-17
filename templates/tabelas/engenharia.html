@@ -1,0 +1,83 @@
+
+<table class="table table-striped display" id="dataTable2" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
+  <thead>
+    <tr>
+      <th scope="col">Código</th>
+      <th scope="col">Produto</th>
+      <th scope="col">Unidade</th>
+      <th scope="col">Quantidade Solicitada</th>
+    </tr>
+  </thead>
+  
+</table>
+
+<div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>
+<script>
+  $(document).ready(function () {
+    var table = $('#dataTable2').DataTable({
+    "processing" : true,
+    "serverSide" : false,
+    "serverMethod" : "post",
+    "ajax" :{
+      'url' : '/ajaxfile'
+    },
+    "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+    "pageLength": 5,
+    "paging": true,
+    "responsive" : true,
+    searching : true,
+    sort: true,
+    'columns': [
+      { data : 'id_item', "width": "10%"},
+      { data : 'descricao', "width": "40%"},
+      { data : 'um', "width": "10%"},
+      {data: null, "width": "10%",render: function(data, type, row) {return `<input type="text" style="text-align: center;" placeholder="Digite a Quantidade" value="" id="input" name="input">`;}
+  }
+    ],
+    columnDefs: [
+    { className: 'dt-center', targets: '_all' },
+    ],
+    "language": {
+      "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+    },
+  });
+  $('#subButton').click(function () {
+        var data = table.$('input, select').serialize();
+        // alert('The following data would have been submitted to the server: \n\n' + data.substr(0, 120) + '...');
+        Swal.fire({
+        title: 'Solicitante',
+        html: `<input type="text" id="login" class="swal2-input" placeholder="Usuário">
+        <input type="password" id="password" class="swal2-input" placeholder="Senha">`,
+        confirmButtonText: 'Enviar Requisição',
+        focusConfirm: false,
+        preConfirm: () => {
+          const login = Swal.getPopup().querySelector('#login').value
+          const password = Swal.getPopup().querySelector('#password').value
+          if (!login || !password) {
+            Swal.showValidationMessage(`Insira o usuário e a senha.`)
+          }
+          return { login: login, password: password}
+        }
+      }).then((result) => {
+        const usuario = result.value.login
+        const senha = result.value.password
+        const elements = document.querySelectorAll("#dataTable2 input")
+        const qnts = document.getElementById('input')
+        // let tableRow = $("#dataTable2").find("tr").find("td").find("input").each(function () { alert($(this).val() ) });
+        const dict_values = {usuario, senha, data}; //, quantidade
+        const s = JSON.stringify(dict_values);
+        console.log(dict_values);
+        $.ajax({
+          url:"/requisicao/confere",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(s)
+      });
+      //   Swal.fire(`
+      //   //   ${dict_values}
+      //   // `.trim())
+      })
+    });
+});
+</script>
+<script language=javascript src="{{ url_for('static', filename='javascript/popup.js') }}" type="text/javascript"></script>

@@ -1,0 +1,56 @@
+<table class="table table-striped display" id="dataTable3" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
+    <thead>
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Produto</th>
+        <th scope="col">Unidade</th>
+        <th scope="col">Classe</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Solicitante</th>
+        <th scope="col">Setor</th>
+      </tr>
+    </thead>    
+  </table>
+  
+  <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>
+
+<script>
+    $(document).ready(function () {
+    $('#dataTable3').DataTable({
+        select: true,
+        "processing" : true,
+        "serverSide" : false,
+        "serverMethod" : "post",
+        "ajax" :{
+        'url' : '/ajaxpendentes'
+        },
+        "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+        "pageLength": 5,
+        "paging": true,
+        "responsive" : true,
+        searching : true,
+        sort: true,
+        'columns': [
+        { data : 'id_item', "width": "10%"},
+        { data : 'descricao', "width": "40%"},
+        { data : 'um', "width": "10%"},
+        { data : 'tipo', "width": "30%"},
+        { data : 'qnt_solicitada', "width": "10%"},
+        { data : 'solicitante', "width": "10%"},
+        { data : 'setor', "width": "10%"},
+        ],
+        columnDefs: [
+        { className: 'dt-center', targets: '_all' },
+        ],
+        "language": {
+        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+        },
+    });
+    $('button').click(function () {
+        var data = table.$('input, select').serialize();
+        alert('The following data would have been submitted to the server: \n\n' + data.substr(0, 120) + '...');
+        return false;
+    });
+    });
+</script>
+<script language=javascript src="{{ url_for('static', filename='javascript/popup.js') }}" type="text/javascript"></script>

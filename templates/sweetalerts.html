@@ -1,0 +1,32 @@
+       
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+ {% for category, message in messages %}
+       <style>
+        .swal2-popup {
+        color: black !important;
+        font-family: Georgia, serif;
+        text-align: center;
+        }
+        .swal2-html-container{
+                text-align: center;
+        }
+        .swal2-title {
+        font-size: 35px !important;
+        font-family: Georgia, serif;
+        color: rgb(27, 27, 27) !important;
+        }
+       </style>
+        <script>
+        Swal.fire({
+                title:"Error",
+                // success , error , warning ,info
+                text: "{{ message }}",
+                // Custom message flashed from your flask routes
+                icon: "{{ category }}" == "danger" ? "error" : "{{ category }}"
+                // success , error , warning ,info
+        })
+        </script>
+ {% endfor %}
+ {% endif %}
+ {% endwith %}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-Br">
+  <head>
+    {% include "/head/head.html" %}
+    <title>Requisição de Materiais TECPLAS</title>
+  </head>
+
+  <body>
+    <div>           
+      {% include "sweetalerts.html" %}
+    </div>
+    <section>
+      <!-- Sidebar --> 
+      {% include "/sidebar/sidebar.html" %}
+    </section>
+
+    <!-- Criando o Título da Página -->
+    <header>
+      <div class="row"  id="titulo">
+        <div class="row-sm text-sm-center"><h1 style="font-weight: bold;">Requisição de Itens</h1></div>
+        </div>
+      </div>
+    </header>
+    
+
+    <div class="container">
+      <div class="row">
+        <!-- Criando as Tabs -->
+          {% include "tabelas/engenharia.html" %}
+      </div>
+      <button type="submit" class="btn btn-outline-secondary botao_flutuante" id="subButton">Enviar Requisição</button>
+      <!-- Posicionando o logo Tecplas -->
+      <a><img src="../static/img/xxx.png" alt="Logo da Tecplas" id="img_tec"></a>
+    </div>
+    
+    
+
+    <!-- Chamando os Scripts JS e Bootstrap -->
+    {% include "/bottom/bottom.html" %}
+  </body>
+</html>

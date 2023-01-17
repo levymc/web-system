@@ -1,0 +1,32 @@
+
+<div class="h2" style="margin-top:2em;margin-left:1em">
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><h4><b>Solicitação de Compra</b></h4></div>
+<div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
+</div></div>
+<div class="container-fluid">
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><b>Solicitante:</b> ${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</div>
+<div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="fornecedor" style="width:80% !important;" class="form-control v1" placeholder="Fornecedor"></div>
+</div>
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><b>Descrição:</b> ${JSON.stringify(data.descricao).replace('"', '').replace('"', '')}</div>
+<div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="contato_fornecedor" style="width:80% !important;" class="form-control" placeholder="Contato Fornecedor"></div>
+</div> 
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><b>Motivo:</b> ${JSON.stringify(data.motivo).replace('"', '').replace('"', '')}</div>
+<div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="unidade" style="width:80% !important;" class="form-control" placeholder="Unidade Padrão Comercializada"></div>
+</div> 
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><b>Quantidade:</b> ${JSON.stringify(data.quantidade).replace('"', '').replace('"', '')}</div>
+<div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="valor_unitario" style="width:80% !important;" class="form-control" placeholder="Valor Unitário"></div>
+</div> 
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><b>Setor:</b> ${JSON.stringify(data.setor).replace('"', '').replace('"', '')}</div>
+<div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="frete" style="width:80% !important;" class="form-control" placeholder="Frete"></div>
+</div> 
+<div class="row" style="line-height: 3em;">
+<div class="col-sm-6 text-start"><b>Cotação nº:</b> ${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}</div>
+<div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="inf_extra" style="width:80% !important;" class="form-control" placeholder="Informação Adicional"></div>
+</div> 
+</div>

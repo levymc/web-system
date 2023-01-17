@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include "sweetalerts.html" %}
+    {% include "/head/head.html" %}
+    <title>Sistema Tecplas</title>
+  </head>
+
+  <body>
+    <section>
+      <!-- Sidebar --> 
+      {% include "/sidebar/sidebar.html" %}
+    </section>
+
+    <!-- Criando o Título da Página -->
+    <header>
+      <div class="row"  id="titulo_index">
+        <div class="row-sm text-sm-center"><h1 style="font-size: 60px;">Sistema Tecplas</h1></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Posicionando o logo Tecplas -->
+      
+        <div class="row justify-content-center">
+          <div class="col">
+            <a><img src="../static/img/xxx.png" alt="Tec" id="img_tec"></a>
+          </div>
+        </div>
+    </div>
+    
+    <!-- {% if variavel is defined %}
+      <script type=text/javascript> 
+        console.log("{{ resposta|tojson|safe }}");
+      </script>
+    {% endif %} -->
+
+    <!-- Chamando os Scripts JS e Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    {% include "/bottom/bottom.html" %}
+  </body>
+</html>

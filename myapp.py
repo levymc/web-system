@@ -1,0 +1,177 @@
+from flask import Flask, render_template, request, flash, jsonify
+import sqlite3, requests, sqlite_funcs, json, hashlib
+from flask_mail import Mail, Message
+from werkzeug.exceptions import abort
+
+app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+# app.config['SERVER_NAME'] = 'sistema.tecplas:3000'
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'levytecplas@gmail.com'
+app.config['MAIL_PASSWORD'] = 'pjuamxrpynilleto'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+
+@app.route("/", methods=["POST", "GET"])
+def index():
+    return render_template('index.html')
+
+@app.route("/requisicao/", methods=["POST", "GET"])
+def requisicao():
+    return render_template('requisicao.html')
+
+@app.route("/reqPend/", methods=["POST", "GET"])
+def reqPend():
+    return render_template('reqPend.html')
+
+@app.route("/consultaFPQ", methods=["POST", "GET"])
+def consultaFPQ():
+    return render_template('consultaFPQ.html')
+
+@app.route("/cotacao/", methods=["POST", "GET"])
+def cotacao():
+    output = request.get_json()
+    result = json.loads(output)
+    # print(result)
+    return render_template('cotacao.html')
+
+@app.route("/second/", methods=["POST", "GET"])
+def second():
+    return render_template('second.html')
+
+@app.route("/acesso", methods=["POST", "GET"])
+def acessoSistema():
+    global result
+    result = {
+        'usuario': str(request.values.get('formLoginUsuario')),
+        'senha': str(request.values.get('formLoginSenha')),
+    }
+    resposta = sqlite_funcs.confereUsuario(result['usuario'], result['senha'])
+    if resposta == True:
+        return render_template('second.html')
+    elif resposta == "vazio":
+        flash(f"Digite o usuário e a senha!", "warning")
+        return render_template('index.html')
+    else:
+        flash(f"Usuário ou Senha inválido", "error")
+        return render_template('index.html')
+
+
+@app.route("/usuario", methods=["POST", "GET"])
+def usuario():
+    # output = request.get_json()
+    # result = json.loads(output)
+    # resposta = sqlite_funcs.confereUsuario(result['usuario'], result['senha'])
+    usuario = {'usuario': result['usuario'],
+    'senha': result['senha']}
+    resposta = json.dumps(usuario)
+    # print(resposta) 
+    return resposta
+
+@app.route("/comprasInserir", methods=["POST", "GET"])
+def comprasInserir():
+    output = request.get_json()
+    result_ = json.loads(output)
+    result_['usuario'] = result['usuario']
+    salvarDB = sqlite_funcs.solicitacaoComprasInserir(result_)
+    # print(salvarDB) 
+    return {'value': salvarDB}
+
+@app.route("/comprasPendentes", methods=["POST", "GET"])
+def comprasPendentes():
+    # print(json.dumps(sqlite_funcs.comprasPendentes()))
+    return jsonify(sqlite_funcs.comprasPendentes())
+
+@app.route("/cotacaoInserir", methods=["POST", "GET"])
+def cotacaoInserir():
+    output = request.get_json()
+    resultado = json.loads(output)
+    # print("Resultado: ",resultado)
+    inserirDB = sqlite_funcs.cotacaoInserirDB(resultado)
+    return {'value': inserirDB}
+
+@app.route("/cotacaoInformacoes", methods=["POST", "GET"])
+def cotacaoInformacoes():
+    output = request.get_json()
+    resultado = json.loads(output)
+    # print("Resultado: ",resultado['id_solicitacao'])
+    informacoes = sqlite_funcs.cotacaoInformacoesDB(resultado['id_solicitacao'])
+    return informacoes ## Devolver as cotações refentes ao id_solicitacao
+
+@app.route("/send", methods = ["POST"])
+def send():
+    output = request.get_json()
+    result = json.loads(output) #this converts the json output to a python dictionary
+    print(result) # Printing the new dictionary
+    insert_message = sqlite_funcs.inserir(result)
+    nome = result['nome']
+    motivo = result['motivo']
+    desc = result['descricao']
+    msg = Message('ERRO - FPQ CONSULTA', sender = 'aeb0b9af40e392', recipients = ['processo5@tecplas.com.br'])
+    msg.body = f"""
+        Usuário:       {nome}
+        Motivo:       {motivo}
+        Descrição:       {desc}
+        """
+    # msg.html = "<b>Hey Paul</b>, sending you this email from my <a href="https://google.com">Flask app</a>, lmk if it works"
+    mail.send(msg)
+    return result
+
+@app.route("/resultado", methods=["POST", "GET"])
+def resultado():
+    if request.method == 'POST':
+        msg_ = request.values.get('input_2') if request.values.get('input_2') else ''
+        try:
+            if msg_ =='':
+                flash(f"Digite algo para pesquisar", "error")
+                return render_template('consultaFPQ.html')
+            else:
+                posts = sqlite_funcs.selec_status(msg_)
+                return render_template('consultaFPQ.html', msg_=msg_, posts=posts)
+        except sqlite3.OperationalError as e: 
+            flash(f"Peça não encontrada, digite novamente !", "warning")
+            return render_template('consultaFPQ.html', msg_=""), print(type(e), e)
+    else: return render_template('consultaFPQ.html', msg_=msg_)
+
+@app.route("/ajaxfile", methods = ["POST", "GET"])
+def requiConsulta():
+    produtos = sqlite_funcs.reqConsulta()
+    return jsonify(produtos)
+
+@app.route("/ajaxpendentes", methods = ["POST", "GET"])
+def pendConsulta():
+    try:
+        pendencias = sqlite_funcs.pendConsulta()
+        return jsonify(pendencias)
+    except Exception as e:
+        print("e")
+        return e
+
+@app.route("/requisicao/confere", methods = ["POST", "GET"])
+def confere():
+    output = request.get_json()
+    result = json.loads(output) #Converte JSON em Py Dict
+    senha = hashlib.md5(result['senha'].encode()).hexdigest()
+    try:
+        conn = sqlite3.connect('static/db/requisicao.db')
+        cursor = conn.cursor()
+        user_find = cursor.execute(f"SELECT * FROM usuarios WHERE senha='{senha}'").fetchall()[0][1]
+        print("Login realizado com Sucesso!")
+        print(result)
+        # AQUI ENTRA O SCRIPT DE ENVIO AO BANCO DE DADOS!
+        return render_template('requisicao.html')
+    except IndexError as passwordError: 
+        print("Erro: "+ str(passwordError))
+        return render_template('requisicao.html')
+    except Exception as e:
+        print("Algum erro ocorreu no sistema: \n"+type(e)+":"+str(e))
+        return render_template('requisicao.html', e=e)
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=3000) #, use_reloader=False
