@@ -107,7 +107,7 @@ function acessoResponsavel(){
   })     
 }
 
-function loginCompra(){
+function solicitacaoCompra(){
   $.ajax({
     url:"/usuario",
     type: "GET",
@@ -206,10 +206,137 @@ function loginCompra(){
                 }
               })
               }
-        }
-    )}})}
+      }
+  )}})};
        
-    
+
+function paginaAprovador(){
+  Swal.fire({
+    width: '85%',
+    showConfirmButton: false,
+    title: 'Compras à serem aprovadas',
+    titleText: 'Solicitações de Compra Esperando Aprovação',
+    padding: '2em 1em 1.25em',
+    html: `
+    <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Usuário</th>
+        <th scope="col">Data da Solicitação</th>
+        <th scope="col">Descrição</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Motivo</th>
+        <th scope="col">Setor</th>
+        <th scope="col">Cotações</th>
+      </tr>
+    </thead>    
+  </table>
+  <div class="row">
+    <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar">Aprovar</button></div>
+    <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
+  </div>
+  <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
+  });
+  $(document).ready(function () {
+    var tableAprovador = $('#dataTable4').DataTable({
+      select: true,
+      "processing" : true,
+      "serverSide" : false,
+      "serverMethod" : "post",
+      "ajax" :{
+      'url' : '/comprasPendentesAprovacao'
+      },
+      "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+      "pageLength": 5,
+      "paging": true,
+      "responsive" : true,
+      searching : false,
+      sort: true,
+      'columns': [
+      { data : 'id_solicitacao', "width": "4%"},
+      { data : 'solicitante', "width": "12.5%"}, 
+      { data : 'data', "width": "10%"},
+      { data : 'descricao', "width": "23%"},
+      { data : 'quantidade', "width": "9.375%"},
+      { data : 'motivo', "width": "15.625%"},
+      { data : 'setor', "width": "12.5%"},
+      { data : 'qnt_cotacao', "width": "8%"},
+      ],
+      columnDefs: [
+      { className: 'dt-center', targets: '_all' },
+      ],
+      "language": {
+      "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+      },
+  })
+  $('#button-aprovar').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 1 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    console.log("sim", dadosSolicitacao)
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Selecione algum item para Aprovar",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)', 
+      })};
+      const s = JSON.stringify(dadosSolicitacao);
+      console.log(s)
+      $.ajax({
+        url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(s)
+      }).done((response) => {
+        console.log(response)
+        if(response.value==true){
+          Swal.fire({
+            titleText: "Solicitação de Compra Aprovada",
+            text: "O processo de cotação já pode ser iniciado.",
+            icon: "sucess",
+            showConfirmButton: true,
+            confirmButtonColor:'hwb(216 31% 1%)', 
+          });
+        };
+    });
+  });
+  $('#button-rejeitar').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    console.log("não")
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Selecione algum item para Rejeitar",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })};
+      const s = JSON.stringify(dadosSolicitacao);
+      console.log(s)
+      $.ajax({
+        url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(s)
+      }).done((response) => {
+        console.log(response)
+        if(response.value==true){
+          Swal.fire({
+            titleText: "Solicitação de Compra Aprovada",
+            text: "O processo de cotação já pode ser iniciado.",
+            icon: "sucess",
+            showConfirmButton: true,
+            confirmButtonColor:'hwb(216 31% 1%)', 
+          });
+        };
+    });
+    });
+  });
+};
+
   
 
 function loginComprador(){

@@ -101,12 +101,12 @@ def solicitacaoComprasInserir(result):
         print(type(e),e)
         return False
 
-def comprasPendentes():
+def comprasPendentes(status):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         compras = []
-        for i in cursor.execute("SELECT * FROM solicitacao WHERE status = 0").fetchall():
+        for i in cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall():
             compras.append({
                 'id_solicitacao':i[0],
                 'solicitante': i[1],
@@ -121,6 +121,18 @@ def comprasPendentes():
         return {'aaData': compras}
     except Exception as e:
         return [e]
+
+def compras_updateSolicitacao(comprasPara_aprovar):
+    try:
+        conn = sqlite3.connect('static/db/compras.db')
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE solicitacao SET status=1 WHERE id_solicitacao='{comprasPara_aprovar['id_solicitacao']}'")
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(e)
+        return e
 
 def cotacaoInserirDB(resultado):
     # print("Resultado22: ",resultado)

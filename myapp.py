@@ -60,7 +60,6 @@ def acessoSistema():
         flash(f"Usuário ou Senha inválido", "error")
         return render_template('index.html')
 
-
 @app.route("/usuario", methods=["POST", "GET"])
 def usuario():
     # output = request.get_json()
@@ -81,10 +80,20 @@ def comprasInserir():
     # print(salvarDB) 
     return {'value': salvarDB}
 
+@app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
+def comprasPendentesAprovacao():
+    return jsonify(sqlite_funcs.comprasPendentes('0'))
+
+@app.route("/comprasAprovar", methods=["POST", "GET"])
+def comprasAprovar():
+    output = request.get_json()
+    comprasPara_aprovar = json.loads(output)
+    valor = sqlite_funcs.compras_updateSolicitacao(comprasPara_aprovar)
+    return {'value': valor}
+
 @app.route("/comprasPendentes", methods=["POST", "GET"])
 def comprasPendentes():
-    # print(json.dumps(sqlite_funcs.comprasPendentes()))
-    return jsonify(sqlite_funcs.comprasPendentes())
+    return jsonify(sqlite_funcs.comprasPendentes('1'))
 
 @app.route("/cotacaoInserir", methods=["POST", "GET"])
 def cotacaoInserir():
