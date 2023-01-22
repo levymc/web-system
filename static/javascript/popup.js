@@ -121,7 +121,6 @@ function solicitacaoCompra(){
       // console.log(test.usuario);
       Swal.fire({
         allowOutsideClick: false,
-        showCloseButton: true,
         title: 'Solicitação de Compra',
         html: `
             <h3 style="text-align: left; margin-left: 8%; margin-top: 4%;">Usuário: ${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</h3>
