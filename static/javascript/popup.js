@@ -121,32 +121,61 @@ function solicitacaoCompra(){
       // console.log(test.usuario);
       Swal.fire({
         allowOutsideClick: false,
+        width: "50em",
         title: 'Solicitação de Compra',
         html: `
-            <h3 style="text-align: left; margin-left: 8%; margin-top: 4%;">Usuário: ${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</h3>
-            <textarea id="descricao_solicitacao" name="descricao_solicitacao"cols="30" rows="20" style="resize:none; width: 80%;" class="swal2-textarea"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
-            <input type="text" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="Quantidade (UN) solicitada" style="width: 80%">
-            <textarea id="motivo_solicitacao" name="movito_solicitacao "cols="30" rows="200" style="resize:none; width: 80%" class="swal2-textarea"  maxlength="200" placeholder="Motivo da Solicitação"></textarea>
-            <select class="form-control" id="areaUso">
-              <option style="color:rgba(0, 0, 0, 0.3) !important;" value="" disabled selected>Área de Uso</option>
-              <option>MC Ajustagem</option>
-              <option>MC Laminação</option>
-              <option>Termoformado</option>
-              <option>Ferramental</option>
-              <option>Pintura</option>
-              <option>Polimento Acrílico</option>
-              <option>Polimento Metálico</option>
-              <option>Manutenção</option>
-              <option>Administração</option>
-              <option>Qualidade</option>
-              <option>Engenharia</option>
-              <option>Sala Branca</option>
-              <option>Ajustagem</option>
-              <option>Colmeia</option>
-              <option>AutoClave</option>
-              <option>Produto Próprio</option>
-              <option>Outro...</option>
-            </select>`,
+          <div class="row" style="margin-left:1em !important;">
+            <div class="col">
+              <div class="row">
+                <h3 style="text-align: left; margin-left: 0.75em; margin-top: 4% ;">Usuário: <b>${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</b></h3>
+              </div>
+              <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+                <label for="item_solicitacao">Nome do Item</label>
+                <input type="text" id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
+                </div>
+              <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
+                <label for="descricao_solicitacao">Descrição do Item</label>
+                <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="20" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+                <label for="quantidade_solicitacao">Quantidade</label>             
+                <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="  Quantidade solicitada" style="width: 80%">
+              </div>
+              <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+                <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
+                <input type="text" id="unidade_solicitacao" name="unidade_solicitacao" class="swal2-input" placeholder="  Unidade de venda do item" style="width: 80%">
+              </div>
+              <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
+                <label for="motivo_solicitacao">Justificativa</label>
+                <input type="text" id="motivo_solicitacao" name="movito_solicitacao" style="margin-left:-0em !important; width: 80%" class="swal2-input" placeholder="  Justificativa da Solicitação"></input>
+              </div>
+              <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
+                <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
+                <select style="margin-left:-0em !important;" class="form-control" id="areaUso">
+                  <option value="" disabled selected>Área de Uso</option>
+                  <option>Administração</option>
+                  <option>Ajustagem</option>
+                  <option>AutoClave</option>
+                  <option>Colmeia</option>
+                  <option>Engenharia</option>
+                  <option>Ferramental</option>
+                  <option>Manutenção</option>
+                  <option>MC Ajustagem</option>
+                  <option>MC Laminação</option>
+                  <option>Pintura</option>
+                  <option>Polimento Acrílico</option>
+                  <option>Polimento Metálico</option>
+                  <option>Produto Próprio</option>
+                  <option>Qualidade</option>
+                  <option>Sala Branca</option>
+                  <option>Termoformado</option>
+                  <option>Outro...</option>
+                </select>
+            </div>
+          </div>
+          `,
         confirmButtonText: 'Enviar Solicitação',
         confirmButtonColor: '#007bff',
         showCancelButton: true,

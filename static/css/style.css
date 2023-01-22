@@ -219,6 +219,16 @@ body{
     text-align: center;
     margin-top: 1.5em;
 }
+.swal2-input{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+input::placeholder {
+    font-size: 15px;
+}
+textarea::placeholder {
+    font-size: 15px;
+}
 
 /* CONFIGURAÇÕES SIDEBAR */
 .side-bar{
