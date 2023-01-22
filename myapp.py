@@ -91,6 +91,13 @@ def comprasAprovar():
     valor = sqlite_funcs.compras_updateSolicitacao(comprasPara_aprovar)
     return {'value': valor}
 
+@app.route("/rejeitarCompras", methods=["POST", "GET"])
+def rejeitarCompras():
+    output = request.get_json()
+    id_reprovar = json.loads(output)
+    valor = sqlite_funcs.rejeitarCompra(id_reprovar)
+    return {'value': valor}
+
 @app.route("/comprasPendentes", methods=["POST", "GET"])
 def comprasPendentes():
     return jsonify(sqlite_funcs.comprasPendentes('1'))

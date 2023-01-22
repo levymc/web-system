@@ -134,6 +134,18 @@ def compras_updateSolicitacao(comprasPara_aprovar):
         print(e)
         return e
 
+def rejeitarCompra(id):
+    try:
+        conn = sqlite3.connect('static/db/compras.db')
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE solicitacao SET status=2 WHERE id_solicitacao='{id}'")
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(e)
+        return e
+
 def cotacaoInserirDB(resultado):
     # print("Resultado22: ",resultado)
     try:

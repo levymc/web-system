@@ -120,6 +120,8 @@ function solicitacaoCompra(){
       var test = JSON.parse(jade)
       // console.log(test.usuario);
       Swal.fire({
+        allowOutsideClick: false,
+        showCloseButton: true,
         title: 'Solicitação de Compra',
         html: `
             <h3 style="text-align: left; margin-left: 8%; margin-top: 4%;">Usuário: ${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</h3>
@@ -215,9 +217,16 @@ function paginaAprovador(){
     width: '85%',
     showConfirmButton: false,
     title: 'Compras à serem aprovadas',
-    titleText: 'Solicitações de Compra Esperando Aprovação',
+    titleText: 'Solicitações de Compra Aguardando Aprovação',
     padding: '2em 1em 1.25em',
+    allowOutsideClick: false,
+    showCloseButton: true,
     html: `
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col" id="subTitle-comprasPendente">Selecione uma, ou mais, Solicitação para aprovar ou rejeitar.</div>
+        <div class="col-1"></div>
+    </div>
     <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
@@ -228,7 +237,6 @@ function paginaAprovador(){
         <th scope="col">Quantidade</th>
         <th scope="col">Motivo</th>
         <th scope="col">Setor</th>
-        <th scope="col">Cotações</th>
       </tr>
     </thead>    
   </table>
@@ -261,7 +269,6 @@ function paginaAprovador(){
       { data : 'quantidade', "width": "9.375%"},
       { data : 'motivo', "width": "15.625%"},
       { data : 'setor', "width": "12.5%"},
-      { data : 'qnt_cotacao', "width": "8%"},
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
@@ -313,26 +320,48 @@ function paginaAprovador(){
         showConfirmButton: true,
         confirmButtonText: "Ok",
         confirmButtonColor:'hwb(216 31% 1%)',
-      })};
-      const s = JSON.stringify(dadosSolicitacao);
-      console.log(s)
-      $.ajax({
-        url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(s)
-      }).done((response) => {
-        console.log(response)
-        if(response.value==true){
-          Swal.fire({
-            titleText: "Solicitação de Compra Aprovada",
-            text: "O processo de cotação já pode ser iniciado.",
-            icon: "sucess",
-            showConfirmButton: true,
-            confirmButtonColor:'hwb(216 31% 1%)', 
-          });
-        };
-    });
+      })}else{
+        Swal.fire({
+          titleText: "Deseja Rejeitar a Solicitação?",
+          showCancelButton: true,
+          icon: "question",
+          focusConfirmButton: false,
+          allowOutsideClick: false,
+          confirmButtonText: "Sim",
+          confirmButtonColor:'hwb(216 31% 1%)',
+          cancelButtonText: "Não",
+        }).then((result) => {
+          if (result.value==true){
+            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+            console.log(id_reprovar)
+            $.ajax({
+              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(id_reprovar)
+            }).done((response) => {
+              console.log(response)
+              if(response.value==true){
+                Swal.fire({
+                  titleText: "Solicitação de Compra Rejeitada",
+                  icon: "info",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                });
+              };
+            });
+          }else{
+            Swal.fire({
+              titleText: "Solicitação Não Rejeitada",
+              icon: "warning",
+              showConfirmButton: true,
+              confirmButtonColor:'hwb(216 31% 1%)', 
+              confirmButtonText:"Ok",
+            });
+          }
+        });
+      }
+      
     });
   });
 };
@@ -344,9 +373,16 @@ function loginComprador(){
       width: '85%',
       showConfirmButton: false,
       title: 'Solicitações de Compras Pendentes',
-      titleText: 'Compras Pendentes',
+      titleText: 'Compras Pendentes', 
       padding: '2em 1em 1.25em',
+      allowOutsideClick: false,
+      showCloseButton: true,
       html: `
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col" id="subTitle-comprasPendente">Na tabela abaixo estão listadas as Solicitações de Compras aprovadas para cotação.</div>
+        <div class="col-1"></div>
+      </div>
       <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
       <thead>
         <tr>
@@ -355,7 +391,7 @@ function loginComprador(){
           <th scope="col">Data da Solicitação</th>
           <th scope="col">Descrição</th>
           <th scope="col">Quantidade</th>
-          <th scope="col">Motivo</th>
+          <th scope="col">Justificação</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
         </tr>
