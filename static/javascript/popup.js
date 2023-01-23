@@ -127,11 +127,11 @@ function solicitacaoCompra(){
                 <h3 style="text-align: left; margin-left: 0.75em; margin-top: 4% ;">Usuário: <b>${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</b></h3>
               </div>
               <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
-                <label for="item_solicitacao">Nome do Item</label>
+                <label for="item_solicitacao">Nome do Item (forma genérica)</label>
                 <input type="text" id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
                 </div>
               <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
-                <label for="descricao_solicitacao">Descrição do Item</label>
+                <label for="descricao_solicitacao">Descrição  (especificações)</label>
                 <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="20" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
               </div>
             </div>
@@ -142,7 +142,7 @@ function solicitacaoCompra(){
               </div>
               <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
                 <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
-                <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="unidade_solicitacao">
+                <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
                   <option style="font-size:14px;" value="" disabled selected>UN</option>
                   <option style="font-size:14px;">Caixa (complementar na descrição)</option>
                   <option style="font-size:14px;">Centímetro (cm)</option>
@@ -189,6 +189,8 @@ function solicitacaoCompra(){
           `,
         confirmButtonText: 'Enviar Solicitação',
         confirmButtonColor: '#007bff',
+        allowOutsideClick: false,
+        showCloseButton: true,
         showCancelButton: true,
         cancelButtonText: 'Cancelar',
         focusConfirm: false,
@@ -438,9 +440,8 @@ function loginComprador(){
       <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
       <thead>
         <tr>
-          <th scope="col">id</th>
-          <th scope="col">Usuário</th>
           <th scope="col">Data da Solicitação</th>
+          <th scope="col">Usuário</th>
           <th scope="col">Descrição</th>
           <th scope="col">Quantidade</th>
           <th scope="col">Justificativa</th>
@@ -471,9 +472,8 @@ function loginComprador(){
         searching : true,
         sort: true,
         'columns': [
-        { data : 'id_solicitacao', "width": "4%"},
-        { data : 'solicitante', "width": "12.5%"}, 
         { data : 'data', "width": "10%"},
+        { data : 'solicitante', "width": "12.5%"}, 
         { data : 'descricao', "width": "23%"},
         { data : 'quantidade', "width": "9.375%"},
         { data : 'motivo', "width": "15.625%"},
@@ -583,17 +583,19 @@ function loginComprador(){
           padding: '1em 1em 1.25em',
           html: `<div class="row text-center">`+html+`</div>`+botoes
         });
-      })}
+      
       $('#button-novaCotacao2').click(function () {
         Swal.fire({
           // titleText: text,
           title: `${JSON.stringify(numero_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
           width: '50em',
           confirmButtonText: 'Enviar Cotação',
+          allowOutsideClick: false,
+          showCloseButton: true,
           confirmButtonColor: '#007bff',
           padding: '1em 1em 1.25em',
           html: `
-          <div class="h2" style="margin-top:2em;margin-left:1em">
+          <div class="h2" style="margin-left:1em">
           <div class="row" style="line-height: 3em;">
             <div class="col-sm-6 text-start"><h4><b>Solicitação de Compra</b></h4></div>
             <div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
@@ -675,6 +677,7 @@ function loginComprador(){
               }
         });
     });
+  })}
     })});
     }
   
@@ -743,7 +746,7 @@ function novaCotacao(data_Solicitacao){
     confirmButtonColor: '#007bff',
     padding: '1em 1em 1.25em',
     html: `
-    <div class="h2" style="margin-top:2em;margin-left:1em">
+    <div class="h2" style="margin-left:1em">
     <div class="row" style="line-height: 3em;">
       <div class="col-sm-6 text-start"><h4><b>Resumo da Solicitação</b></h4></div>
       <div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
@@ -774,12 +777,12 @@ function novaCotacao(data_Solicitacao){
       <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="inf_extra" style="width:80% !important;" class="form-control" placeholder="Observações"></div>
     </div> 
     <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start""><b>Possui Prazo? :</b></div>
+      <div class="col-sm-6 text-start""></div>
       <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="date" id="validade_cotacao" style="width:80% !important;" class="form-control" placeholder="Validade Cotação">
       <p class="text-center" style="font-size: 75%; color:red;line-height: 1.25em; margin-top:1em !important;">Caso necessário, indique a data de validade da cotação acima. </p></div>
     </div> 
     <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start""><b>Prioridade:</b></div>
+      <div class="col-sm-6 text-start""></div>
       <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"></div>
     </div> 
     <div class="row" style="line-height: 3em; backgroung:white">

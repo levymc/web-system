@@ -112,7 +112,6 @@ def comprasPendentes(status):
             qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
             if qnt_cotacao_rejeitada != 0:
                 qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
-            # print(i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8])
             compras.append({
                 'id_solicitacao':i[0],
                 'solicitante': i[1],
