@@ -459,104 +459,12 @@ function loginComprador(){
     $('#button-novaCotacao').click(function () {
         var data_Solicitacao = table.rows('.selected').data(); // Recebe os valores da linha selecionada
         data_Solicitacao = data_Solicitacao[0]
-        
-        return Swal.fire({
-          title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
-          width: '50em',
-          confirmButtonText: 'Enviar Cotação',
-          confirmButtonColor: '#007bff',
-          padding: '1em 1em 1.25em',
-          html: `
-          <div class="h2" style="margin-top:2em;margin-left:1em">
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><h4><b>Resumo da Solicitação</b></h4></div>
-            <div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
-          </div></div>
-          <div class="container-fluid">
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Solicitante:</b> ${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="fornecedor" style="width:80% !important;" class="form-control v1" placeholder="Fornecedor"></div>
-          </div>
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Descrição:</b> ${JSON.stringify(data_Solicitacao.descricao).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="contato_fornecedor" style="width:80% !important;" class="form-control" placeholder="Contato Fornecedor"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Motivo:</b> ${JSON.stringify(data_Solicitacao.motivo).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="unidade" style="width:80% !important;" class="form-control" placeholder="Unidade Padrão Comercializada"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Quantidade:</b> ${JSON.stringify(data_Solicitacao.quantidade).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="valor_unitario" style="width:80% !important;" class="form-control" placeholder="Valor Unitário"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Setor:</b> ${JSON.stringify(data_Solicitacao.setor).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="frete" style="width:80% !important;" class="form-control" placeholder="Frete"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start""><b>Nº da Cotação:</b> ${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="inf_extra" style="width:80% !important;" class="form-control" placeholder="Observações"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start""><b>Possui Prazo? :</b></div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="date" id="validade_cotacao" style="width:80% !important;" class="form-control" placeholder="Validade Cotação">
-            <p class="text-center" style="font-size: 75%; color:red;line-height: 1.25em; margin-top:1em !important;">Caso necessário, indique a data de validade da cotação acima. </p></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start""><b>Prioridade:</b></div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"></div>
-          </div> 
-          <div class="row" style="line-height: 3em; backgroung:white">
-          <div class="col-sm-6 text-end"></div>
-          <div class="col-sm-6 text-start" style="margin-top:1.25em;border-left: 2px dotted grey;"></div>
-          </div> 
-          </div>
-          `,
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-          focusConfirm: false,
-          preConfirm: () => {
-          const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
-          const unidade = Swal.getPopup().querySelector('#unidade').value
-          const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
-          if (!fornecedor || !unidade || !valor_unitario) {
-              Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
-          }
-          return { 
-            id_solicitacao: data_Solicitacao.id_solicitacao,
-            solicitante: data_Solicitacao.solicitante, 
-            qnt_solicitada: data_Solicitacao.quantidade,
-            fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
-            valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
-            frete: Swal.getPopup().querySelector('#frete').value,
-            inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
-          }
-      }
-        }).then((result) => {
-          if (!result.value){
-            Swal.fire({
-              title:"Cotação Cancelada.",
-              icon:"error",
-              showConfirmButton: true,
-              timer: 2000,
-              confirmButtonText: 'OK',
-              confirmButtonColor:'hwb(216 31% 1%)',
-            })
-        }else{
-            const dict_values = result.value;
-            const s = JSON.stringify(dict_values);
-            $.ajax({
-                url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(s)
-            }).done((response) => {
-              if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
-                else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
-              })
-              }
-        });
-    });      
+        if (!data_Solicitacao){
+          Swal.fire({icon:"error", titleText:"Selecione Alguma Compra", confirmButtonColor:'hwb(216 31% 1%)',})
+        }
+        novaCotacao(data_Solicitacao); 
+    });
+
     $('#button-cotacao').click(function () {
       var data = table.rows('.selected').data();// Recebe os valores da linha selecionada
       data = data[0]
@@ -729,7 +637,6 @@ function loginComprador(){
               }
         });
     });
-
     })});
     })
   }
@@ -789,3 +696,102 @@ function editarCotacao(id){
     };
   });
 }
+
+function novaCotacao(data_Solicitacao){
+  Swal.fire({
+    title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
+    width: '50em',
+    confirmButtonText: 'Enviar Cotação',
+    confirmButtonColor: '#007bff',
+    padding: '1em 1em 1.25em',
+    html: `
+    <div class="h2" style="margin-top:2em;margin-left:1em">
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start"><h4><b>Resumo da Solicitação</b></h4></div>
+      <div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
+    </div></div>
+    <div class="container-fluid">
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start"><b>Solicitante:</b> ${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="fornecedor" style="width:80% !important;" class="form-control v1" placeholder="Fornecedor"></div>
+    </div>
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start"><b>Descrição:</b> ${JSON.stringify(data_Solicitacao.descricao).replace('"', '').replace('"', '')}</div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="contato_fornecedor" style="width:80% !important;" class="form-control" placeholder="Contato Fornecedor"></div>
+    </div> 
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start"><b>Motivo:</b> ${JSON.stringify(data_Solicitacao.motivo).replace('"', '').replace('"', '')}</div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="unidade" style="width:80% !important;" class="form-control" placeholder="Unidade Padrão Comercializada"></div>
+    </div> 
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start"><b>Quantidade:</b> ${JSON.stringify(data_Solicitacao.quantidade).replace('"', '').replace('"', '')}</div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="valor_unitario" style="width:80% !important;" class="form-control" placeholder="Valor Unitário"></div>
+    </div> 
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start"><b>Setor:</b> ${JSON.stringify(data_Solicitacao.setor).replace('"', '').replace('"', '')}</div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="frete" style="width:80% !important;" class="form-control" placeholder="Frete"></div>
+    </div> 
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start""><b>Nº da Cotação:</b> ${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}</div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="inf_extra" style="width:80% !important;" class="form-control" placeholder="Observações"></div>
+    </div> 
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start""><b>Possui Prazo? :</b></div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="date" id="validade_cotacao" style="width:80% !important;" class="form-control" placeholder="Validade Cotação">
+      <p class="text-center" style="font-size: 75%; color:red;line-height: 1.25em; margin-top:1em !important;">Caso necessário, indique a data de validade da cotação acima. </p></div>
+    </div> 
+    <div class="row" style="line-height: 3em;">
+      <div class="col-sm-6 text-start""><b>Prioridade:</b></div>
+      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"></div>
+    </div> 
+    <div class="row" style="line-height: 3em; backgroung:white">
+    <div class="col-sm-6 text-end"></div>
+    <div class="col-sm-6 text-start" style="margin-top:1.25em;border-left: 2px dotted grey;"></div>
+    </div> 
+    </div>
+    `,
+    showCancelButton: true,
+    cancelButtonText: 'Cancelar',
+    focusConfirm: false,
+    preConfirm: () => {
+    const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+    const unidade = Swal.getPopup().querySelector('#unidade').value
+    const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
+    if (!fornecedor || !unidade || !valor_unitario) {
+        Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
+    }
+    return { 
+      id_solicitacao: data_Solicitacao.id_solicitacao,
+      solicitante: data_Solicitacao.solicitante, 
+      qnt_solicitada: data_Solicitacao.quantidade,
+      fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
+      valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+      frete: Swal.getPopup().querySelector('#frete').value,
+      inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+    }
+}
+  }).then((result) => {
+    if (!result.value){
+      Swal.fire({
+        title:"Cotação Cancelada.",
+        icon:"error",
+        showConfirmButton: true,
+        timer: 2000,
+        confirmButtonText: 'OK',
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })
+  }else{
+      const dict_values = result.value;
+      const s = JSON.stringify(dict_values);
+      $.ajax({
+          url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(s)
+      }).done((response) => {
+        if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
+          else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+        })
+      }
+    });
+  };
