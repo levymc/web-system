@@ -100,7 +100,7 @@ def rejeitarCompras():
 
 @app.route("/comprasPendentes", methods=["POST", "GET"])
 def comprasPendentes():
-    return jsonify(sqlite_funcs.comprasPendentes('1'))
+    return jsonify(sqlite_funcs.comprasPendentes(1))
 
 @app.route("/cotacaoInserir", methods=["POST", "GET"])
 def cotacaoInserir():

@@ -109,23 +109,26 @@ def comprasPendentes(status):
         dados = cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall()
         for i in dados:
             qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
-            qnt_cotacao_rejeitada = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall()
-            if not len(qnt_cotacao_rejeitada)==0:
-                qnt_cotacao = 1 + int(i[7]) - len(qnt_cotacao_rejeitada)
+            qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
+            if qnt_cotacao_rejeitada != 0:
+                qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
+            # print(i[0],i[1],i[2],i[3],i[4],i[5],i[6],i[7],i[8])
             compras.append({
                 'id_solicitacao':i[0],
                 'solicitante': i[1],
                 'data': i[2],
-                'descricao': i[3],
-                'quantidade': i[4],
-                'motivo': i[5],
-                'setor':i[6],
+                'nomeItem': i[3],
+                'descricao': i[4],
+                'quantidade': i[5],
+                'unidade': i[6],
+                'motivo': i[7],
+                'setor':i[8],
                 'qnt_cotacao': qnt_cotacao,
             })
         conn.close()
         return {'aaData': compras}
     except Exception as e:
-        return [e]
+        return {'value': False}
 
 def compras_updateSolicitacao(comprasPara_aprovar):
     try:

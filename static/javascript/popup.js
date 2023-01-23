@@ -109,7 +109,7 @@ function acessoResponsavel(){
 function solicitacaoCompra(){
   $.ajax({
     url:"/usuario",
-    type: "GET",
+    type: "POST",
     contentType: "application/json"
   }).done((jade) => {
     if (jade == false){
@@ -272,9 +272,8 @@ function paginaAprovador(){
     <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
-        <th scope="col">id</th>
-        <th scope="col">Usuário</th>
         <th scope="col">Data da Solicitação</th>
+        <th scope="col">Usuário</th>
         <th scope="col">Descrição</th>
         <th scope="col">Quantidade</th>
         <th scope="col">Motivo</th>
@@ -304,9 +303,8 @@ function paginaAprovador(){
       searching : false,
       sort: true,
       'columns': [
-      { data : 'id_solicitacao', "width": "4%"},
-      { data : 'solicitante', "width": "12.5%"}, 
       { data : 'data', "width": "10%"},
+      { data : 'solicitante', "width": "12.5%"}, 
       { data : 'descricao', "width": "23%"},
       { data : 'quantidade', "width": "9.375%"},
       { data : 'motivo', "width": "15.625%"},
@@ -402,6 +400,26 @@ function paginaAprovador(){
   });
 };
 
+function confereComprasPendentes(){
+  $.ajax({
+    url:"/comprasPendentes",
+    type: "POST",
+    contentType: "application/json",
+  }).done((response) => {
+    if (response.value==false){
+      Swal.fire({
+        titleText:"Nenhuma Solicitação de Compra foi aprovada para Cotação",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonColor:'hwb(216 31% 1%)',
+      });
+    }else{
+      loginComprador();
+    }
+    console.log(response);
+  });
+}
+
 function loginComprador(){
     Swal.fire({
       width: '85%',
@@ -444,7 +462,7 @@ function loginComprador(){
         "serverSide" : false,
         "serverMethod" : "post",
         "ajax" :{
-        'url' : '/comprasPendentes'
+          'url' : '/comprasPendentes'
         },
         "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
         "pageLength": 5,
@@ -469,6 +487,7 @@ function loginComprador(){
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         },
     });
+    
     $('#button-novaCotacao').click(function () {
         var data_Solicitacao = table.rows('.selected').data(); // Recebe os valores da linha selecionada
         data_Solicitacao = data_Solicitacao[0]
