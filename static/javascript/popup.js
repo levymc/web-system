@@ -276,8 +276,10 @@ function paginaAprovador(){
       <tr>
         <th scope="col">Data da Solicitação</th>
         <th scope="col">Usuário</th>
+        <th scope="col">Item</th>
         <th scope="col">Descrição</th>
         <th scope="col">Quantidade</th>
+        <th scope="col">UN</th>
         <th scope="col">Motivo</th>
         <th scope="col">Setor</th>
       </tr>
@@ -286,6 +288,9 @@ function paginaAprovador(){
   <div class="row">
     <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar">Aprovar</button></div>
     <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-info">Mais Informações</button></div>
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
@@ -307,8 +312,10 @@ function paginaAprovador(){
       'columns': [
       { data : 'data', "width": "10%"},
       { data : 'solicitante', "width": "12.5%"}, 
+      { data : 'nomeItem', "width": "12.5%"}, 
       { data : 'descricao', "width": "23%"},
       { data : 'quantidade', "width": "9.375%"},
+      { data : 'unidade', "width": "3%"},
       { data : 'motivo', "width": "15.625%"},
       { data : 'setor', "width": "12.5%"},
       ],
@@ -348,6 +355,69 @@ function paginaAprovador(){
         };
     });
   });
+  $('#button-info').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    console.log(dadosSolicitacao);
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Selecione algum item para Rejeitar",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })}else{
+    Swal.fire({
+      title: "Informações da Solicitações",
+      width:'50em',
+      showConfirmButton: true,
+      confirmButtonColor:'hwb(216 31% 1%)', 
+      html:`
+              <div class="container-fluid">
+                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                  <div class="col text-start"> 
+                    Solicitante (usuário): ${dadosSolicitacao.solicitante}
+                  </div>
+                  <div class="col text-start"> 
+                    Data da Solicitação: ${dadosSolicitacao.data}
+                  </div>
+                  
+                </div>
+                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                  <div class="col text-start"> 
+                    Item Solicitado: ${dadosSolicitacao.nomeItem}
+                  </div>
+                  <div class="col text-start"> 
+                    Descrição do Item: ${dadosSolicitacao.descricao}
+                  </div>
+                  </div>
+                </div>
+
+                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                  <div class="col text-start" > 
+                    Quantidade Solicitada: ${dadosSolicitacao.quantidade}
+                  </div>
+                  <div class="col text-start"> 
+                    Unidade: ${dadosSolicitacao.unidade}
+                  </div>
+                </div>
+
+                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                  <div class="col text-start"> 
+                    Justificativa da Compra: ${dadosSolicitacao.motivo}
+                  </div>
+                  <div class="col text-start"> 
+                    Setor/Departamento: ${dadosSolicitacao.setor}
+                  </div>
+                </div>
+
+              </div>
+              `
+            });
+          };
+        });
+  
+
   $('#button-rejeitar').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
     dadosSolicitacao = dadosSolicitacao[0];
@@ -393,6 +463,7 @@ function paginaAprovador(){
               showConfirmButton: true,
               confirmButtonColor:'hwb(216 31% 1%)', 
               confirmButtonText:"Ok",
+              
             });
           }
         });

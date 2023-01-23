@@ -135,6 +135,17 @@ body{
     color: rgb(255, 255, 255);
     background-color: rgb(220, 27, 27)
 }
+#button-info{
+    color: black;
+    background-color: #ffffff;
+    width: 12em;
+    height: 3em !important;
+    font-size: 14px;
+}
+#button-info:hover{
+    color: rgb(255, 255, 255);
+    background-color: rgb(27, 131, 220)
+}
 #button-addon2{
     color: black;
     background-color: #ffffff;
@@ -187,15 +198,16 @@ body{
 }
 .container-fluid{
     margin-top:1em;
-    margin-bottom:2em;
+    margin-bottom:1em;
     background: rgba(192, 192, 192, 0.3);
-    padding-bottom: 2em;
+
     border-radius: 10px;
+    padding-top: 0.75em;
 }
 .container-fluid input{
-    margin-left: 3em;
-    
+    margin-left: 3em;   
 }
+
 .card{
     margin: 2em;
 }
@@ -219,6 +231,9 @@ body{
     margin: 0;
     margin-top: 0.2em;
 }
+#dataTable4 td,th {
+    font-size: 0.85em;
+  }
 .swal2-html-container #areaUso{
     margin-left: 8%;
     margin-top: 3%;
