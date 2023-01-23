@@ -71,7 +71,6 @@ function requiSend(){
         const senha = result.value.password
         const dict_values = {usuario, senha}; //, quantidade
         const s = JSON.stringify(dict_values);
-        // console.log(dict_values)
         $.ajax({
           url:"/requisicao/confere",
           type: "POST",
@@ -118,7 +117,6 @@ function solicitacaoCompra(){
       swal("deu ruim!");
     } else {
       var test = JSON.parse(jade)
-      // console.log(test.usuario);
       Swal.fire({
         allowOutsideClick: false,
         width: "50em",
@@ -220,14 +218,12 @@ function solicitacaoCompra(){
             const setor = result2.value.setor;
             const dict_values = {dataAtual,nomeItem , descricao, quantidade, motivo, setor};
             const s = JSON.stringify(dict_values);
-            // console.log(s);
             $.ajax({
                 url:"/comprasInserir",
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(s)
             }).done((response) => {
-              // console.log(response.value);
               if (response.value == true){
                 Swal.fire({
                   confirmButtonColor:'hwb(216 31% 1%)',
@@ -311,7 +307,6 @@ function paginaAprovador(){
   $('#button-aprovar').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 1 ao status
     dadosSolicitacao = dadosSolicitacao[0];
-    console.log("sim", dadosSolicitacao)
     if (!dadosSolicitacao){
       Swal.fire({
         titleText: "Selecione algum item para Aprovar",
@@ -321,14 +316,12 @@ function paginaAprovador(){
         confirmButtonColor:'hwb(216 31% 1%)', 
       })};
       const s = JSON.stringify(dadosSolicitacao);
-      console.log(s)
       $.ajax({
         url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(s)
       }).done((response) => {
-        console.log(response)
         if(response.value==true){
           Swal.fire({
             titleText: "Solicitação de Compra Aprovada",
@@ -343,7 +336,6 @@ function paginaAprovador(){
   $('#button-rejeitar').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
     dadosSolicitacao = dadosSolicitacao[0];
-    console.log("não")
     if (!dadosSolicitacao){
       Swal.fire({
         titleText: "Selecione algum item para Rejeitar",
@@ -364,14 +356,12 @@ function paginaAprovador(){
         }).then((result) => {
           if (result.value==true){
             const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
-            console.log(id_reprovar)
             $.ajax({
               url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
               type: "POST",
               contentType: "application/json",
               data: JSON.stringify(id_reprovar)
             }).done((response) => {
-              console.log(response)
               if(response.value==true){
                 Swal.fire({
                   titleText: "Solicitação de Compra Rejeitada",
@@ -429,8 +419,8 @@ function loginComprador(){
       </thead>    
     </table>
     <div class="row">
-      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-addon2_">Nova Cotação</button></div>
-      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-addon2">Cotações</button></div>
+      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Nova Cotação</button></div>
+      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-cotacao">Cotações</button></div>
     </div>
     <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
     });
@@ -466,13 +456,11 @@ function loginComprador(){
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
         },
     });
-    $('#button-addon2_').click(function () {
+    $('#button-novaCotacao').click(function () {
         var data_Solicitacao = table.rows('.selected').data(); // Recebe os valores da linha selecionada
         data_Solicitacao = data_Solicitacao[0]
-        // console.log(data);
         
         return Swal.fire({
-          // titleText: text,
           title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
           width: '50em',
           confirmButtonText: 'Enviar Cotação',
@@ -545,7 +533,6 @@ function loginComprador(){
           }
       }
         }).then((result) => {
-          // console.log(result.value)
           if (!result.value){
             Swal.fire({
               title:"Cotação Cancelada.",
@@ -558,21 +545,19 @@ function loginComprador(){
         }else{
             const dict_values = result.value;
             const s = JSON.stringify(dict_values);
-            // console.log(s);
             $.ajax({
                 url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(s)
             }).done((response) => {
-              // console.log(response.value);
               if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
                 else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
               })
               }
         });
     });      
-    $('#button-addon2').click(function () {
+    $('#button-cotacao').click(function () {
       var data = table.rows('.selected').data();// Recebe os valores da linha selecionada
       data = data[0]
       if (!data){
@@ -590,11 +575,9 @@ function loginComprador(){
         contentType: "application/json",
         data: JSON.stringify(s)
       }).done((response) => {
-        // console.log("INFOO: ", response, "Tamanho: ",response.id_cotacao)
         if (response.length){
           var html = ``
           for (var i in response){
-            // console.log(response[i])
             var width = '70em';
             var html_ = `
             <div class="card" style="width: 15rem; margin-left:auto; margin-right:auto"">
@@ -656,7 +639,6 @@ function loginComprador(){
         html: `<div class="row text-center">`+html+`</div>`+botoes
       });
       $('#button-novaCotacao').click(function () {
-        console.log(response);
         Swal.fire({
           // titleText: text,
           title: `${JSON.stringify(numero_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
@@ -723,7 +705,6 @@ function loginComprador(){
           }
       }
         }).then((result) => {
-          // console.log(result.value)
           if (!result.value){
             Swal.fire({
               title:"Cotação Cancelada.",
@@ -736,14 +717,12 @@ function loginComprador(){
         }else{
             const dict_values = result.value;
             const s = JSON.stringify(dict_values);
-            // console.log(s);
             $.ajax({
                 url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
                 type: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(s)
             }).done((response) => {
-              // console.log(response.value);
               if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
                 else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
               })
@@ -756,7 +735,6 @@ function loginComprador(){
   }
 
 function apagarCotacao(id){
-  console.log(id);
   Swal.fire({
     title:"Deseja mesmo apagar?",
     showConfirmButton: true,
@@ -777,7 +755,6 @@ function apagarCotacao(id){
         data: JSON.stringify(s)
       }).done((apagou) => {
         if (apagou.value==true){
-          console.log("APAGOU!!!!!!!!");
           Swal.fire({
             titleText:"Cotação Apagada",
             showConfirmButton: true,
@@ -789,7 +766,6 @@ function apagarCotacao(id){
   })
 }
 function editarCotacao(id){
-  console.log(id);
   Swal.fire({
     title:"Editar Cotação?",
     showConfirmButton: true,
@@ -798,5 +774,18 @@ function editarCotacao(id){
     confirmButtonText: "Sim",
     showCancelButton: true,
     cancelButtonText: "Cancelar",
-  })
+  }).then(response => {
+    if (response.value == true){
+      const dict_values = {'id_cotacao': id};
+      const s = JSON.stringify(dict_values);
+      $.ajax({
+        url:"/dadosCotacao",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(s)
+      }).done((dadosCotacao)=> {
+        console.log(dadosCotacao); // Aqui deve entrar o script Modal para editar a cotação!!!!
+      });
+    };
+  });
 }

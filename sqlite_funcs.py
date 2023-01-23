@@ -255,6 +255,28 @@ def cotacaoInformacoesDB(id_solicitacao):
         print(e)
         return False
 
+def dadosCotacao(id_cotacao):
+    try:
+        conn = sqlite3.connect('static/db/compras.db')
+        cursor = conn.cursor()
+        dict_informacoes = {}
+        dados = cursor.execute(f"SELECT * FROM cotacao WHERE id_cotacao={id_cotacao} AND status_cotacao=0").fetchall()
+        informacoes = dados[0]
+        dict_informacoes['id_cotacao']=informacoes[0]
+        dict_informacoes['id_solicitacao']=informacoes[1]
+        dict_informacoes['solicitante']=informacoes[2]
+        dict_informacoes['fornecedor']=informacoes[3]
+        dict_informacoes['qnt_solicitada']=informacoes[4]
+        dict_informacoes['valor_unitario']=informacoes[5]
+        dict_informacoes['valor_total']=informacoes[6]
+        dict_informacoes['frete']=informacoes[7]
+        dict_informacoes['inf_extra']=informacoes[8]
+        dict_informacoes['status_cotacao']=informacoes[9]
+        return dict_informacoes
+    except Exception as e:
+        print(e)
+        return False
+
 
 def selec_status(var):
     conn = sqlite3.connect('./static/db/fpq_status.db')

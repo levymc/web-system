@@ -149,7 +149,7 @@ body{
     color: rgb(255, 255, 255);
     background-color: rgb(27, 131, 220)
 }
-#button-addon2_{
+#button-cotacao{
     color: black;
     background-color: #ffffff;
     width: 9em;
@@ -158,7 +158,10 @@ body{
 .btn:focus{
     box-shadow: none !important;
 }
-#button-addon2_:hover{
+.swal2-close:focus{
+    box-shadow: none !important;
+}
+#button-cotacao:hover{
     color: rgb(255, 255, 255);
     background-color: rgb(27, 131, 220)
 }
