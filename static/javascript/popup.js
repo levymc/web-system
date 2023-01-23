@@ -114,7 +114,6 @@ function solicitacaoCompra(){
   }).done((jade) => {
     if (jade == false){
       console.log("Error");
-      swal("deu ruim!");
     } else {
       var test = JSON.parse(jade)
       Swal.fire({
@@ -143,7 +142,21 @@ function solicitacaoCompra(){
               </div>
               <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
                 <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
-                <input type="text" id="unidade_solicitacao" name="unidade_solicitacao" class="swal2-input" placeholder="  Unidade de venda do item" style="width: 80%">
+                <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="unidade_solicitacao">
+                  <option style="font-size:14px;" value="" disabled selected>UN</option>
+                  <option style="font-size:14px;">Caixa (complementar na descrição)</option>
+                  <option style="font-size:14px;">Centímetro (cm)</option>
+                  <option style="font-size:14px;">Centímetro Quadrado (cm²)</option>
+                  <option style="font-size:14px;">Gramas (g)</option>
+                  <option style="font-size:14px;">Kilos (kg)</option>
+                  <option style="font-size:14px;">Litros (l)</option>
+                  <option style="font-size:14px;">Metro (m)</option>
+                  <option style="font-size:14px;">Metro Quadrado (m²)</option>
+                  <option style="font-size:14px;">Mililítros (ml)</option>
+                  <option style="font-size:14px;">Polegadas (")</option>
+                  <option style="font-size:14px;">Unitário</option>
+                  <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+                </select>
               </div>
               <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
                 <label for="motivo_solicitacao">Justificativa</label>
@@ -151,25 +164,25 @@ function solicitacaoCompra(){
               </div>
               <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
                 <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
-                <select style="margin-left:-0em !important;" class="form-control" id="areaUso">
-                  <option value="" disabled selected>Área de Uso</option>
-                  <option>Administração</option>
-                  <option>Ajustagem</option>
-                  <option>AutoClave</option>
-                  <option>Colmeia</option>
-                  <option>Engenharia</option>
-                  <option>Ferramental</option>
-                  <option>Manutenção</option>
-                  <option>MC Ajustagem</option>
-                  <option>MC Laminação</option>
-                  <option>Pintura</option>
-                  <option>Polimento Acrílico</option>
-                  <option>Polimento Metálico</option>
-                  <option>Produto Próprio</option>
-                  <option>Qualidade</option>
-                  <option>Sala Branca</option>
-                  <option>Termoformado</option>
-                  <option>Outro...</option>
+                <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="areaUso">
+                  <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
+                  <option style="font-size:14px;">Administração</option>
+                  <option style="font-size:14px;">Ajustagem</option>
+                  <option style="font-size:14px;">AutoClave</option>
+                  <option style="font-size:14px;">Colmeia</option>
+                  <option style="font-size:14px;">Engenharia</option>
+                  <option style="font-size:14px;">Ferramental</option>
+                  <option style="font-size:14px;">Manutenção</option>
+                  <option style="font-size:14px;">MC Ajustagem</option>
+                  <option style="font-size:14px;">MC Laminação</option>
+                  <option style="font-size:14px;">Pintura</option>
+                  <option style="font-size:14px;">Polimento Acrílico</option>
+                  <option style="font-size:14px;">Polimento Metálico</option>
+                  <option style="font-size:14px;">Produto Próprio</option>
+                  <option style="font-size:14px;">Qualidade</option>
+                  <option style="font-size:14px;">Sala Branca</option>
+                  <option style="font-size:14px;">Termoformado</option>
+                  <option style="font-size:14px;">Outro... (complementar na descrição)</option>
                 </select>
             </div>
           </div>
@@ -192,6 +205,7 @@ function solicitacaoCompra(){
           nome: nomeItem,
           descricao: descricao, 
           quantidade: quantidade, 
+          unidade: Swal.getPopup().querySelector('#unidade_solicitacao').value,
           motivo: motivo, 
           setor: setor,
         }
@@ -214,9 +228,10 @@ function solicitacaoCompra(){
             const nomeItem = result2.value.nome;
             const descricao = result2.value.descricao;
             const quantidade = result2.value.quantidade;
+            const unidade = result2.value.unidade;
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
-            const dict_values = {dataAtual,nomeItem , descricao, quantidade, motivo, setor};
+            const dict_values = {dataAtual,nomeItem , descricao, quantidade, unidade, motivo, setor};
             const s = JSON.stringify(dict_values);
             $.ajax({
                 url:"/comprasInserir",
@@ -386,8 +401,6 @@ function paginaAprovador(){
     });
   });
 };
-
-  
 
 function loginComprador(){
     Swal.fire({

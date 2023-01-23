@@ -84,15 +84,15 @@ def confereUsuario(usuario, senha):
             return False
 
 def solicitacaoComprasInserir(result):
-    resultado = result['usuario'], result['dataAtual'], result['nomeItem'], result['descricao'], result['quantidade'], result['motivo'], result['setor']
+    resultado = result['usuario'], result['dataAtual'], result['nomeItem'], result['descricao'], result['quantidade'], result['unidade'], result['motivo'], result['setor']
     print(resultado)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         cursor.execute(f"""
             INSERT INTO solicitacao 
-            (solicitante, data, nome_item, descricao, quantidade, motivo, setor) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)""", 
+            (solicitante, data, nome_item, descricao, quantidade, unidade, motivo, setor) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", 
             (resultado))
         conn.commit()
         conn.close()
