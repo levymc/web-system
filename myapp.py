@@ -110,6 +110,14 @@ def cotacaoInserir():
     inserirDB = sqlite_funcs.cotacaoInserirDB(resultado)
     return {'value': inserirDB}
 
+@app.route("/cotacaoApagar", methods=["POST", "GET"])
+def cotacaoApagar():
+    output = request.get_json()
+    resultado = json.loads(output)
+    # print("Resultado: ",resultado)
+    apagou = sqlite_funcs.cotacaoApagar(resultado)
+    return {'value': apagou}
+
 @app.route("/cotacaoInformacoes", methods=["POST", "GET"])
 def cotacaoInformacoes():
     output = request.get_json()

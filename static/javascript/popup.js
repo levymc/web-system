@@ -182,6 +182,7 @@ function solicitacaoCompra(){
         cancelButtonText: 'Cancelar',
         focusConfirm: false,
         preConfirm: () => {
+        const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value
         const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value
         const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value
         const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value
@@ -190,6 +191,7 @@ function solicitacaoCompra(){
             Swal.showValidationMessage(`Preencha os campos para prosseguir`)
         }
         return { 
+          nome: nomeItem,
           descricao: descricao, 
           quantidade: quantidade, 
           motivo: motivo, 
@@ -211,11 +213,12 @@ function solicitacaoCompra(){
             var mes = String(data.getMonth() + 1).padStart(2, '0');
             var ano = data.getFullYear();
             dataAtual = dia + '/' + mes + '/' + ano;
+            const nomeItem = result2.value.nome;
             const descricao = result2.value.descricao;
             const quantidade = result2.value.quantidade;
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
-            const dict_values = {dataAtual, descricao, quantidade, motivo, setor};
+            const dict_values = {dataAtual,nomeItem , descricao, quantidade, motivo, setor};
             const s = JSON.stringify(dict_values);
             // console.log(s);
             $.ajax({
@@ -229,7 +232,7 @@ function solicitacaoCompra(){
                 Swal.fire({
                   confirmButtonColor:'hwb(216 31% 1%)',
                   titleText: "Solicitação de compra enviada!!",
-                  icon: "sucess"
+                  icon: "success"
                 }
                 )} else{
                   Swal.fire("Ocorreu algum erro!")
@@ -330,7 +333,7 @@ function paginaAprovador(){
           Swal.fire({
             titleText: "Solicitação de Compra Aprovada",
             text: "O processo de cotação já pode ser iniciado.",
-            icon: "sucess",
+            icon: "success",
             showConfirmButton: true,
             confirmButtonColor:'hwb(216 31% 1%)', 
           });
@@ -606,8 +609,8 @@ function loginComprador(){
               <li class="list-group-item">Frete: R$${response[i].frete}</li>
             </ul>
             <div class="card-body text-end">
-              <a href="#" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href="#" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
+              <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a onClick="apagarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
             </div>
           </div>`;
           html = html + html_;
@@ -629,7 +632,7 @@ function loginComprador(){
             </ul>
             <div class="card-body text-end">
               <a href="#" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
-              <a href="#" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
+              <a onClick="newPopup()" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
             </div>
           </div>`
           var numero_cotacao = response.id_cotacao
@@ -651,30 +654,6 @@ function loginComprador(){
         cancelButtonText: 'Sair',
         padding: '1em 1em 1.25em',
         html: `<div class="row text-center">`+html+`</div>`+botoes
-      });
-      $('#apagarCotacao').click(function(){
-        Swal.fire({
-          title:"Deseja mesmo apagar?",
-          showConfirmButton: true,
-          confirmButtonColor: '#007bff',
-          allowOutsideClick: false,
-          confirmButtonText: "Sim",
-          showCancelButton: true,
-          cancelButtonText: "Cancelar",
-        }).then(response => {
-          if (response.value == True)
-          console.log(response);
-        })
-      });
-      $('#editarCotacao').click(function(){
-        Swal.fire({
-          title:"Editar Cotação?",
-          showConfirmButton: true,
-          confirmButtonColor: '#007bff',
-          confirmButtonText: "Sim",
-          showCancelButton: true,
-          cancelButtonText: "Cancelar",
-        })
       });
       $('#button-novaCotacao').click(function () {
         console.log(response);
@@ -774,6 +753,50 @@ function loginComprador(){
 
     })});
     })
-      
   }
 
+function apagarCotacao(id){
+  console.log(id);
+  Swal.fire({
+    title:"Deseja mesmo apagar?",
+    showConfirmButton: true,
+    confirmButtonColor: '#007bff',
+    icon:"question",
+    allowOutsideClick: false,
+    confirmButtonText: "Sim",
+    showCancelButton: true,
+    cancelButtonText: "Cancelar",
+  }).then(response => {
+    if (response.value == true){
+      const dict_values = {'id': id};
+      const s = JSON.stringify(dict_values);
+      $.ajax({
+        url:"/cotacaoApagar",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(s)
+      }).done((apagou) => {
+        if (apagou.value==true){
+          console.log("APAGOU!!!!!!!!");
+          Swal.fire({
+            titleText:"Cotação Apagada",
+            showConfirmButton: true,
+            confirmButtonColor: '#007bff',
+          })
+        };
+      });
+    };
+  })
+}
+function editarCotacao(id){
+  console.log(id);
+  Swal.fire({
+    title:"Editar Cotação?",
+    showConfirmButton: true,
+    confirmButtonColor: '#007bff',
+    icon:"question",
+    confirmButtonText: "Sim",
+    showCancelButton: true,
+    cancelButtonText: "Cancelar",
+  })
+}
