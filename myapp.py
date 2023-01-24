@@ -100,7 +100,7 @@ def rejeitarCompras():
 
 @app.route("/comprasPendentes", methods=["POST", "GET"])
 def comprasPendentes():
-    return jsonify(sqlite_funcs.comprasPendentes('1'))
+    return jsonify(sqlite_funcs.comprasPendentes(1))
 
 @app.route("/cotacaoInserir", methods=["POST", "GET"])
 def cotacaoInserir():
@@ -110,6 +110,14 @@ def cotacaoInserir():
     inserirDB = sqlite_funcs.cotacaoInserirDB(resultado)
     return {'value': inserirDB}
 
+@app.route("/cotacaoApagar", methods=["POST", "GET"])
+def cotacaoApagar():
+    output = request.get_json()
+    resultado = json.loads(output)
+    # print("Resultado: ",resultado)
+    apagou = sqlite_funcs.cotacaoApagar(resultado)
+    return {'value': apagou}
+
 @app.route("/cotacaoInformacoes", methods=["POST", "GET"])
 def cotacaoInformacoes():
     output = request.get_json()
@@ -117,6 +125,14 @@ def cotacaoInformacoes():
     # print("Resultado: ",resultado['id_solicitacao'])
     informacoes = sqlite_funcs.cotacaoInformacoesDB(resultado['id_solicitacao'])
     return informacoes ## Devolver as cotações refentes ao id_solicitacao
+
+@app.route("/dadosCotacao", methods=["POST", "GET"])
+def dadosCotacao():
+    print("chegou!")
+    output = request.get_json()
+    resultado = json.loads(output)
+    informacoes = sqlite_funcs.dadosCotacao(resultado['id_cotacao'])
+    return informacoes
 
 @app.route("/send", methods = ["POST"])
 def send():
