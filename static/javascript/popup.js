@@ -547,7 +547,6 @@ function confereComprasPendentes(){
     }else{
       loginComprador();
     }
-    console.log(response);
   });
 }
 
@@ -660,6 +659,7 @@ function loginComprador(){
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><b>Valor Total:</b> ${response[i].valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
+                  <li class="list-group-item"><b>Unidade:</b> ${response[i].unidade}</li>
                   <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
@@ -684,6 +684,7 @@ function loginComprador(){
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><b>Valor Total:</b> ${response.valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
+                <li class="list-group-item"><b>Unidade:</b> ${response.unidade}</li>
                 <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
@@ -811,15 +812,17 @@ function loginComprador(){
             id_solicitacao: data.id_solicitacao,
             solicitante: data.solicitante, 
             qnt_solicitada: data.quantidade,
+            unidade: unidade,
             solicitante: data.solicitante,
-            fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
-            valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+            fornecedor: fornecedor,
+            valor_unitario: valor_unitario,
             frete: Swal.getPopup().querySelector('#frete').value,
             inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
             validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
           }
       }
         }).then((result) => {
+          console.log(result)
           if (!result.value){
             Swal.fire({
               title:"Cotação Cancelada.",
@@ -900,7 +903,102 @@ function editarCotacao(id){
         contentType: "application/json",
         data: JSON.stringify(s)
       }).done((dadosCotacao)=> {
-        console.log(dadosCotacao); // Aqui deve entrar o script Modal para editar a cotação!!!!
+        Swal.fire({
+          title: `Modificação da Cotação`,
+          width: '70em',
+          confirmButtonText: 'Enviar Cotação',
+          confirmButtonColor: '#007bff',
+          padding: '1em 1em 1.25em',
+          html: `
+          <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
+            <div class="h2" style="margin-left:1em">
+              <div class="row" style="line-height: 1.5em;">
+                <div class=" h5 col-sm-4 text-center"><b>Resumo da Cotação</b></div>
+                <div class=" h5 col-sm text-center"><b>Alterações</b></div>
+              </div>
+            </div>
+            <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
+                <b>Fornecedor:</b> <font color="#560101">${dadosCotacao.fornecedor.charAt(0).toUpperCase() + dadosCotacao.fornecedor.slice(1)}</font> <br />
+                <b>Contato:</b> <font color="#560101">${dadosCotacao.contato_fornecedor}</font><br />
+                <b>Unidade Comercializada:</b> <font color="#560101">${dadosCotacao.unidade}</font><br />
+                <b>Valor Unitário:</b> <font color="#560101">${dadosCotacao.valor_unitario}</font><br />
+                <b>Valor Frete:</b> <font color="#560101">${dadosCotacao.frete}</font><br />
+                <b>Informações Extra:</b> <font color="#560101">${dadosCotacao.inf_extra}</font><br />
+                <b>Validade Cotação:</b> <font color="#560101">${dadosCotacao.validade_cotacao}</font><br />
+            </div>
+            <div class="col">
+                <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+                    <div class="col" style="width:110%">
+                      <div class="input-group mb-3">
+                          <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                          <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+                      </div>
+                      <div class="input-group mb-3">
+                          <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                          <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                      </div>
+                      <div class="input-group mb-3">
+                          <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                          <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
+                              <option disabled selected>UN</option>
+                              <option value='1'>Caixa (complementar na descrição)</option>
+                              <option value='2'>Centímetro (cm)</option>
+                              <option value='3'>Centímetro Quadrado (cm²)</option>
+                              <option value='4'>Gramas (g)</option>
+                              <option value='5'>Kilos (kg)</option>
+                              <option value='6'>Litros (l)</option>
+                              <option value='7'>Metro (m)</option>
+                              <option value='8'>Metro Quadrado (m²)</option>
+                              <option value='9'>Mililítros (ml)</option>
+                              <option value='10'>Polegadas (")</option>
+                              <option value='11'>Unitário</option>
+                              <option value='12'>Outro... (complementar em Inf. Extra)</option>
+                          </select>
+                      </div>
+                      <div class="input-group mb-3">
+                          <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                          <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                      </div>
+                      <div class="input-group mb-3">
+                          <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                          <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+                      </div>
+                  </div>
+                  <div class="col" style="margin-left:3em;">
+                      <div class="input-group mb-3">
+                          <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                          <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                      </div>
+                      <div class="input-group mb-3">
+                          <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                          <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+          `,
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          focusConfirm: false,
+          preConfirm: () => {
+            const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+            const unidade = Swal.getPopup().querySelector('#unidade').value
+            const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
+            if (!fornecedor || !unidade || !valor_unitario) {
+                Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
+            }
+            return { 
+              id_solicitacao: data_Solicitacao.id_solicitacao,
+              solicitante: data_Solicitacao.solicitante, 
+              qnt_solicitada: data_Solicitacao.quantidade,
+              fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
+              valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+              frete: Swal.getPopup().querySelector('#frete').value,
+              inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+            }
+        }
+        })
       });
     };
   });
@@ -946,18 +1044,18 @@ function novaCotacao(data_Solicitacao){
                     <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
                     <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
                         <option disabled selected>UN</option>
-                        <option value='1'>Caixa (complementar na descrição)</option>
-                        <option value='2'>Centímetro (cm)</option>
-                        <option value='3'>Centímetro Quadrado (cm²)</option>
-                        <option value='4'>Gramas (g)</option>
-                        <option value='5'>Kilos (kg)</option>
-                        <option value='6'>Litros (l)</option>
-                        <option value='7'>Metro (m)</option>
-                        <option value='8'>Metro Quadrado (m²)</option>
-                        <option value='9'>Mililítros (ml)</option>
-                        <option value='10'>Polegadas (")</option>
-                        <option value='11'>Unitário</option>
-                        <option value='12'>Outro... (complementar em Inf. Extra)</option>
+                        <option value='Caixa'>Caixa (complementar na descrição)</option>
+                        <option value='cm'>Centímetro (cm)</option>
+                        <option value='cm²'>Centímetro Quadrado (cm²)</option>
+                        <option value='g'>Gramas (g)</option>
+                        <option value='kg'>Kilos (kg)</option>
+                        <option value='l'>Litros (l)</option>
+                        <option value='m'>Metro (m)</option>
+                        <option value='m²'>Metro Quadrado (m²)</option>
+                        <option value='ml'>Mililítros (ml)</option>
+                        <option value='Polegadas'>Polegadas (")</option>
+                        <option value='Unitário'>Unitário</option>
+                        <option value='Outro'>Outro... (complementar em Inf. Extra)</option>
                     </select>
                 </div>
                 <div class="input-group mb-3">
@@ -997,10 +1095,13 @@ function novaCotacao(data_Solicitacao){
       id_solicitacao: data_Solicitacao.id_solicitacao,
       solicitante: data_Solicitacao.solicitante, 
       qnt_solicitada: data_Solicitacao.quantidade,
-      fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
-      valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+      unidade: unidade,
+      solicitante: data_Solicitacao.solicitante,
+      fornecedor: fornecedor,
+      valor_unitario: valor_unitario,
       frete: Swal.getPopup().querySelector('#frete').value,
       inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+      validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
     }
 }
   }).then((result) => {
