@@ -658,10 +658,10 @@ function loginComprador(){
                   <p class="card-text"><b>Contato:</b> ...</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><b>Valor Total:</b> R$${response[i].valor_total}</li>
+                  <li class="list-group-item"><b>Valor Total:</b> ${response[i].valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
-                  <li class="list-group-item"><b>Valor Unitário:</b> R$${response[i].valor_unitario}</li>
-                  <li class="list-group-item"><b>Frete:</b> R$${response[i].frete}</li>
+                  <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                  <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
                   <li class="list-group-item"><b>Validade Cotação:</b> ...</li>
                 </ul>
@@ -682,10 +682,10 @@ function loginComprador(){
                 <p class="card-text"><b>Contato:</b> ...</p>
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><b>Valor Total:</b> ${response.valor_total}</li>
+                <li class="list-group-item"><b>Valor Total:</b> ${response.valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
-                <li class="list-group-item"><b>Valor Unitário:</b> R$${response.valor_unitario}</li>
-                <li class="list-group-item"><b>Frete:</b> R$${response.frete}</li>
+                <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
                 <li class="list-group-item"><b>Validade Cotação:</b> ...</li>
               </ul>
