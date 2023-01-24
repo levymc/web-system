@@ -2,7 +2,7 @@ function newPopup(){
     Swal.fire({
         title: 'Contato Processo',
         html: `<div class="loginCompras">
-            <input type="text" id="nome_contato" name="nome" class="swal2-input" placeholder="Nome">
+            <input type="text" style="margin-left:1em !important;" id="nome_contato" name="nome" class="swal2-input" placeholder="Nome">
             <input type="text" id="motivo_contato" name="motivo" class="swal2-input" placeholder="Motivo">
             <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="500" style="resize:none; height:10em !important;" class="swal2-textarea"  maxlength="200" placeholder="Descrição"></textarea>
             </div>`,
@@ -268,7 +268,7 @@ function paginaAprovador(){
     html: `
     <div class="row">
         <div class="col-1"></div>
-        <div class="col" id="subTitle-comprasPendente">Selecione uma, ou mais, Solicitação para aprovar ou rejeitar.</div>
+        <div class="col" id="subTitle-comprasPendente">Selecione apenas uma Solicitação para aprovar, rejeitar ou ver mais informações.</div>
         <div class="col-1"></div>
     </div>
     <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
