@@ -571,8 +571,8 @@ function loginComprador(){
         <tr>
           <th scope="col">Data da Solicitação</th>
           <th scope="col">Usuário</th>
+          <th scope="col">Item</th>
           <th scope="col">Descrição</th>
-          <th scope="col">Quantidade</th>
           <th scope="col">Justificativa</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
@@ -603,8 +603,8 @@ function loginComprador(){
         'columns': [
         { data : 'data', "width": "10%"},
         { data : 'solicitante', "width": "12.5%"}, 
+        { data : 'nomeItem', "width": "9.375%"},
         { data : 'descricao', "width": "23%"},
-        { data : 'quantidade', "width": "9.375%"},
         { data : 'motivo', "width": "15.625%"},
         { data : 'setor', "width": "12.5%"},
         { data : 'qnt_cotacao', "width": "8%"},
