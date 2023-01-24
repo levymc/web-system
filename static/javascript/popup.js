@@ -636,9 +636,9 @@ function loginComprador(){
         Swal.fire({icon:"info", titleText:"Solicitação ainda sem Cotação", confirmButtonColor:'hwb(216 31% 1%)',})
       }else{
         if(Number(JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', ''))==1){
-          var title = `${JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', '')} Cotação Realizada`
+          var title = `${JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', '')} Cotação Válida`
         } else{
-          var title = `${JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', '')} Cotações Realizadas`
+          var title = `${JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', '')} Cotações Válidas`
         }
         const s = JSON.stringify(data);
         $.ajax({
@@ -652,42 +652,42 @@ function loginComprador(){
             for (var i in response){
               var width = '70em';
               var html_ = `
-              <div class="card" style="width: 15rem; margin-left:auto; margin-right:auto"">
-              <div class="card-body">
-                <h4 class="card-title">${response[i].id_cotacao}ª Cotação</h4>
-                <h5 class="card-title">Fornecedor: ${response[i].fornecedor}</h5>
-                <p class="card-text">Valor Total: <b>R$${response[i].valor_total}</b></p>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Quantidade Solicitada: ${response[i].qnt_solicitada}</li>
-                <li class="list-group-item">Valor Unitário: R$${response[i].valor_unitario}</li>
-                <li class="list-group-item">Frete: R$${response[i].frete}</li>
-              </ul>
-              <div class="card-body text-end">
-                <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a onClick="apagarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
-              </div>
-            </div>`;
+              <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
+                <div class="card-body">
+                  <p class="card-text">Id : ${response[i].id_cotacao}</p>
+                  <h5 class="card-title"><b>Fornecedor:</b> ${response[i].fornecedor}</h5>
+                  <p class="card-text"><b>Valor Total:</b> R$${response[i].valor_total}</b></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
+                  <li class="list-group-item"><b>Valor Unitário:</b> R$${response[i].valor_unitario}</li>
+                  <li class="list-group-item"><b>Frete:</b> R$${response[i].frete}</li>
+                </ul>
+                <div class="card-body text-end">
+                  <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a onClick="apagarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                </div>
+              </div>`;
             html = html + html_;
             var numero_cotacao = response[response.length-1].id_cotacao
             }
           } else{
             var width = '30em';
             var html = `
-              <div class="card" style="width: 15rem; margin-left:auto; margin-right:auto">
+              <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
               <div class="card-body">
-                <h4 class="card-title">${response.id_cotacao}ª Cotação</h4>
-                <h5 class="card-title">Fornecedor: ${response.fornecedor}</h5>
-                <p class="card-text">Valor Total: <b>R$${response.valor_total}</b></p>
+                <p class="card-text">Id : ${response.id_cotacao}</p>
+                <h5 class="card-title"><b>Fornecedor:</b> ${response.fornecedor}</h5>
+                <p class="card-text"><b>Valor Total:</b> R$${response.valor_total}</p>
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">Quantidade Solicitada: ${response.qnt_solicitada}</li>
-                <li class="list-group-item">Valor Unitário: R$${response.valor_unitario}</li>
-                <li class="list-group-item">Frete: R$${response.frete}</li>
+                <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
+                <li class="list-group-item"><b>Valor Unitário:</b> R$${response.valor_unitario}</li>
+                <li class="list-group-item"><b>Frete:</b> R$${response.frete}</li>
               </ul>
               <div class="card-body text-end">
-                <a href="#" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a onClick="newPopup()" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                <a onClick="editarCotacao(${response.id_cotacao})" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a onClick="apagarCotacao(${response.id_cotacao})" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
               </div>
             </div>`
             var numero_cotacao = response.id_cotacao
@@ -716,7 +716,7 @@ function loginComprador(){
       $('#button-novaCotacao2').click(function () {
         Swal.fire({
           // titleText: text,
-          title: `${JSON.stringify(numero_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
+          title: `${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
           width: '70em',
           confirmButtonText: 'Enviar Cotação',
           allowOutsideClick: false,
@@ -834,7 +834,7 @@ function loginComprador(){
                 contentType: "application/json",
                 data: JSON.stringify(s)
             }).done((response) => {
-              if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
+              if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!",confirmButtonColor:'hwb(216 31% 1%)',})} 
                 else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
               })
               }
@@ -903,7 +903,7 @@ function editarCotacao(id){
 
 function novaCotacao(data_Solicitacao){
   Swal.fire({
-    title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
+    title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
     width: '70em',
     confirmButtonText: 'Enviar Cotação',
     confirmButtonColor: '#007bff',
