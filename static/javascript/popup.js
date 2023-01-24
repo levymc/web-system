@@ -278,10 +278,7 @@ function paginaAprovador(){
         <th scope="col">Usuário</th>
         <th scope="col">Item</th>
         <th scope="col">Descrição</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">UN</th>
         <th scope="col">Motivo</th>
-        <th scope="col">Setor</th>
       </tr>
     </thead>    
   </table>
@@ -310,14 +307,11 @@ function paginaAprovador(){
       searching : false,
       sort: true,
       'columns': [
-      { data : 'data', "width": "10%"},
-      { data : 'solicitante', "width": "12.5%"}, 
-      { data : 'nomeItem', "width": "12.5%"}, 
-      { data : 'descricao', "width": "23%"},
-      { data : 'quantidade', "width": "9.375%"},
-      { data : 'unidade', "width": "3%"},
-      { data : 'motivo', "width": "15.625%"},
-      { data : 'setor', "width": "12.5%"},
+      { data : 'data', "width": "15%"},
+      { data : 'solicitante', "width": "15%"}, 
+      { data : 'nomeItem', "width": "15%"}, 
+      { data : 'descricao', "width": "30%"},
+      { data : 'motivo', "width": "25%"},
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
