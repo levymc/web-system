@@ -654,14 +654,16 @@ function loginComprador(){
               var html_ = `
               <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
                 <div class="card-body">
-                  <p class="card-text">Id : ${response[i].id_cotacao}</p>
                   <h5 class="card-title"><b>Fornecedor:</b> ${response[i].fornecedor}</h5>
-                  <p class="card-text"><b>Valor Total:</b> R$${response[i].valor_total}</b></p>
+                  <p class="card-text"><b>Contato:</b> ...</p>
                 </div>
                 <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Valor Total:</b> R$${response[i].valor_total}</li>
                   <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
                   <li class="list-group-item"><b>Valor Unitário:</b> R$${response[i].valor_unitario}</li>
                   <li class="list-group-item"><b>Frete:</b> R$${response[i].frete}</li>
+                  <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
+                  <li class="list-group-item"><b>Validade Cotação:</b> ...</li>
                 </ul>
                 <div class="card-body text-end">
                   <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -676,14 +678,16 @@ function loginComprador(){
             var html = `
               <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
               <div class="card-body">
-                <p class="card-text">Id : ${response.id_cotacao}</p>
                 <h5 class="card-title"><b>Fornecedor:</b> ${response.fornecedor}</h5>
-                <p class="card-text"><b>Valor Total:</b> R$${response.valor_total}</p>
+                <p class="card-text"><b>Contato:</b> ...</p>
               </div>
               <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Valor Total:</b> ${response.valor_total}</li>
                 <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
                 <li class="list-group-item"><b>Valor Unitário:</b> R$${response.valor_unitario}</li>
                 <li class="list-group-item"><b>Frete:</b> R$${response.frete}</li>
+                <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
+                <li class="list-group-item"><b>Validade Cotação:</b> ...</li>
               </ul>
               <div class="card-body text-end">
                 <a onClick="editarCotacao(${response.id_cotacao})" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
