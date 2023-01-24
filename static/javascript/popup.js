@@ -717,49 +717,81 @@ function loginComprador(){
         Swal.fire({
           // titleText: text,
           title: `${JSON.stringify(numero_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
-          width: '50em',
+          width: '70em',
           confirmButtonText: 'Enviar Cotação',
           allowOutsideClick: false,
           showCloseButton: true,
           confirmButtonColor: '#007bff',
           padding: '1em 1em 1.25em',
           html: `
-          <div class="h2" style="margin-left:1em">
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><h4><b>Solicitação de Compra</b></h4></div>
-            <div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
-          </div></div>
-          <div class="container-fluid">
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Solicitante:</b> ${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="fornecedor" style="width:80% !important;" class="form-control v1" placeholder="Fornecedor"></div>
-          </div>
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Descrição:</b> ${JSON.stringify(data.descricao).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="contato_fornecedor" style="width:80% !important;" class="form-control" placeholder="Contato Fornecedor"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Motivo:</b> ${JSON.stringify(data.motivo).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="unidade" style="width:80% !important;" class="form-control" placeholder="Unidade Padrão Comercializada"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Quantidade:</b> ${JSON.stringify(data.quantidade).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="valor_unitario" style="width:80% !important;" class="form-control" placeholder="Valor Unitário"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start"><b>Setor:</b> ${JSON.stringify(data.setor).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="frete" style="width:80% !important;" class="form-control" placeholder="Frete"></div>
-          </div> 
-          <div class="row" style="line-height: 3em;">
-            <div class="col-sm-6 text-start""><b>Cotação nº:</b> ${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}</div>
-            <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="inf_extra" style="width:80% !important;" class="form-control" placeholder="Observações"></div>
-          </div> 
-          <div class="row" style="line-height: 3em; backgroung:white">
-          <div class="col-sm-6 text-end"></div>
-          <div class="col-sm-6 text-start" style="margin-top:1.25em;border-left: 2px dotted grey;"><input type="date" id="validade_cotacao" style="width:80% !important;" class="form-control" placeholder="Validade Cotação">
-          <p class="text-center" style="font-size: 75%; color:red;line-height: 1.25em; margin-top:1em !important;">Caso necessário, indique a data de validade da cotação acima. </p></div>
-          </div> 
-          </div>
+          <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
+      <div class="h2" style="margin-left:1em">
+        <div class="row" style="line-height: 1.5em;">
+          <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
+          <div class=" h5 col-sm text-center"><b>Informações da Cotação</b></div>
+        </div>
+      </div>
+      <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
+          <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
+          <b>Data da Solicitação:</b> <font color="#560101">${data.data}</font><br />
+          <b>Item Solicitado:</b> <font color="#560101">${data.nomeItem}</font><br />
+          <b>Descrição:</b> <font color="#560101">${data.descricao}</font><br />
+          <b>Quantidade Solicitada:</b> <font color="#560101">${data.quantidade}</font><br />
+          <b>Unidade:</b> <font color="#560101">${data.unidade}</font><br />
+          <b>Setor:</b> <font color="#560101">${data.setor}</font><br />
+          <b>Justificativa:</b> <font color="#560101">${data.motivo}</font><br />
+      </div>
+      <div class="col">
+          <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+              <div class="col" style="width:110%">
+                <div class="input-group mb-3">
+                    <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                    <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                    <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                    <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
+                        <option disabled selected>UN</option>
+                        <option value='1'>Caixa (complementar na descrição)</option>
+                        <option value='2'>Centímetro (cm)</option>
+                        <option value='3'>Centímetro Quadrado (cm²)</option>
+                        <option value='4'>Gramas (g)</option>
+                        <option value='5'>Kilos (kg)</option>
+                        <option value='6'>Litros (l)</option>
+                        <option value='7'>Metro (m)</option>
+                        <option value='8'>Metro Quadrado (m²)</option>
+                        <option value='9'>Mililítros (ml)</option>
+                        <option value='10'>Polegadas (")</option>
+                        <option value='11'>Unitário</option>
+                        <option value='12'>Outro... (complementar em Inf. Extra)</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                    <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                    <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+                </div>
+            </div>
+            <div class="col" style="margin-left:3em;">
+                <div class="input-group mb-3">
+                    <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                    <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                    <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
           `,
           showCancelButton: true,
           cancelButtonText: 'Cancelar',
@@ -775,10 +807,12 @@ function loginComprador(){
             id_solicitacao: data.id_solicitacao,
             solicitante: data.solicitante, 
             qnt_solicitada: data.quantidade,
+            solicitante: data.solicitante,
             fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
             valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
             frete: Swal.getPopup().querySelector('#frete').value,
             inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+            validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
           }
       }
         }).then((result) => {
@@ -870,55 +904,79 @@ function editarCotacao(id){
 function novaCotacao(data_Solicitacao){
   Swal.fire({
     title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação`,
-    width: '50em',
+    width: '70em',
     confirmButtonText: 'Enviar Cotação',
     confirmButtonColor: '#007bff',
     padding: '1em 1em 1.25em',
     html: `
-    <div class="h2" style="margin-left:1em">
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start"><h4><b>Resumo da Solicitação</b></h4></div>
-      <div class="col-sm-6 text-start v1"><h4><b>Informações a Preencher</b></h4></div>
-    </div></div>
-    <div class="container-fluid">
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start"><b>Solicitante:</b> ${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="fornecedor" style="width:80% !important;" class="form-control v1" placeholder="Fornecedor"></div>
-    </div>
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start"><b>Descrição:</b> ${JSON.stringify(data_Solicitacao.descricao).replace('"', '').replace('"', '')}</div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="contato_fornecedor" style="width:80% !important;" class="form-control" placeholder="Contato Fornecedor"></div>
-    </div> 
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start"><b>Motivo:</b> ${JSON.stringify(data_Solicitacao.motivo).replace('"', '').replace('"', '')}</div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="unidade" style="width:80% !important;" class="form-control" placeholder="Unidade Padrão Comercializada"></div>
-    </div> 
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start"><b>Quantidade:</b> ${JSON.stringify(data_Solicitacao.quantidade).replace('"', '').replace('"', '')}</div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="valor_unitario" style="width:80% !important;" class="form-control" placeholder="Valor Unitário"></div>
-    </div> 
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start"><b>Setor:</b> ${JSON.stringify(data_Solicitacao.setor).replace('"', '').replace('"', '')}</div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="number" id="frete" style="width:80% !important;" class="form-control" placeholder="Frete"></div>
-    </div> 
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start""><b>Nº da Cotação:</b> ${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}</div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="text" id="inf_extra" style="width:80% !important;" class="form-control" placeholder="Observações"></div>
-    </div> 
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start""></div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"><input type="date" id="validade_cotacao" style="width:80% !important;" class="form-control" placeholder="Validade Cotação">
-      <p class="text-center" style="font-size: 75%; color:red;line-height: 1.25em; margin-top:1em !important;">Caso necessário, indique a data de validade da cotação acima. </p></div>
-    </div> 
-    <div class="row" style="line-height: 3em;">
-      <div class="col-sm-6 text-start""></div>
-      <div class="col-sm-6" style="border-left: 2px dotted grey; margin-top:1.25em;"></div>
-    </div> 
-    <div class="row" style="line-height: 3em; backgroung:white">
-    <div class="col-sm-6 text-end"></div>
-    <div class="col-sm-6 text-start" style="margin-top:1.25em;border-left: 2px dotted grey;"></div>
-    </div> 
-    </div>
+    <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
+      <div class="h2" style="margin-left:1em">
+        <div class="row" style="line-height: 1.5em;">
+          <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
+          <div class=" h5 col-sm text-center"><b>Informações da Cotação</b></div>
+        </div>
+      </div>
+      <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
+          <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
+          <b>Data da Solicitação:</b> <font color="#560101">${data_Solicitacao.data}</font><br />
+          <b>Item Solicitado:</b> <font color="#560101">${data_Solicitacao.nomeItem}</font><br />
+          <b>Descrição:</b> <font color="#560101">${data_Solicitacao.descricao}</font><br />
+          <b>Quantidade Solicitada:</b> <font color="#560101">${data_Solicitacao.quantidade}</font><br />
+          <b>Unidade:</b> <font color="#560101">${data_Solicitacao.unidade}</font><br />
+          <b>Setor:</b> <font color="#560101">${data_Solicitacao.setor}</font><br />
+          <b>Justificativa:</b> <font color="#560101">${data_Solicitacao.motivo}</font><br />
+      </div>
+      <div class="col">
+          <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+              <div class="col" style="width:110%">
+                <div class="input-group mb-3">
+                    <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                    <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                    <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                    <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
+                        <option disabled selected>UN</option>
+                        <option value='1'>Caixa (complementar na descrição)</option>
+                        <option value='2'>Centímetro (cm)</option>
+                        <option value='3'>Centímetro Quadrado (cm²)</option>
+                        <option value='4'>Gramas (g)</option>
+                        <option value='5'>Kilos (kg)</option>
+                        <option value='6'>Litros (l)</option>
+                        <option value='7'>Metro (m)</option>
+                        <option value='8'>Metro Quadrado (m²)</option>
+                        <option value='9'>Mililítros (ml)</option>
+                        <option value='10'>Polegadas (")</option>
+                        <option value='11'>Unitário</option>
+                        <option value='12'>Outro... (complementar em Inf. Extra)</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                    <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                </div>
+                <div class="input-group mb-3">
+                    <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                    <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+                </div>
+            </div>
+            <div class="col" style="margin-left:3em;">
+                <div class="input-group mb-3">
+                    <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                    <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                    <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
     `,
     showCancelButton: true,
     cancelButtonText: 'Cancelar',

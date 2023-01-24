@@ -203,6 +203,14 @@ body{
     border-radius: 10px;
     padding: 0.75em;
 }
+.container-fluid2{
+    margin-top:1em;
+    margin-bottom:1em;
+    background: rgba(192, 192, 192, 0.3);
+    border-radius: 10px;
+    padding: 0.2em;
+    margin-left: 1em;
+}
 .container-fluid input{
     margin-left: 3em;   
 }
@@ -259,10 +267,10 @@ body{
     margin: 0 !important;
 }
 input::placeholder {
-    font-size: 17px;
+    font-size: 15px;
 }
 textarea::placeholder {
-    font-size: 17px;
+    font-size: 15px;
 }
 
 /* CONFIGURAÇÕES SIDEBAR */
