@@ -655,7 +655,7 @@ function loginComprador(){
               <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
                 <div class="card-body">
                   <h5 class="card-title"><b>Fornecedor:</b> ${response[i].fornecedor}</h5>
-                  <p class="card-text"><b>Contato:</b> ...</p>
+                  <p class="card-text"><b>Contato:</b> ${response[i].contato_fornecedor}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><b>Valor Total:</b> ${response[i].valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
@@ -663,7 +663,7 @@ function loginComprador(){
                   <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
-                  <li class="list-group-item"><b>Validade Cotação:</b> ...</li>
+                  <li class="list-group-item"><b>Validade Cotação:</b> ${response[i].validade_cotacao}</li>
                 </ul>
                 <div class="card-body text-end">
                   <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -679,7 +679,7 @@ function loginComprador(){
               <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
               <div class="card-body">
                 <h5 class="card-title"><b>Fornecedor:</b> ${response.fornecedor}</h5>
-                <p class="card-text"><b>Contato:</b> ...</p>
+                <p class="card-text"><b>Contato:</b> ${response.contato_fornecedor}<p>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><b>Valor Total:</b> ${response.valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
@@ -687,7 +687,7 @@ function loginComprador(){
                 <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
-                <li class="list-group-item"><b>Validade Cotação:</b> ...</li>
+                <li class="list-group-item"><b>Validade Cotação:</b> ${response.validade_cotacao}</li>
               </ul>
               <div class="card-body text-end">
                 <a onClick="editarCotacao(${response.id_cotacao})" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
@@ -874,6 +874,7 @@ function apagarCotacao(id){
             titleText:"Cotação Apagada",
             showConfirmButton: true,
             confirmButtonColor: '#007bff',
+            icon:"info",
           })
         };
       });

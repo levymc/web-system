@@ -229,12 +229,14 @@ def cotacaoInformacoesDB(id_solicitacao):
             dict_informacoes['id_solicitacao']=informacoes[1]
             dict_informacoes['solicitante']=informacoes[2]
             dict_informacoes['fornecedor']=informacoes[3]
-            dict_informacoes['qnt_solicitada']=informacoes[4]
-            dict_informacoes['valor_unitario']=informacoes[5]
-            dict_informacoes['valor_total']=informacoes[6]
-            dict_informacoes['frete']=informacoes[7]
-            dict_informacoes['inf_extra']=informacoes[8]
-            dict_informacoes['status_cotacao']=informacoes[9]
+            dict_informacoes['contato_fornecedor']=informacoes[4]
+            dict_informacoes['qnt_solicitada']=informacoes[5]
+            dict_informacoes['valor_unitario']=informacoes[6]
+            dict_informacoes['valor_total']=informacoes[7]
+            dict_informacoes['frete']=informacoes[8]
+            dict_informacoes['inf_extra']=informacoes[9]
+            dict_informacoes['validade_cotacao']=informacoes[10]
+            dict_informacoes['status_cotacao']=informacoes[11]
             return dict_informacoes
         else:
             dict_lista_informacoes = []
@@ -244,12 +246,14 @@ def cotacaoInformacoesDB(id_solicitacao):
                     'id_solicitacao':i[1],
                     'solicitante':i[2],
                     'fornecedor':i[3],
-                    'qnt_solicitada':i[4],
-                    'valor_unitario':i[5],
-                    'valor_total':i[6],
-                    'frete':i[7],
-                    'inf_extra':i[8],
-                    'status_cotacao':i[9],
+                    'contato_fornecedor':i[4],
+                    'qnt_solicitada':i[5],
+                    'valor_unitario':i[6],
+                    'valor_total':i[7],
+                    'frete':i[8],
+                    'inf_extra':i[9],
+                    'validade_cotacao':i[10],
+                    'status_cotacao':i[11],
                 })
             return dict_lista_informacoes
         conn.close()
