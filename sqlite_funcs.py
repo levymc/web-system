@@ -164,15 +164,15 @@ def cotacaoInserirDB(resultado):
                 if i.isnumeric():
                     qnt_solicitada+=i
             if resultado["frete"] != "":
-                resultado["valor_total"] = int(resultado["valor_unitario"])*int(qnt_solicitada)+int(resultado["frete"])
-            else: resultado["valor_total"] = int(resultado["valor_unitario"])*int(qnt_solicitada)
+                resultado["valor_total"] = float(resultado["valor_unitario"])*int(qnt_solicitada)+int(resultado["frete"])
+            else: resultado["valor_total"] = float(resultado["valor_unitario"])*int(qnt_solicitada)
             cursor.execute(f"""
                 INSERT INTO cotacao 
                 (id_solicitacao, usuario, fornecedor, quantidade, unidade, valor_un, valor_total, frete, inf_extra, validade_cotacao)
                 VALUES (?,?,?,?,?,?,?,?,?)
                 """,
                 (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
-                qnt_solicitada, resultado['unidade'], resultado['valor_unitario'], resultado['valor_total'],
+                qnt_solicitada, resultado['unidade'], float(resultado['valor_unitario']), resultado['valor_total'],
                 resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
             qnt_cotacao = cursor.execute(f"SELECT qnt_cotacao FROM solicitacao WHERE id_solicitacao = {resultado['id_solicitacao']}").fetchall()[0][0]
             qnt_cotacao_rejeitada = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {resultado['id_solicitacao']} AND status_cotacao = 2").fetchall()
@@ -184,8 +184,8 @@ def cotacaoInserirDB(resultado):
         else: 
             qnt_solicitada = resultado["qnt_solicitada"]
             if resultado["frete"] != "":
-                resultado["valor_total"] = int(resultado["valor_unitario"])*qnt_solicitada+int(resultado["frete"])
-            else: resultado["valor_total"] = int(resultado["valor_unitario"])*qnt_solicitada
+                resultado["valor_total"] = float(resultado["valor_unitario"])*qnt_solicitada+int(resultado["frete"])
+            else: resultado["valor_total"] = float(resultado["valor_unitario"])*qnt_solicitada
             cursor.execute(f"""
                 INSERT INTO cotacao 
                 (id_solicitacao, usuario, fornecedor, quantidade, unidade, valor_un, valor_total, frete, inf_extra, validade_cotacao)
@@ -248,13 +248,13 @@ def cotacaoInformacoesDB(id_solicitacao):
             dict_informacoes['solicitante']=informacoes[2]
             dict_informacoes['fornecedor']=informacoes[3]
             dict_informacoes['contato_fornecedor']=informacoes[4]
+            dict_informacoes['unidade']=informacoes[6]
             dict_informacoes['qnt_solicitada']=informacoes[5]
-            dict_informacoes['valor_unitario']=informacoes[6]
-            dict_informacoes['valor_total']=informacoes[7]
-            dict_informacoes['frete']=informacoes[8]
-            dict_informacoes['inf_extra']=informacoes[9]
-            dict_informacoes['validade_cotacao']=informacoes[10]
-            dict_informacoes['status_cotacao']=informacoes[11]
+            dict_informacoes['valor_unitario']=informacoes[7]
+            dict_informacoes['frete']=informacoes[9]
+            dict_informacoes['inf_extra']=informacoes[10]
+            dict_informacoes['validade_cotacao']=informacoes[11]
+            dict_informacoes['status_cotacao']=informacoes[12]
             return dict_informacoes
         else:
             dict_lista_informacoes = []
@@ -266,12 +266,12 @@ def cotacaoInformacoesDB(id_solicitacao):
                     'fornecedor':i[3],
                     'contato_fornecedor':i[4],
                     'qnt_solicitada':i[5],
-                    'valor_unitario':i[6],
-                    'valor_total':i[7],
-                    'frete':i[8],
-                    'inf_extra':i[9],
-                    'validade_cotacao':i[10],
-                    'status_cotacao':i[11],
+                    'unidade':i[6],
+                    'valor_unitario':i[7],
+                    'frete':i[9],
+                    'inf_extra':i[10],
+                    'validade_cotacao':i[11],
+                    'status_cotacao':i[12],
                 })
             return dict_lista_informacoes
         conn.close()

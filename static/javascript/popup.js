@@ -646,6 +646,7 @@ function loginComprador(){
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((response) => {
+          console.log(response);
           if (response.length){
             var html = ``
             for (var i in response){
@@ -657,10 +658,9 @@ function loginComprador(){
                   <p class="card-text"><b>Contato:</b> ${response[i].contato_fornecedor}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><b>Valor Total:</b> ${response[i].valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                  <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
                   <li class="list-group-item"><b>Unidade:</b> ${response[i].unidade}</li>
-                  <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
                   <li class="list-group-item"><b>Validade Cotação:</b> ${response[i].validade_cotacao}</li>
@@ -682,10 +682,9 @@ function loginComprador(){
                 <p class="card-text"><b>Contato:</b> ${response.contato_fornecedor}<p>
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><b>Valor Total:</b> ${response.valor_total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
                 <li class="list-group-item"><b>Unidade:</b> ${response.unidade}</li>
-                <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
                 <li class="list-group-item"><b>Validade Cotação:</b> ${response.validade_cotacao}</li>
@@ -815,7 +814,7 @@ function loginComprador(){
             unidade: unidade,
             solicitante: data.solicitante,
             fornecedor: fornecedor,
-            valor_unitario: valor_unitario,
+            valor_unitario: valor_unitario.replace(',','.'),
             frete: Swal.getPopup().querySelector('#frete').value,
             inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
             validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
@@ -903,6 +902,7 @@ function editarCotacao(id){
         contentType: "application/json",
         data: JSON.stringify(s)
       }).done((dadosCotacao)=> {
+        console.log(dadosCotacao);
         Swal.fire({
           title: `Modificação da Cotação`,
           width: '70em',
