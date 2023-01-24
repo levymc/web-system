@@ -364,51 +364,115 @@ function paginaAprovador(){
     Swal.fire({
       title: "Informações da Solicitações",
       width:'50em',
-      showConfirmButton: true,
+      allowOutsideClick: false,
+      showCloseButton: true,
+      padding: 0 ,
+      showConfirmButton: false,
       confirmButtonColor:'hwb(216 31% 1%)', 
       html:`
-              <div class="container-fluid">
-                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+              <div class="container-fluid" style="margin-left:2em; margin-right:2em; width:40em;">
+                <div class="row pageMaisInfo">
                   <div class="col text-start"> 
-                    Solicitante (usuário): ${dadosSolicitacao.solicitante}
+                    <b>Solicitante (usuário):</b> <font color="#560101">${dadosSolicitacao.solicitante}</font>
                   </div>
                   <div class="col text-start"> 
-                    Data da Solicitação: ${dadosSolicitacao.data}
+                  <b>Data da Solicitação:</b> <font color="#560101">${dadosSolicitacao.data}</font>
                   </div>
                   
                 </div>
-                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                <div class="row pageMaisInfo"">
                   <div class="col text-start"> 
-                    Item Solicitado: ${dadosSolicitacao.nomeItem}
+                  <b>Item Solicitado:</b> <font color="#560101">${dadosSolicitacao.nomeItem}</font>
                   </div>
                   <div class="col text-start"> 
-                    Descrição do Item: ${dadosSolicitacao.descricao}
-                  </div>
+                  <b>Descrição do Item:</b> <font color="#560101">${dadosSolicitacao.descricao}</font>
                   </div>
                 </div>
 
-                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                <div class="row pageMaisInfo">
                   <div class="col text-start" > 
-                    Quantidade Solicitada: ${dadosSolicitacao.quantidade}
+                  <b>Quantidade Solicitada:</b> <font color="#560101">${dadosSolicitacao.quantidade}</font>
                   </div>
                   <div class="col text-start"> 
-                    Unidade: ${dadosSolicitacao.unidade}
+                  <b>Unidade:</b> <font color="#560101">${dadosSolicitacao.unidade}</font>
                   </div>
                 </div>
 
-                <div class="row" style="background-color: #ffffff; border-radius: 10px;margin-top:0.5em;">
+                <div class="row pageMaisInfo">
                   <div class="col text-start"> 
-                    Justificativa da Compra: ${dadosSolicitacao.motivo}
+                  <b>Justificativa da Compra:</b> <font color="#560101">${dadosSolicitacao.motivo}</font>
                   </div>
                   <div class="col text-start"> 
-                    Setor/Departamento: ${dadosSolicitacao.setor}
+                  <b>Setor/Departamento:</b> <font color="#560101">${dadosSolicitacao.setor}</font>
                   </div>
                 </div>
-
+              </div>
+              <div class="row" style="margin-bottom:1.5em;">
+                <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
+                <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
               </div>
               `
             });
           };
+          $('#button-aprovar2').click(function () {
+            const s = JSON.stringify(dadosSolicitacao);
+            $.ajax({
+              url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(s)
+            }).done((response) => {
+              if(response.value==true){
+                Swal.fire({
+                  titleText: "Solicitação de Compra Aprovada",
+                  text: "O processo de cotação já pode ser iniciado.",
+                  icon: "success",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                });
+              };
+          });
+          });
+          $('#button-rejeitar2').click(function () {
+            Swal.fire({
+              titleText: "Deseja Rejeitar a Solicitação?",
+              showCancelButton: true,
+              icon: "question",
+              focusConfirmButton: false,
+              allowOutsideClick: false,
+              confirmButtonText: "Sim",
+              confirmButtonColor:'hwb(216 31% 1%)',
+              cancelButtonText: "Não",
+            }).then((result) => {
+              if (result.value==true){
+                const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+                $.ajax({
+                  url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+                  type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(id_reprovar)
+                }).done((response) => {
+                  if(response.value==true){
+                    Swal.fire({
+                      titleText: "Solicitação de Compra Rejeitada",
+                      icon: "info",
+                      showConfirmButton: true,
+                      confirmButtonColor:'hwb(216 31% 1%)', 
+                    });
+                  };
+                });
+              }else{
+                Swal.fire({
+                  titleText: "Solicitação Não Rejeitada",
+                  icon: "warning",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                  confirmButtonText:"Ok",
+                  
+                });
+              }
+            });
+          });
         });
   
 
