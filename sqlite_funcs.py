@@ -204,6 +204,24 @@ def cotacaoInserirDB(resultado):
         print("Erro: ",e)
         return False
 
+def cotacaoUpdate(dados):
+    try:
+        conn = sqlite3.connect('static/db/compras.db') 
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE cotacao SET fornecedor='{dados['fornecedor']}' WHERE id_cotacao={dados['id_cotacao']}")
+        cursor.execute(f"UPDATE cotacao SET valor_un='{dados['valor_unitario']}' WHERE id_cotacao={dados['id_cotacao']}")
+        cursor.execute(f"UPDATE cotacao SET unidade='{dados['unidade']}' WHERE id_cotacao={dados['id_cotacao']}")
+        cursor.execute(f"UPDATE cotacao SET frete='{dados['frete']}' WHERE id_cotacao={dados['id_cotacao']}")
+        cursor.execute(f"UPDATE cotacao SET inf_extra='{dados['inf_extra']}' WHERE id_cotacao={dados['id_cotacao']}")
+        cursor.execute(f"UPDATE cotacao SET validade_cotacao='{dados['validade_cotacao']}' WHERE id_cotacao={dados['id_cotacao']}")
+        conn.commit()
+        conn.close()
+        return True
+
+    except Exception as e:
+        print("Error:", e)
+        return False    
+
 def cotacaoApagar(id_cotacao):
     try:
         id_cotacao = id_cotacao['id']

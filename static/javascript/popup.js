@@ -941,18 +941,18 @@ function editarCotacao(id){
                           <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
                           <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
                               <option disabled selected>UN</option>
-                              <option value='1'>Caixa (complementar na descrição)</option>
-                              <option value='2'>Centímetro (cm)</option>
-                              <option value='3'>Centímetro Quadrado (cm²)</option>
-                              <option value='4'>Gramas (g)</option>
-                              <option value='5'>Kilos (kg)</option>
-                              <option value='6'>Litros (l)</option>
-                              <option value='7'>Metro (m)</option>
-                              <option value='8'>Metro Quadrado (m²)</option>
-                              <option value='9'>Mililítros (ml)</option>
-                              <option value='10'>Polegadas (")</option>
-                              <option value='11'>Unitário</option>
-                              <option value='12'>Outro... (complementar em Inf. Extra)</option>
+                              <option value='Caixa'>Caixa (complementar na descrição)</option>
+                              <option value='cm'>Centímetro (cm)</option>
+                              <option value='cm²'>Centímetro Quadrado (cm²)</option>
+                              <option value='g'>Gramas (g)</option>
+                              <option value='kg'>Kilos (kg)</option>
+                              <option value='l'>Litros (l)</option>
+                              <option value='m'>Metro (m)</option>
+                              <option value='m²'>Metro Quadrado (m²)</option>
+                              <option value='ml'>Mililítros (ml)</option>
+                              <option value='Polegadas'>Polegadas (")</option>
+                              <option value='Unitário'>Unitário</option>
+                              <option value='Outro'>Outro... (complementar em Inf. Extra)</option>
                           </select>
                       </div>
                       <div class="input-group mb-3">
@@ -989,16 +989,31 @@ function editarCotacao(id){
                 Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
             }
             return { 
-              id_solicitacao: data_Solicitacao.id_solicitacao,
-              solicitante: data_Solicitacao.solicitante, 
-              qnt_solicitada: data_Solicitacao.quantidade,
-              fornecedor: Swal.getPopup().querySelector('#fornecedor').value,
-              valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+              id_cotacao: dadosCotacao.id_cotacao,
+              id_solicitacao: dadosCotacao.id_solicitacao,
+              solicitante: dadosCotacao.solicitante, 
+              qnt_solicitada: dadosCotacao.quantidade,
+              unidade: unidade,
+              fornecedor: fornecedor,
+              valor_unitario: valor_unitario,
               frete: Swal.getPopup().querySelector('#frete').value,
               inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+              validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
             }
-        }
-        })
+          }
+        }).then((result) => {// AQUI ENTRA O UPDATE DA COTAÇÃO NO DB
+          const dict_values = result.value;
+          const s = JSON.stringify(dict_values);
+          $.ajax({
+            url:"/cotacaoUpdate", /// ARRUMAR A PARTIR DAQUI!!
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(s)
+          }).done((response) => {
+            if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
+              else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+          });
+        });
       });
     };
   });
