@@ -274,12 +274,14 @@ def dadosCotacao(id_cotacao):
         dict_informacoes['fornecedor']=informacoes[3]
         dict_informacoes['contato_fornecedor']=informacoes[4]
         dict_informacoes['qnt_solicitada']=informacoes[5]
-        dict_informacoes['valor_unitario']=informacoes[6]
-        dict_informacoes['valor_total']=informacoes[7]
-        dict_informacoes['frete']=informacoes[8]
-        dict_informacoes['inf_extra']=informacoes[9]
-        dict_informacoes['validade_cotacao']=informacoes[10]
-        dict_informacoes['status_cotacao']=informacoes[11]
+        dict_informacoes['unidade']=informacoes[6]
+        dict_informacoes['valor_unitario']=informacoes[7]
+        dict_informacoes['valor_total']=informacoes[8]
+        dict_informacoes['frete']=informacoes[9]
+        dict_informacoes['inf_extra']=informacoes[10]
+        dict_informacoes['validade_cotacao']=informacoes[11]
+        dict_informacoes['status_cotacao']=informacoes[12]
+        print(dict_informacoes)
         return dict_informacoes
     except Exception as e:
         print(e)

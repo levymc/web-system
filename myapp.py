@@ -122,16 +122,15 @@ def cotacaoApagar():
 def cotacaoInformacoes():
     output = request.get_json()
     resultado = json.loads(output)
-    # print("Resultado: ",resultado)
     informacoes = sqlite_funcs.cotacaoInformacoesDB(resultado['id_solicitacao'])
-    return informacoes ## Devolver as cotações refentes ao id_solicitacao
+    return informacoes ## Devolve as cotações refentes ao id_solicitacao
 
 @app.route("/dadosCotacao", methods=["POST", "GET"])
 def dadosCotacao():
     output = request.get_json()
     resultado = json.loads(output)
     informacoes = sqlite_funcs.dadosCotacao(resultado['id_cotacao'])
-    return informacoes
+    return informacoes ## Devolve a cotação referente ao id_cotacao
 
 @app.route("/send", methods = ["POST"])
 def send():
