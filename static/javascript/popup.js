@@ -144,17 +144,26 @@ function solicitacaoCompra(){
                 <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
                 <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
                   <option style="font-size:14px;" value="" disabled selected>UN</option>
-                  <option style="font-size:14px;">Caixa (complementar na descrição)</option>
-                  <option style="font-size:14px;">Centímetro (cm)</option>
-                  <option style="font-size:14px;">Centímetro Quadrado (cm²)</option>
-                  <option style="font-size:14px;">Gramas (g)</option>
-                  <option style="font-size:14px;">Kilos (kg)</option>
-                  <option style="font-size:14px;">Litros (l)</option>
+                  <option style="font-size:14px;">Bloco</option>
+                  <option style="font-size:14px;">Bobina</option>
+                  <option style="font-size:14px;">Caixa</option>
+                  <option style="font-size:14px;">Chapa</option>
+                  <option style="font-size:14px;">Conjunto</option>
+                  <option style="font-size:14px;">Folha</option>
+                  <option style="font-size:14px;">Frasco</option>
+                  <option style="font-size:14px;">Galão</option>
+                  <option style="font-size:14px;">Kilograma (Kg)</option>
+                  <option style="font-size:14px;">Lata</option>
+                  <option style="font-size:14px;">Litro (l)</option>
                   <option style="font-size:14px;">Metro (m)</option>
-                  <option style="font-size:14px;">Metro Quadrado (m²)</option>
-                  <option style="font-size:14px;">Mililítros (ml)</option>
-                  <option style="font-size:14px;">Polegadas (")</option>
-                  <option style="font-size:14px;">Unitário</option>
+                  <option style="font-size:14px;">Metro² (m²)</option>
+                  <option style="font-size:14px;">Pacote</option>
+                  <option style="font-size:14px;">Par</option>
+                  <option style="font-size:14px;">Peça</option>
+                  <option style="font-size:14px;">Pote</option>
+                  <option style="font-size:14px;">Rolo</option>
+                  <option style="font-size:14px;">Saco</option>
+                  <option style="font-size:14px;">Unidade</option>
                   <option style="font-size:14px;">Outro... (complementar na descrição)</option>
                 </select>
               </div>
@@ -761,19 +770,28 @@ function loginComprador(){
                 <div class="input-group mb-3">
                     <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
                     <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                        <option disabled selected>UN</option>
-                        <option value='1'>Caixa (complementar na descrição)</option>
-                        <option value='2'>Centímetro (cm)</option>
-                        <option value='3'>Centímetro Quadrado (cm²)</option>
-                        <option value='4'>Gramas (g)</option>
-                        <option value='5'>Kilos (kg)</option>
-                        <option value='6'>Litros (l)</option>
-                        <option value='7'>Metro (m)</option>
-                        <option value='8'>Metro Quadrado (m²)</option>
-                        <option value='9'>Mililítros (ml)</option>
-                        <option value='10'>Polegadas (")</option>
-                        <option value='11'>Unitário</option>
-                        <option value='12'>Outro... (complementar em Inf. Extra)</option>
+                      <option style="font-size:14px;" value="" disabled selected>UN</option>
+                      <option style="font-size:14px;">Bloco</option>
+                      <option style="font-size:14px;">Bobina</option>
+                      <option style="font-size:14px;">Caixa</option>
+                      <option style="font-size:14px;">Chapa</option>
+                      <option style="font-size:14px;">Conjunto</option>
+                      <option style="font-size:14px;">Folha</option>
+                      <option style="font-size:14px;">Frasco</option>
+                      <option style="font-size:14px;">Galão</option>
+                      <option style="font-size:14px;">Kilograma (Kg)</option>
+                      <option style="font-size:14px;">Lata</option>
+                      <option style="font-size:14px;">Litro (l)</option>
+                      <option style="font-size:14px;">Metro (m)</option>
+                      <option style="font-size:14px;">Metro² (m²)</option>
+                      <option style="font-size:14px;">Pacote</option>
+                      <option style="font-size:14px;">Par</option>
+                      <option style="font-size:14px;">Peça</option>
+                      <option style="font-size:14px;">Pote</option>
+                      <option style="font-size:14px;">Rolo</option>
+                      <option style="font-size:14px;">Saco</option>
+                      <option style="font-size:14px;">Unidade</option>
+                      <option style="font-size:14px;">Outro... (complementar na descrição)</option>
                     </select>
                 </div>
                 <div class="input-group mb-3">
@@ -942,19 +960,28 @@ function editarCotacao(id){
                       <div class="input-group mb-3">
                           <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
                           <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                              <option disabled selected>UN</option>
-                              <option value='Caixa'>Caixa (complementar na descrição)</option>
-                              <option value='cm'>Centímetro (cm)</option>
-                              <option value='cm²'>Centímetro Quadrado (cm²)</option>
-                              <option value='g'>Gramas (g)</option>
-                              <option value='kg'>Kilos (kg)</option>
-                              <option value='l'>Litros (l)</option>
-                              <option value='m'>Metro (m)</option>
-                              <option value='m²'>Metro Quadrado (m²)</option>
-                              <option value='ml'>Mililítros (ml)</option>
-                              <option value='Polegadas'>Polegadas (")</option>
-                              <option value='Unitário'>Unitário</option>
-                              <option value='Outro'>Outro... (complementar em Inf. Extra)</option>
+                            <option style="font-size:14px;" value="" disabled selected>UN</option>
+                            <option style="font-size:14px;">Bloco</option>
+                            <option style="font-size:14px;">Bobina</option>
+                            <option style="font-size:14px;">Caixa</option>
+                            <option style="font-size:14px;">Chapa</option>
+                            <option style="font-size:14px;">Conjunto</option>
+                            <option style="font-size:14px;">Folha</option>
+                            <option style="font-size:14px;">Frasco</option>
+                            <option style="font-size:14px;">Galão</option>
+                            <option style="font-size:14px;">Kilograma (Kg)</option>
+                            <option style="font-size:14px;">Lata</option>
+                            <option style="font-size:14px;">Litro (l)</option>
+                            <option style="font-size:14px;">Metro (m)</option>
+                            <option style="font-size:14px;">Metro² (m²)</option>
+                            <option style="font-size:14px;">Pacote</option>
+                            <option style="font-size:14px;">Par</option>
+                            <option style="font-size:14px;">Peça</option>
+                            <option style="font-size:14px;">Pote</option>
+                            <option style="font-size:14px;">Rolo</option>
+                            <option style="font-size:14px;">Saco</option>
+                            <option style="font-size:14px;">Unidade</option>
+                            <option style="font-size:14px;">Outro... (complementar na descrição)</option>
                           </select>
                       </div>
                       <div class="input-group mb-3">
@@ -1060,19 +1087,28 @@ function novaCotacao(data_Solicitacao){
                 <div class="input-group mb-3">
                     <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
                     <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                        <option disabled selected>UN</option>
-                        <option value='Caixa'>Caixa (complementar na descrição)</option>
-                        <option value='cm'>Centímetro (cm)</option>
-                        <option value='cm²'>Centímetro Quadrado (cm²)</option>
-                        <option value='g'>Gramas (g)</option>
-                        <option value='kg'>Kilos (kg)</option>
-                        <option value='l'>Litros (l)</option>
-                        <option value='m'>Metro (m)</option>
-                        <option value='m²'>Metro Quadrado (m²)</option>
-                        <option value='ml'>Mililítros (ml)</option>
-                        <option value='Polegadas'>Polegadas (")</option>
-                        <option value='Unitário'>Unitário</option>
-                        <option value='Outro'>Outro... (complementar em Inf. Extra)</option>
+                    <option style="font-size:14px;" value="" disabled selected>UN</option>
+                    <option style="font-size:14px;">Bloco</option>
+                    <option style="font-size:14px;">Bobina</option>
+                    <option style="font-size:14px;">Caixa</option>
+                    <option style="font-size:14px;">Chapa</option>
+                    <option style="font-size:14px;">Conjunto</option>
+                    <option style="font-size:14px;">Folha</option>
+                    <option style="font-size:14px;">Frasco</option>
+                    <option style="font-size:14px;">Galão</option>
+                    <option style="font-size:14px;">Kilograma (Kg)</option>
+                    <option style="font-size:14px;">Lata</option>
+                    <option style="font-size:14px;">Litro (l)</option>
+                    <option style="font-size:14px;">Metro (m)</option>
+                    <option style="font-size:14px;">Metro² (m²)</option>
+                    <option style="font-size:14px;">Pacote</option>
+                    <option style="font-size:14px;">Par</option>
+                    <option style="font-size:14px;">Peça</option>
+                    <option style="font-size:14px;">Pote</option>
+                    <option style="font-size:14px;">Rolo</option>
+                    <option style="font-size:14px;">Saco</option>
+                    <option style="font-size:14px;">Unidade</option>
+                    <option style="font-size:14px;">Outro... (complementar na descrição)</option>
                     </select>
                 </div>
                 <div class="input-group mb-3">
