@@ -186,6 +186,7 @@ function solicitacaoCompra(){
                 </select>
             </div>
           </div>
+          <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a onClick="#" style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
           `,
         confirmButtonText: 'Enviar Solicitação',
         confirmButtonColor: '#007bff',
@@ -349,6 +350,7 @@ function paginaAprovador(){
         };
     });
   });
+
   $('#button-info').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
     dadosSolicitacao = dadosSolicitacao[0];
@@ -473,7 +475,7 @@ function paginaAprovador(){
               }
             });
           });
-        });
+  });
   
 
   $('#button-rejeitar').click(function () {
@@ -848,9 +850,8 @@ function loginComprador(){
     });
   })}
     })});
-    }
+}
   
-
 function apagarCotacao(id){
   Swal.fire({
     title:"Deseja mesmo apagar?",
@@ -883,6 +884,7 @@ function apagarCotacao(id){
     };
   })
 }
+
 function editarCotacao(id){
   Swal.fire({
     title:"Editar Cotação?",
@@ -1143,4 +1145,4 @@ function novaCotacao(data_Solicitacao){
         })
       }
     });
-  };
+};
