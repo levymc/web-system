@@ -47,7 +47,7 @@ function newPopup(){
             `.trim())
         }
     }) 
-}
+};
 
 function requiSend(){
     Swal.fire({
@@ -81,7 +81,7 @@ function requiSend(){
       //   //   ${dict_values}
       //   // `.trim())
       })     
-}
+};
 
 function acessoResponsavel(){
   Swal.fire({
@@ -104,7 +104,7 @@ function acessoResponsavel(){
       Password: ${result.value.password}
     `.trim())
   })     
-}
+};
 
 function solicitacaoCompra(){
   $.ajax({
@@ -263,9 +263,10 @@ function solicitacaoCompra(){
               })
               }
       }
-  )}})};
+    )}
+  });
+};
        
-
 function paginaAprovador(){
   Swal.fire({
     width: '85%',
@@ -559,7 +560,7 @@ function confereComprasPendentes(){
       loginComprador();
     }
   });
-}
+};
 
 function loginComprador(){
     Swal.fire({
@@ -868,7 +869,7 @@ function loginComprador(){
     });
   })}
     })});
-}
+};
   
 function apagarCotacao(id){
   Swal.fire({
@@ -901,7 +902,7 @@ function apagarCotacao(id){
       });
     };
   })
-}
+};
 
 function editarCotacao(id){
   Swal.fire({
@@ -1046,7 +1047,7 @@ function editarCotacao(id){
       });
     };
   });
-}
+};
 
 function novaCotacao(data_Solicitacao){
   Swal.fire({
