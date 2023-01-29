@@ -118,87 +118,88 @@ function solicitacaoCompra(){
       console.log("Error");
     } else {
       var test = JSON.parse(jade)
+      const html = `
+  <div class="row" style="margin-left:1em !important;">
+    <div class="col">
+      <div class="row">
+        <h3 style="text-align: left; margin-left: 0.75em; margin-top: 4% ;">Usuário: <b>${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</b></h3>
+      </div>
+      <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+        <label for="item_solicitacao">Nome do Item (forma genérica)</label>
+        <input type="text" id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
+        </div>
+      <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
+        <label for="descricao_solicitacao">Descrição  (especificações)</label>
+        <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="20" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
+      </div>
+    </div>
+    <div class="col">
+      <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+        <label for="quantidade_solicitacao">Quantidade</label>             
+        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="  Quantidade solicitada" style="width: 80%">
+      </div>
+      <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+        <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
+          <option style="font-size:14px;" value="" disabled selected>UN</option>
+          <option style="font-size:14px;" value="Bloco">Bloco</option>
+          <option style="font-size:14px;" value="Bobina">Bobina</option>
+          <option style="font-size:14px;" value="Caixa">Caixa</option>
+          <option style="font-size:14px;" value="Chapa">Chapa</option>
+          <option style="font-size:14px;" value="Conjunto">Conjunto</option>
+          <option style="font-size:14px;" value="Folha">Folha</option>
+          <option style="font-size:14px;" value="Frasco">Frasco</option>
+          <option style="font-size:14px;" value="Galão">Galão</option>
+          <option style="font-size:14px;" value="Kilograma">Kilograma (Kg)</option>
+          <option style="font-size:14px;" value="Lata">Lata</option>
+          <option style="font-size:14px;" value="Litro">Litro (l)</option>
+          <option style="font-size:14px;" value="Metro">Metro (m)</option>
+          <option style="font-size:14px;" value="Metro²">Metro² (m²)</option>
+          <option style="font-size:14px;" value="Pacote">Pacote</option>
+          <option style="font-size:14px;" value="Par">Par</option>
+          <option style="font-size:14px;" value="Peça">Peça</option>
+          <option style="font-size:14px;" value="Pote">Pote</option>
+          <option style="font-size:14px;" value="Rolo">Rolo</option>
+          <option style="font-size:14px;" value="Saco">Saco</option>
+          <option style="font-size:14px;" value="Unidade">Unidade</option>
+          <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
+        </select>
+      </div>
+      <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
+        <label for="motivo_solicitacao">Justificativa</label>
+        <input type="text" id="motivo_solicitacao" name="movito_solicitacao" style="margin-left:-0em !important; width: 80%" class="swal2-input" placeholder="  Justificativa da Solicitação"></input>
+      </div>
+      <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
+        <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
+        <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="areaUso">
+          <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
+          <option style="font-size:14px;" value="Administração">Administração</option>
+          <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
+          <option style="font-size:14px;" value="AutoClave">AutoClave</option>
+          <option style="font-size:14px;" value="Colmeia">Colmeia</option>
+          <option style="font-size:14px;" value="Engenharia">Engenharia</option>
+          <option style="font-size:14px;" value="Ferramental">Ferramental</option>
+          <option style="font-size:14px;" value="Manutenção">Manutenção</option>
+          <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
+          <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
+          <option style="font-size:14px;" value="Pintura">Pintura</option>
+          <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
+          <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
+          <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
+          <option style="font-size:14px;" value="Qualidade">Qualidade</option>
+          <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
+          <option style="font-size:14px;" value="Termoformado">Termoformado</option>
+          <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
+        </select>
+    </div>
+  </div>
+  <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  `
       Swal.fire({
         allowOutsideClick: false,
         width: "50em",
         title: 'Solicitação de Compra',
-        html: `
-          <div class="row" style="margin-left:1em !important;">
-            <div class="col">
-              <div class="row">
-                <h3 style="text-align: left; margin-left: 0.75em; margin-top: 4% ;">Usuário: <b>${test.usuario.charAt(0).toUpperCase() + test.usuario.slice(1)}</b></h3>
-              </div>
-              <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
-                <label for="item_solicitacao">Nome do Item (forma genérica)</label>
-                <input type="text" id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
-                </div>
-              <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
-                <label for="descricao_solicitacao">Descrição  (especificações)</label>
-                <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="20" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
-              </div>
-            </div>
-            <div class="col">
-              <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
-                <label for="quantidade_solicitacao">Quantidade</label>             
-                <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="  Quantidade solicitada" style="width: 80%">
-              </div>
-              <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
-                <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
-                <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
-                  <option style="font-size:14px;" value="" disabled selected>UN</option>
-                  <option style="font-size:14px;" value="Bloco">Bloco</option>
-                  <option style="font-size:14px;" value="Bobina">Bobina</option>
-                  <option style="font-size:14px;" value="Caixa">Caixa</option>
-                  <option style="font-size:14px;" value="Chapa">Chapa</option>
-                  <option style="font-size:14px;" value="Conjunto">Conjunto</option>
-                  <option style="font-size:14px;" value="Folha">Folha</option>
-                  <option style="font-size:14px;" value="Frasco">Frasco</option>
-                  <option style="font-size:14px;" value="Galão">Galão</option>
-                  <option style="font-size:14px;" value="Kilograma">Kilograma (Kg)</option>
-                  <option style="font-size:14px;" value="Lata">Lata</option>
-                  <option style="font-size:14px;" value="Litro">Litro (l)</option>
-                  <option style="font-size:14px;" value="Metro">Metro (m)</option>
-                  <option style="font-size:14px;" value="Metro²">Metro² (m²)</option>
-                  <option style="font-size:14px;" value="Pacote">Pacote</option>
-                  <option style="font-size:14px;" value="Par">Par</option>
-                  <option style="font-size:14px;" value="Peça">Peça</option>
-                  <option style="font-size:14px;" value="Pote">Pote</option>
-                  <option style="font-size:14px;" value="Rolo">Rolo</option>
-                  <option style="font-size:14px;" value="Saco">Saco</option>
-                  <option style="font-size:14px;" value="Unidade">Unidade</option>
-                  <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
-                </select>
-              </div>
-              <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
-                <label for="motivo_solicitacao">Justificativa</label>
-                <input type="text" id="motivo_solicitacao" name="movito_solicitacao" style="margin-left:-0em !important; width: 80%" class="swal2-input" placeholder="  Justificativa da Solicitação"></input>
-              </div>
-              <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
-                <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
-                <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="areaUso">
-                  <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
-                  <option style="font-size:14px;" value="Administração">Administração</option>
-                  <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
-                  <option style="font-size:14px;" value="AutoClave">AutoClave</option>
-                  <option style="font-size:14px;" value="Colmeia">Colmeia</option>
-                  <option style="font-size:14px;" value="Engenharia">Engenharia</option>
-                  <option style="font-size:14px;" value="Ferramental">Ferramental</option>
-                  <option style="font-size:14px;" value="Manutenção">Manutenção</option>
-                  <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
-                  <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
-                  <option style="font-size:14px;" value="Pintura">Pintura</option>
-                  <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
-                  <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
-                  <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
-                  <option style="font-size:14px;" value="Qualidade">Qualidade</option>
-                  <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
-                  <option style="font-size:14px;" value="Termoformado">Termoformado</option>
-                  <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
-                </select>
-            </div>
-          </div>
-          <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
-          `,
+        html: html,
         confirmButtonText: 'Enviar Solicitação',
         confirmButtonColor: '#007bff',
         allowOutsideClick: false,
@@ -289,6 +290,12 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
       Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
       Swal.getPopup().querySelector("#areaUso").value = "";
+      Swal.update({
+        title: nomeItem,
+        // html:html+`
+        // <span>${nomeItem}</span>
+        // `,
+      });
     });
   }
   });
