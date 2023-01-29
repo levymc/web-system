@@ -106,7 +106,9 @@ function acessoResponsavel(){
   })     
 };
 
+
 function solicitacaoCompra(){
+  const itens = [];
   $.ajax({
     url:"/usuario",
     type: "POST",
@@ -144,27 +146,27 @@ function solicitacaoCompra(){
                 <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
                 <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
                   <option style="font-size:14px;" value="" disabled selected>UN</option>
-                  <option style="font-size:14px;">Bloco</option>
-                  <option style="font-size:14px;">Bobina</option>
-                  <option style="font-size:14px;">Caixa</option>
-                  <option style="font-size:14px;">Chapa</option>
-                  <option style="font-size:14px;">Conjunto</option>
-                  <option style="font-size:14px;">Folha</option>
-                  <option style="font-size:14px;">Frasco</option>
-                  <option style="font-size:14px;">Galão</option>
-                  <option style="font-size:14px;">Kilograma (Kg)</option>
-                  <option style="font-size:14px;">Lata</option>
-                  <option style="font-size:14px;">Litro (l)</option>
-                  <option style="font-size:14px;">Metro (m)</option>
-                  <option style="font-size:14px;">Metro² (m²)</option>
-                  <option style="font-size:14px;">Pacote</option>
-                  <option style="font-size:14px;">Par</option>
-                  <option style="font-size:14px;">Peça</option>
-                  <option style="font-size:14px;">Pote</option>
-                  <option style="font-size:14px;">Rolo</option>
-                  <option style="font-size:14px;">Saco</option>
-                  <option style="font-size:14px;">Unidade</option>
-                  <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+                  <option style="font-size:14px;" value="Bloco">Bloco</option>
+                  <option style="font-size:14px;" value="Bobina">Bobina</option>
+                  <option style="font-size:14px;" value="Caixa">Caixa</option>
+                  <option style="font-size:14px;" value="Chapa">Chapa</option>
+                  <option style="font-size:14px;" value="Conjunto">Conjunto</option>
+                  <option style="font-size:14px;" value="Folha">Folha</option>
+                  <option style="font-size:14px;" value="Frasco">Frasco</option>
+                  <option style="font-size:14px;" value="Galão">Galão</option>
+                  <option style="font-size:14px;" value="Kilograma">Kilograma (Kg)</option>
+                  <option style="font-size:14px;" value="Lata">Lata</option>
+                  <option style="font-size:14px;" value="Litro">Litro (l)</option>
+                  <option style="font-size:14px;" value="Metro">Metro (m)</option>
+                  <option style="font-size:14px;" value="Metro²">Metro² (m²)</option>
+                  <option style="font-size:14px;" value="Pacote">Pacote</option>
+                  <option style="font-size:14px;" value="Par">Par</option>
+                  <option style="font-size:14px;" value="Peça">Peça</option>
+                  <option style="font-size:14px;" value="Pote">Pote</option>
+                  <option style="font-size:14px;" value="Rolo">Rolo</option>
+                  <option style="font-size:14px;" value="Saco">Saco</option>
+                  <option style="font-size:14px;" value="Unidade">Unidade</option>
+                  <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
                 </select>
               </div>
               <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
@@ -175,27 +177,27 @@ function solicitacaoCompra(){
                 <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
                 <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="areaUso">
                   <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
-                  <option style="font-size:14px;">Administração</option>
-                  <option style="font-size:14px;">Ajustagem</option>
-                  <option style="font-size:14px;">AutoClave</option>
-                  <option style="font-size:14px;">Colmeia</option>
-                  <option style="font-size:14px;">Engenharia</option>
-                  <option style="font-size:14px;">Ferramental</option>
-                  <option style="font-size:14px;">Manutenção</option>
-                  <option style="font-size:14px;">MC Ajustagem</option>
-                  <option style="font-size:14px;">MC Laminação</option>
-                  <option style="font-size:14px;">Pintura</option>
-                  <option style="font-size:14px;">Polimento Acrílico</option>
-                  <option style="font-size:14px;">Polimento Metálico</option>
-                  <option style="font-size:14px;">Produto Próprio</option>
-                  <option style="font-size:14px;">Qualidade</option>
-                  <option style="font-size:14px;">Sala Branca</option>
-                  <option style="font-size:14px;">Termoformado</option>
-                  <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+                  <option style="font-size:14px;" value="Administração">Administração</option>
+                  <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
+                  <option style="font-size:14px;" value="AutoClave">AutoClave</option>
+                  <option style="font-size:14px;" value="Colmeia">Colmeia</option>
+                  <option style="font-size:14px;" value="Engenharia">Engenharia</option>
+                  <option style="font-size:14px;" value="Ferramental">Ferramental</option>
+                  <option style="font-size:14px;" value="Manutenção">Manutenção</option>
+                  <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
+                  <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
+                  <option style="font-size:14px;" value="Pintura">Pintura</option>
+                  <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
+                  <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
+                  <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
+                  <option style="font-size:14px;" value="Qualidade">Qualidade</option>
+                  <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
+                  <option style="font-size:14px;" value="Termoformado">Termoformado</option>
+                  <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
                 </select>
             </div>
           </div>
-          <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a onClick="#" style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+          <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
           `,
         confirmButtonText: 'Enviar Solicitação',
         confirmButtonColor: '#007bff',
@@ -208,6 +210,7 @@ function solicitacaoCompra(){
         const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value
         const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value
         const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value
+        const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value
         const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value
         const setor = Swal.getPopup().querySelector('#areaUso').value
         if (!descricao || !motivo || !setor) {
@@ -217,7 +220,7 @@ function solicitacaoCompra(){
           nome: nomeItem,
           descricao: descricao, 
           quantidade: quantidade, 
-          unidade: Swal.getPopup().querySelector('#unidade_solicitacao').value,
+          unidade: unidade,
           motivo: motivo, 
           setor: setor,
         }
@@ -244,6 +247,7 @@ function solicitacaoCompra(){
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
             const dict_values = {dataAtual,nomeItem , descricao, quantidade, unidade, motivo, setor};
+            console.log(dict_values)
             const s = JSON.stringify(dict_values);
             $.ajax({
                 url:"/comprasInserir",
@@ -262,8 +266,31 @@ function solicitacaoCompra(){
                 }
               })
               }
-      }
-    )}
+      });
+    $('#addItem').click(function () {
+      const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
+      const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
+      const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
+      const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
+      const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
+      const setor = Swal.getPopup().querySelector('#areaUso').value;
+      const dictDadosItem = {
+        nomeItem: nomeItem,
+        descricao: descricao,
+        quantidade: quantidade,
+        unidade: unidade,
+        motivo: motivo,
+        setor: setor,
+      };
+      itens.push(dictDadosItem);
+      Swal.getPopup().querySelector("#item_solicitacao").value = "";
+      Swal.getPopup().querySelector("#descricao_solicitacao").value = "";
+      Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
+      Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
+      Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
+      Swal.getPopup().querySelector("#areaUso").value = "";
+    });
+  }
   });
 };
        
