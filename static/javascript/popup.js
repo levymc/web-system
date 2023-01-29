@@ -108,7 +108,7 @@ function acessoResponsavel(){
 
 
 function solicitacaoCompra(){
-  const itens = [];
+  var itens = [];
   $.ajax({
     url:"/usuario",
     type: "POST",
@@ -118,7 +118,7 @@ function solicitacaoCompra(){
       console.log("Error");
     } else {
       var test = JSON.parse(jade)
-      const html = `
+      var html = `
   <div class="row" style="margin-left:1em !important;">
     <div class="col">
       <div class="row">
@@ -194,7 +194,9 @@ function solicitacaoCompra(){
     </div>
   </div>
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <div id="itens" style="margin-bottom:1.5em;"></div>
   `
+      Swal.isUpdatableParameter(html),
       Swal.fire({
         allowOutsideClick: false,
         width: "50em",
@@ -269,7 +271,7 @@ function solicitacaoCompra(){
               }
       });
     $('#addItem').click(function () {
-      const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
+      var nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
       const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
       const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
       const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
@@ -290,14 +292,23 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
       Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
       Swal.getPopup().querySelector("#areaUso").value = "";
-      Swal.update({
-        title: nomeItem,
-        // html:html+`
-        // <span>${nomeItem}</span>
-        // `,
-      });
+      console.log(nomeItem);
+      if (itens.length == 1){
+        htmlNovo = `<span>${itens.length}- ${nomeItem}; </span>`;
+      }else{
+        htmlNovo = `<span> ${itens.length}- ${nomeItem}; </span>`;
+      }
+      document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
+
     });
   }
+  });
+};
+
+function swalUpdate(arg){
+  location.reload();
+  Swal.update({
+    html:arg,
   });
 };
        
