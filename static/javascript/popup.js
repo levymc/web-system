@@ -293,11 +293,7 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
       Swal.getPopup().querySelector("#areaUso").value = "";
       console.log(nomeItem);
-      if (itens.length == 1){
-        htmlNovo = `<span>${itens.length}- ${nomeItem}; </span>`;
-      }else{
-        htmlNovo = `<span> ${itens.length}- ${nomeItem}; </span>`;
-      }
+      htmlNovo = `<span style="margin-left:0.2em;padding:0.5em;background:rgba(192, 192, 192, 0.3);border-radius: 10px;"> ${itens.length}- ${nomeItem}; </span>`;
       document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
 
     });
