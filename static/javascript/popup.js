@@ -127,7 +127,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Nome do Item (forma genérica)</label>
-        <input type="text" id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
+        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
         </div>
       <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
         <label for="descricao_solicitacao">Descrição  (especificações)</label>
@@ -300,12 +300,12 @@ function solicitacaoCompra(){
           <div class="col h4 itensNovos">Itens Adicionados:</div>    
         </div>
         <div class="row">
-          <div class="col itensNovos">${itens.length}- ${nomeItem};</div>    
+          <div class="col itensNovos">${itens.length}- ${nomeItem}</div>    
         </div>`;
       }else{
         htmlNovo = `
       <div class="row">
-        <div class="col itensNovos">${itens.length}- ${nomeItem};</div>    
+        <div class="col itensNovos">${itens.length}- ${nomeItem}</div>    
       </div>`;
       }
       document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
