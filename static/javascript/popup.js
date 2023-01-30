@@ -131,7 +131,7 @@ function solicitacaoCompra(){
         </div>
       <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
         <label for="descricao_solicitacao">Descrição  (especificações)</label>
-        <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="20" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
+        <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="10" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Categoria </label>
