@@ -119,6 +119,7 @@ function solicitacaoCompra(){
     } else {
       var test = JSON.parse(jade)
       var html = `
+      <section class="text-end containerExterno" id="itens"></section>
   <div class="row" style="margin-left:1em !important;">
     <div class="col">
       <div class="row">
@@ -194,7 +195,7 @@ function solicitacaoCompra(){
     </div>
   </div>
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
-  <div id="itens" style="margin-bottom:1.5em;"></div>
+  
   `
       Swal.isUpdatableParameter(html),
       Swal.fire({
@@ -293,7 +294,20 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
       Swal.getPopup().querySelector("#areaUso").value = "";
       console.log(nomeItem);
-      htmlNovo = `<span style="margin-left:0.2em;padding:0.5em;background:rgba(192, 192, 192, 0.3);border-radius: 10px;"> ${itens.length}- ${nomeItem}; </span>`;
+      if (itens.length==1){
+        htmlNovo = `
+        <div class="row">
+          <div class="col h4 itensNovos">Itens Adicionados:</div>    
+        </div>
+        <div class="row">
+          <div class="col itensNovos">${itens.length}- ${nomeItem};</div>    
+        </div>`;
+      }else{
+        htmlNovo = `
+      <div class="row">
+        <div class="col itensNovos">${itens.length}- ${nomeItem};</div>    
+      </div>`;
+      }
       document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
 
     });

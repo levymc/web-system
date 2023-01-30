@@ -222,7 +222,19 @@ body{
 .card{
     margin: 2em;
 }
-
+.containerExterno{
+    position: fixed;
+    top:4em !important;
+    right:5em !important;
+}
+.itensNovos{
+    position: absolute;
+    margin-left:0.2em;
+    margin-top:0.2em;
+    padding:0.5em;
+    background:rgba(240, 239, 239, 0.705);
+    border-radius: 10px;
+}
 
 /* CONFIGURAÇÕES MODAL SWEETALERT2 */
 .swal2-popup {
