@@ -146,6 +146,21 @@ function solicitacaoCompra(){
           <option style="font-size:14px;" value="MP">Matéria-Prima</option>
         </select>
       </div>
+      <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+        <label for="classificacao">Classificação </label>
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="classificacao">
+          <optgroup label="Material Novo">
+            <option>Investimento</option>
+            <option>Obra/Infraestrutura</option>
+            <option value="">Manutenção Planejada</option>
+            <option value="">Manutenção Corretiva</option>
+          </optgroup>
+          <optgroup label="Serviço">
+            <option>Manutenção Planejada</option>
+            <option>Manutenção Corretiva</option>
+          </optgroup>
+        </select>
+      </div>
     </div>
     <div class="col">
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
