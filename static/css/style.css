@@ -283,10 +283,10 @@ body{
     margin: 0 !important;
 }
 input::placeholder {
-    font-size: 15px;
+    font-size: 14px;
 }
 textarea::placeholder {
-    font-size: 15px;
+    font-size: 14px;
 }
 
 /* CONFIGURAÇÕES SIDEBAR */
