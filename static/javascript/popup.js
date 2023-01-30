@@ -133,6 +133,19 @@ function solicitacaoCompra(){
         <label for="descricao_solicitacao">Descrição  (especificações)</label>
         <textarea id="descricao_solicitacao" name="descricao_solicitacao" rows="20" cols="10" style="margin-left:-0em !important; resize:none; width: 80%;" class="swal2-textarea text-start"  maxlength="200" placeholder="Descrição da Solicitação"></textarea>
       </div>
+      <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+        <label for="item_solicitacao">Categoria </label>
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="categoria">
+          <option style="font-size:14px;" value="" disabled selected>Categoria</option>
+          <option style="font-size:14px;" value="Componente">Componente</option>
+          <option style="font-size:14px;" value="EPI">EPI</option>
+          <option style="font-size:14px;" value="Material de Consumo">Material de Consumo Produtivo</option>
+          <option style="font-size:14px;" value="Escritório">Material de Escritório</option>
+          <option style="font-size:14px;" value="Material de Manutenção">Material de Manutenção</option>
+          <option style="font-size:14px;" value="Material de Higiene e Limpeza">Material de Higiene e Limpeza</option>
+          <option style="font-size:14px;" value="MP">Matéria-Prima</option>
+        </select>
+      </div>
     </div>
     <div class="col">
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
