@@ -206,6 +206,16 @@ function solicitacaoCompra(){
           <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
         </select>
     </div>
+    <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
+      <label for="item_solicitacao">Prioridade </label>
+      <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="prioridade">
+        <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
+        <option style="font-size:14px;" value="Alta">Alta</option>
+        <option style="font-size:14px;" value="Baixa">Baixa</option>
+        <option style="font-size:14px;" value="Crítico">Crítico</option>
+        <option style="font-size:14px;" value="Baixa">Baixa</option>
+      </select>
+    </div>
   </div>
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
   
