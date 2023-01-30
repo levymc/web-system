@@ -297,7 +297,7 @@ function solicitacaoCompra(){
       if (itens.length==1){
         htmlNovo = `
         <div class="row">
-          <div class="col h4 itensNovos">Itens Adicionados:</div>    
+          <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
         </div>
         <div class="row">
           <div class="col itensNovos">${itens.length}- ${nomeItem}</div>    
