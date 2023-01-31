@@ -76,9 +76,8 @@ def usuario():
 def comprasInserir():
     output = request.get_json()
     result_ = json.loads(output)
-    print(result_)
-    # result_['usuario'] = result['usuario']
-    # salvarDB = sqlite_funcs.solicitacaoComprasInserir(result_)
+    result_['usuario'] = result['usuario']
+    salvarDB = sqlite_funcs.solicitacaoComprasInserir(result_)
     return {'value': True}
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])

@@ -289,13 +289,23 @@ function solicitacaoCompra(){
             dataAtual = dia + '/' + mes + '/' + ano;
             const nomeItem = result2.value.nome;
             const descricao = result2.value.descricao;
+            const categoria = result2.value.categoria;
+            const classificacao = result2.value.classificacao;
             const quantidade = result2.value.quantidade;
             const unidade = result2.value.unidade;
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
             const prioridade = result2.value.prioridade;
+            var qnt_itens = itens.length
             if (itens.length == 0){
-              const dict_values = {dataAtual, nomeItem, descricao, quantidade, unidade, motivo, setor, prioridade};
+              qnt_itens = qnt_itens + 1
+              itens.push(nomeItem);
+              itens.push(descricao);
+              itens.push(categoria);
+              itens.push(classificacao);
+              itens.push(quantidade);
+              itens.push(unidade);
+              const dict_values = {dataAtual, itens, motivo, setor, prioridade, qnt_itens};
               console.log("Dados1: ",dict_values);
               const s = JSON.stringify(dict_values);
               $.ajax({
@@ -315,7 +325,7 @@ function solicitacaoCompra(){
                 }
               })
             }else{
-              const dict_values = {dataAtual, motivo, setor, prioridade, itens};
+              const dict_values = {dataAtual, itens, motivo, setor, prioridade, qnt_itens};
               console.log("Dados2: ",dict_values);
               const s = JSON.stringify(dict_values);
               $.ajax({
@@ -330,12 +340,12 @@ function solicitacaoCompra(){
                   titleText: "Solicitação de compra enviada!!",
                   icon: "success"
                 }
-                )} else{
-                  Swal.fire("Ocorreu algum erro!")
-                }
-              })
-            }
-            }
+              )} else{
+                Swal.fire("Ocorreu algum erro!")
+              }
+            })
+          }
+        }
             
             
       });
@@ -346,15 +356,16 @@ function solicitacaoCompra(){
       const classificacao = Swal.getPopup().querySelector('#classificacao').value;
       const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
       const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
-      const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
-      const setor = Swal.getPopup().querySelector('#areaUso').value;
+      if (!nomeItem || !descricao || !categoria || !classificacao || !quantidade || !unidade ) {
+        Swal.showValidationMessage(`Preencha os campos para Adicionar um novo Item`)
+    }
       const dictDadosItem = {
         nomeItem: nomeItem,
         descricao: descricao,
+        categoria: categoria,
+        classificacao: classificacao,
         quantidade: quantidade,
         unidade: unidade,
-        motivo: motivo,
-        setor: setor,
       };
       itens.push(dictDadosItem);
       Swal.getPopup().querySelector("#item_solicitacao").value = "";

@@ -84,22 +84,22 @@ def confereUsuario(usuario, senha):
             return False
 
 def solicitacaoComprasInserir(result):
-    resultado = result['usuario'], result['dataAtual'], result['nomeItem'], result['descricao'], result['quantidade'], result['unidade'], result['motivo'], result['setor']
+    resultado = result['usuario'], result['dataAtual'], result['motivo'], result['setor'], result['prioridade'], result['qnt_itens']
     print(resultado)
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        cursor.execute(f"""
-            INSERT INTO solicitacao 
-            (solicitante, data, nome_item, descricao, quantidade, unidade, motivo, setor) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", 
-            (resultado))
-        conn.commit()
-        conn.close()
-        return True
-    except Exception as e: 
-        print(type(e),e)
-        return False
+    # try:
+    #     conn = sqlite3.connect('static/db/compras.db')
+    #     cursor = conn.cursor()
+    #     cursor.execute(f"""
+    #         INSERT INTO solicitacao 
+    #         (solicitante, data, quantidade, unidade, motivo, setor) 
+    #         VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", 
+    #         (resultado))
+    #     conn.commit()
+    #     conn.close()
+    #     return True
+    # except Exception as e: 
+    #     print(type(e),e)
+    #     return False
 
 def comprasPendentes(status):
     try:
