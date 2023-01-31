@@ -358,7 +358,7 @@ function solicitacaoCompra(){
       const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
       if (!nomeItem || !descricao || !categoria || !classificacao || !quantidade || !unidade ) {
         Swal.showValidationMessage(`Preencha os campos para Adicionar um novo Item`)
-    }
+    }else{
       const dictDadosItem = {
         nomeItem: nomeItem,
         descricao: descricao,
@@ -390,7 +390,7 @@ function solicitacaoCompra(){
       </div>`;
       }
       document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
-
+    }
     });
   }
   });

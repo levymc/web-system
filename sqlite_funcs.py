@@ -84,22 +84,30 @@ def confereUsuario(usuario, senha):
             return False
 
 def solicitacaoComprasInserir(result):
-    resultado = result['usuario'], result['dataAtual'], result['motivo'], result['setor'], result['prioridade'], result['qnt_itens']
-    print(resultado)
-    # try:
-    #     conn = sqlite3.connect('static/db/compras.db')
-    #     cursor = conn.cursor()
-    #     cursor.execute(f"""
-    #         INSERT INTO solicitacao 
-    #         (solicitante, data, quantidade, unidade, motivo, setor) 
-    #         VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", 
-    #         (resultado))
-    #     conn.commit()
-    #     conn.close()
-    #     return True
-    # except Exception as e: 
-    #     print(type(e),e)
-    #     return False
+    resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
+    itens = result['itens']
+    # print(resultado, itens)
+    try:
+        conn = sqlite3.connect('static/db/compras.db')
+        cursor = conn.cursor()
+        cursor.execute(f"""
+            INSERT INTO solicitacao 
+            (solicitante, data, motivo, qnt_itens, setor, prioridade ) 
+            VALUES (?, ?, ?, ?, ?, ?)""", 
+            (resultado))
+        conn.commit()
+        print("Aqui")
+        id_solicitacao = cursor.execute(f"""SELECT id_solicitacao 
+                                        FROM solicitacao 
+                                        WHERE solicitante = '{result['usuario']}'
+                                        AND motivo = '{result['motivo']}'
+                                        AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
+        print("ID: ",id_solicitacao)
+        conn.close()
+        return True
+    except Exception as e: 
+        print(type(e),e)
+        return False
 
 def comprasPendentes(status):
     try:
