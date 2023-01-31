@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, flash, jsonify
+from flask import Flask, render_template, request, flash, jsonify, session
 import sqlite3, requests, sqlite_funcs, json, hashlib
 from flask_mail import Mail, Message
 from werkzeug.exceptions import abort
+from datetime import timedelta
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.permanent_session_lifetime = timedelta(seconds=2)
 # app.config['SERVER_NAME'] = 'sistema.tecplas:3000'
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -46,12 +48,15 @@ def second():
 @app.route("/acesso", methods=["POST", "GET"])
 def acessoSistema():
     global result
+    usuario = None
     result = {
         'usuario': str(request.values.get('formLoginUsuario')),
         'senha': str(request.values.get('formLoginSenha')),
     }
     resposta = sqlite_funcs.confereUsuario(result['usuario'], result['senha'])
     if resposta == True:
+        # if 'usuario' in session:
+        #     usuario = session['usuario']
         return render_template('second.html')
     elif resposta == "vazio":
         flash(f"Digite o usuário e a senha!", "warning")
@@ -62,13 +67,9 @@ def acessoSistema():
 
 @app.route("/usuario", methods=["POST", "GET"])
 def usuario():
-    # output = request.get_json()
-    # result = json.loads(output)
-    # resposta = sqlite_funcs.confereUsuario(result['usuario'], result['senha'])
     usuario = {'usuario': result['usuario'],
     'senha': result['senha']}
     resposta = json.dumps(usuario)
-    # print(resposta) 
     return resposta
 
 @app.route("/comprasInserir", methods=["POST", "GET"])
@@ -77,7 +78,6 @@ def comprasInserir():
     result_ = json.loads(output)
     result_['usuario'] = result['usuario']
     salvarDB = sqlite_funcs.solicitacaoComprasInserir(result_)
-    # print(salvarDB) 
     return {'value': salvarDB}
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
@@ -142,6 +142,8 @@ def dadosCotacao():
 
 @app.route("/send", methods = ["POST"])
 def send():
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        flash("Você não está conectado. Refaça o login!")
     output = request.get_json()
     result = json.loads(output) #this converts the json output to a python dictionary
     print(result) # Printing the new dictionary
@@ -155,7 +157,6 @@ def send():
         Motivo:       {motivo}
         Descrição:       {desc}
         """
-    # msg.html = "<b>Hey Paul</b>, sending you this email from my <a href="https://google.com">Flask app</a>, lmk if it works"
     mail.send(msg)
     return result
 
