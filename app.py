@@ -77,7 +77,7 @@ def comprasInserir():
     output = request.get_json()
     result_ = json.loads(output)
     print(result_)
-    result_['usuario'] = result['usuario']
+    # result_['usuario'] = result['usuario']
     # salvarDB = sqlite_funcs.solicitacaoComprasInserir(result_)
     return {'value': True}
 

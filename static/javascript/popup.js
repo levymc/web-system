@@ -293,9 +293,10 @@ function solicitacaoCompra(){
             const unidade = result2.value.unidade;
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
-            const dict_values = {dataAtual,nomeItem , descricao, quantidade, unidade, motivo, setor};
+            const prioridade = result2.value.prioridade;
+            const dict_values = {dataAtua, motivo, setor, prioridade, itens};
             console.log("Itens Adicionados: ",itens);
-            const s = JSON.stringify(itens);
+            const s = JSON.stringify(dict_values);
             $.ajax({
                 url:"/comprasInserir",
                 type: "POST",
@@ -334,11 +335,10 @@ function solicitacaoCompra(){
       itens.push(dictDadosItem);
       Swal.getPopup().querySelector("#item_solicitacao").value = "";
       Swal.getPopup().querySelector("#descricao_solicitacao").value = "";
+      Swal.getPopup().querySelector("#categoria").value = "";
+      Swal.getPopup().querySelector("#classificacao").value = "";
       Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
       Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
-      Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
-      Swal.getPopup().querySelector("#areaUso").value = "";
-      console.log(nomeItem);
       if (itens.length==1){
         document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
         htmlNovo = `
