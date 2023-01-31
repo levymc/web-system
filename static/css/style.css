@@ -225,7 +225,13 @@ body{
 .containerExterno{
     position: fixed;
     top:4em !important;
-    right:1em !important;
+    right:2em !important;
+    text-align: left !important;
+    max-height: 80%;
+    overflow-y:auto !important;
+    border-radius:10px !important;  
+    overflow-x: hidden;
+    padding:1.5em;
 }
 .itensNovos{
     font-size: 14px;

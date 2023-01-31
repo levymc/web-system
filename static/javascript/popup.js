@@ -333,6 +333,7 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#areaUso").value = "";
       console.log(nomeItem);
       if (itens.length==1){
+        document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
         htmlNovo = `
         <div class="row">
           <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
