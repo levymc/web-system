@@ -101,7 +101,6 @@ def solicitacaoComprasInserir(result):
                                         WHERE solicitante = '{result['usuario']}'
                                         AND motivo = '{result['motivo']}'
                                         AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
-        print("ID: ",id_solicitacao)
         for i in itens:
             cursor.execute(f"""
                            INSERT INTO itens
