@@ -119,7 +119,7 @@ function solicitacaoCompra(){
     } else {
       var test = JSON.parse(jade)
       var html = `
-      <section class="text-start containerExterno" id="itens"></section>
+      <section class="containerExterno" id="itens"></section>
   <div class="row" style="margin-left:1em !important;">
     <div class="col">
       <div class="row">
