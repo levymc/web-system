@@ -225,7 +225,7 @@ body{
 .containerExterno{
     position: fixed;
     top:4em !important;
-    right:1em !important;
+    right:2em !important;
 }
 .itensNovos{
     position: absolute;
