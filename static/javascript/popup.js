@@ -294,10 +294,11 @@ function solicitacaoCompra(){
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
             const prioridade = result2.value.prioridade;
-            const dict_values = {dataAtua, motivo, setor, prioridade, itens};
-            console.log("Itens Adicionados: ",itens);
-            const s = JSON.stringify(dict_values);
-            $.ajax({
+            if (itens.length == 0){
+              const dict_values = {dataAtual, nomeItem, descricao, quantidade, unidade, motivo, setor, prioridade};
+              console.log("Dados1: ",dict_values);
+              const s = JSON.stringify(dict_values);
+              $.ajax({
                 url:"/comprasInserir",
                 type: "POST",
                 contentType: "application/json",
@@ -313,7 +314,30 @@ function solicitacaoCompra(){
                   Swal.fire("Ocorreu algum erro!")
                 }
               })
-              }
+            }else{
+              const dict_values = {dataAtual, motivo, setor, prioridade, itens};
+              console.log("Dados2: ",dict_values);
+              const s = JSON.stringify(dict_values);
+              $.ajax({
+                url:"/comprasInserir",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(s)
+            }).done((response) => {
+              if (response.value == true){
+                Swal.fire({
+                  confirmButtonColor:'hwb(216 31% 1%)',
+                  titleText: "Solicitação de compra enviada!!",
+                  icon: "success"
+                }
+                )} else{
+                  Swal.fire("Ocorreu algum erro!")
+                }
+              })
+            }
+            }
+            
+            
       });
     $('#addItem').click(function () {
       const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
