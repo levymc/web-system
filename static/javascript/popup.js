@@ -106,7 +106,6 @@ function acessoResponsavel(){
   })     
 };
 
-
 function solicitacaoCompra(){
   var itens = [];
   $.ajax({
@@ -392,13 +391,6 @@ function solicitacaoCompra(){
     }
     });
   }
-  });
-};
-
-function swalUpdate(arg){
-  location.reload();
-  Swal.update({
-    html:arg,
   });
 };
        
