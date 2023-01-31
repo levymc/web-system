@@ -96,13 +96,19 @@ def solicitacaoComprasInserir(result):
             VALUES (?, ?, ?, ?, ?, ?)""", 
             (resultado))
         conn.commit()
-        print("Aqui")
         id_solicitacao = cursor.execute(f"""SELECT id_solicitacao 
                                         FROM solicitacao 
                                         WHERE solicitante = '{result['usuario']}'
                                         AND motivo = '{result['motivo']}'
                                         AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
         print("ID: ",id_solicitacao)
+        for i in itens:
+            cursor.execute(f"""
+                           INSERT INTO itens
+                           (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
+                           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                           (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
+        conn.commit()
         conn.close()
         return True
     except Exception as e: 
