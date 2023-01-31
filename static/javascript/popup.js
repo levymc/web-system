@@ -126,7 +126,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Nome do Item (forma genérica)</label>
-        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
+        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="Nome do Item" style="width: 80%">
         </div>
       <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
         <label for="descricao_solicitacao">Descrição  (especificações)</label>
@@ -134,7 +134,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Categoria </label>
-        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="categoria">
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="categoria">
           <option style="font-size:14px;" value="" disabled selected>Categoria</option>
           <option style="font-size:14px;" value="Componente">Componente</option>
           <option style="font-size:14px;" value="EPI">EPI</option>
@@ -147,7 +147,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="classificacao">Classificação </label>
-        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="classificacao">
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="classificacao">
           <optgroup label="Material Novo">
             <option>Investimento</option>
             <option>Obra/Infraestrutura</option>
@@ -164,11 +164,11 @@ function solicitacaoCompra(){
     <div class="col">
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="quantidade_solicitacao">Quantidade</label>             
-        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="  Quantidade solicitada" style="width: 80%">
+        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="Quantidade solicitada" style="width: 80%">
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
-        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="unidade_solicitacao">
           <option style="font-size:14px;" value="" disabled selected>UN</option>
           <option style="font-size:14px;" value="Bloco">Bloco</option>
           <option style="font-size:14px;" value="Bobina">Bobina</option>
@@ -193,42 +193,44 @@ function solicitacaoCompra(){
           <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
         </select>
       </div>
-      <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
-        <label for="motivo_solicitacao">Justificativa</label>
-        <input type="text" id="motivo_solicitacao" name="movito_solicitacao" style="margin-left:-0em !important; width: 80%" class="swal2-input" placeholder="  Justificativa da Solicitação"></input>
-      </div>
-      <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
-        <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
-        <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="areaUso">
-          <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
-          <option style="font-size:14px;" value="Administração">Administração</option>
-          <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
-          <option style="font-size:14px;" value="AutoClave">AutoClave</option>
-          <option style="font-size:14px;" value="Colmeia">Colmeia</option>
-          <option style="font-size:14px;" value="Engenharia">Engenharia</option>
-          <option style="font-size:14px;" value="Ferramental">Ferramental</option>
-          <option style="font-size:14px;" value="Manutenção">Manutenção</option>
-          <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
-          <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
-          <option style="font-size:14px;" value="Pintura">Pintura</option>
-          <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
-          <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
-          <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
-          <option style="font-size:14px;" value="Qualidade">Qualidade</option>
-          <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
-          <option style="font-size:14px;" value="Termoformado">Termoformado</option>
-          <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
-        </select>
-    </div>
-    <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
-      <label for="item_solicitacao">Prioridade </label>
-      <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="prioridade">
-        <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
-        <option style="font-size:14px;" value="Alta">Alta</option>
-        <option style="font-size:14px;" value="Baixa">Baixa</option>
-        <option style="font-size:14px;" value="Crítico">Crítico</option>
-        <option style="font-size:14px;" value="Baixa">Baixa</option>
-      </select>
+        <div class="fundinSol">
+          <div class="row text-start" style="margin-top:0.9em;">
+            <label for="motivo_solicitacao" style="margin-left:1.25em !important;">Justificativa</label>
+            <input type="text" id="motivo_solicitacao" name="motivo_solicitacao" class="swal2-input" placeholder="Justificativa da Solicitação"></input>
+          </div>
+          <div class="row text-start" style="margin-top:0.9em;">
+            <label for="areaUso" style="margin-left:1.25em !important;margin-bottom:-0.3em">Área de Uso</label>
+            <select class="selectClass1" id="areaUso">
+              <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
+              <option style="font-size:14px;" value="Administração">Administração</option>
+              <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
+              <option style="font-size:14px;" value="AutoClave">AutoClave</option>
+              <option style="font-size:14px;" value="Colmeia">Colmeia</option>
+              <option style="font-size:14px;" value="Engenharia">Engenharia</option>
+              <option style="font-size:14px;" value="Ferramental">Ferramental</option>
+              <option style="font-size:14px;" value="Manutenção">Manutenção</option>
+              <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
+              <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
+              <option style="font-size:14px;" value="Pintura">Pintura</option>
+              <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
+              <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
+              <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
+              <option style="font-size:14px;" value="Qualidade">Qualidade</option>
+              <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
+              <option style="font-size:14px;" value="Termoformado">Termoformado</option>
+              <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
+            </select>
+        </div>
+        <div class="row text-start" style="margin-top:0.9em;">
+          <label for="prioridade" style="margin-left:1.25em !important;margin-bottom:-0.3em">Prioridade </label>
+          <select class="selectClass1" id="prioridade">
+            <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
+            <option style="font-size:14px;" value="Alta">Alta</option>
+            <option style="font-size:14px;" value="Baixa">Baixa</option>
+            <option style="font-size:14px;" value="Crítico">Crítico</option>
+            <option style="font-size:14px;" value="Baixa">Baixa</option>
+          </select>
+        </div>
     </div>
   </div>
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
