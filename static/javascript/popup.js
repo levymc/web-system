@@ -394,13 +394,6 @@ function solicitacaoCompra(){
   }
   });
 };
-
-function swalUpdate(arg){
-  location.reload();
-  Swal.update({
-    html:arg,
-  });
-};
        
 function paginaAprovador(){
   Swal.fire({
