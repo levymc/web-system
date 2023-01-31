@@ -311,12 +311,12 @@ function solicitacaoCompra(){
       });
     $('#addItem').click(function () {
       var nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
-      const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
-      const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
-      const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
-      const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
-      const setor = Swal.getPopup().querySelector('#areaUso').value;
-      const dictDadosItem = {
+      var descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
+      var quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
+      var unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
+      var motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
+      var setor = Swal.getPopup().querySelector('#areaUso').value;
+      var dictDadosItem = {
         nomeItem: nomeItem,
         descricao: descricao,
         quantidade: quantidade,
@@ -333,7 +333,6 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#areaUso").value = "";
       console.log(nomeItem);
       if (itens.length==1){
-        document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
         htmlNovo = `
         <div class="row">
           <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
