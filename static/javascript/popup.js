@@ -235,7 +235,6 @@ function solicitacaoCompra(){
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
   
   `
-      Swal.isUpdatableParameter(html),
       Swal.fire({
         allowOutsideClick: false,
         width: "50em",
@@ -258,7 +257,7 @@ function solicitacaoCompra(){
         const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
         const setor = Swal.getPopup().querySelector('#areaUso').value;
         const prioridade = Swal.getPopup().querySelector('#prioridade').value;
-        if (!nomeItem || !descricao || !categoria || !classificacao || !quantidade || !unidade || !motivo || !setor || !prioridade ) {
+        if (!motivo || !setor || !prioridade ) {
             Swal.showValidationMessage(`Preencha os campos para Enviar a Solicitação`)
         }
         return { 
@@ -295,8 +294,8 @@ function solicitacaoCompra(){
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
             const dict_values = {dataAtual,nomeItem , descricao, quantidade, unidade, motivo, setor};
-            console.log(dict_values)
-            const s = JSON.stringify(dict_values);
+            console.log("Itens Adicionados: ",itens);
+            const s = JSON.stringify(itens);
             $.ajax({
                 url:"/comprasInserir",
                 type: "POST",
@@ -343,7 +342,7 @@ function solicitacaoCompra(){
         Swal.getPopup().querySelector("#classificacao").value = "";
         Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
         Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
-        console.log(itens);
+        // console.log(itens);
         if (itens.length==1){
           document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
           htmlNovo = `
