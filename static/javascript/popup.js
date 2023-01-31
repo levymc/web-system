@@ -323,43 +323,39 @@ function solicitacaoCompra(){
       const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
       const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
       const setor = Swal.getPopup().querySelector('#areaUso').value;
-      const prioridade = Swal.getPopup().querySelector('#prioridade').value;
-      if (!nomeItem || !descricao || !categoria || !classificacao || !quantidade || !unidade ) {
-          Swal.showValidationMessage(`Preencha os campos para Adicionar um novo Item`)
-      }else{
-        const dictDadosItem = {
-          nomeItem: nomeItem,
-          descricao: descricao,
-          categoria: categoria,
-          classificacao: classificacao,
-          quantidade: quantidade,
-          unidade: unidade,
-        };
-        itens.push(dictDadosItem);
-        Swal.getPopup().querySelector("#item_solicitacao").value = "";
-        Swal.getPopup().querySelector("#descricao_solicitacao").value = "";
-        Swal.getPopup().querySelector("#categoria").value = "";
-        Swal.getPopup().querySelector("#classificacao").value = "";
-        Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
-        Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
-        // console.log(itens);
-        if (itens.length==1){
-          document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
-          htmlNovo = `
-          <div class="row">
-            <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
-          </div>
-          <div class="row">
-            <div class="col itensNovos">${itens.length}- ${nomeItem}</div>    
-          </div>`;
-        }else{
-          htmlNovo = `
+      const dictDadosItem = {
+        nomeItem: nomeItem,
+        descricao: descricao,
+        quantidade: quantidade,
+        unidade: unidade,
+        motivo: motivo,
+        setor: setor,
+      };
+      itens.push(dictDadosItem);
+      Swal.getPopup().querySelector("#item_solicitacao").value = "";
+      Swal.getPopup().querySelector("#descricao_solicitacao").value = "";
+      Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
+      Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
+      Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
+      Swal.getPopup().querySelector("#areaUso").value = "";
+      console.log(nomeItem);
+      if (itens.length==1){
+        document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
+        htmlNovo = `
+        <div class="row">
+          <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
+        </div>
         <div class="row">
           <div class="col itensNovos">${itens.length}- ${nomeItem}</div>    
         </div>`;
-        }
-        document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
+      }else{
+        htmlNovo = `
+      <div class="row">
+        <div class="col itensNovos">${itens.length}- ${nomeItem}</div>    
+      </div>`;
       }
+      document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
+
     });
   }
   });
