@@ -84,16 +84,29 @@ def confereUsuario(usuario, senha):
             return False
 
 def solicitacaoComprasInserir(result):
-    resultado = result['usuario'], result['dataAtual'], result['nomeItem'], result['descricao'], result['quantidade'], result['unidade'], result['motivo'], result['setor']
-    print(resultado)
+    resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
+    itens = result['itens']
+    # print(resultado, itens)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         cursor.execute(f"""
             INSERT INTO solicitacao 
-            (solicitante, data, nome_item, descricao, quantidade, unidade, motivo, setor) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", 
+            (solicitante, data, motivo, qnt_itens, setor, prioridade ) 
+            VALUES (?, ?, ?, ?, ?, ?)""", 
             (resultado))
+        conn.commit()
+        id_solicitacao = cursor.execute(f"""SELECT id_solicitacao 
+                                        FROM solicitacao 
+                                        WHERE solicitante = '{result['usuario']}'
+                                        AND motivo = '{result['motivo']}'
+                                        AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
+        for i in itens:
+            cursor.execute(f"""
+                           INSERT INTO itens
+                           (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
+                           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                           (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
         conn.commit()
         conn.close()
         return True

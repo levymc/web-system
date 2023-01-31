@@ -152,12 +152,12 @@ function solicitacaoCompra(){
           <optgroup label="Material Novo">
             <option>Investimento</option>
             <option>Obra/Infraestrutura</option>
-            <option value="">Manutenção Planejada</option>
-            <option value="">Manutenção Corretiva</option>
+            <option value="Material Novo - Manutenção Planejada">Manutenção Planejada</option>
+            <option value="Material Novo - Manutenção Corretiva">Manutenção Corretiva</option>
           </optgroup>
           <optgroup label="Serviço">
-            <option>Manutenção Planejada</option>
-            <option>Manutenção Corretiva</option>
+            <option value="Serviço - Manutenção Planejada">Manutenção Planejada</option>
+            <option value="Serviço - Manutenção Corretiva">Manutenção Corretiva</option>
           </optgroup>
         </select>
       </div>
@@ -235,7 +235,6 @@ function solicitacaoCompra(){
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
   
   `
-      Swal.isUpdatableParameter(html),
       Swal.fire({
         allowOutsideClick: false,
         width: "50em",
@@ -249,22 +248,28 @@ function solicitacaoCompra(){
         cancelButtonText: 'Cancelar',
         focusConfirm: false,
         preConfirm: () => {
-        const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value
-        const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value
-        const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value
-        const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value
-        const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value
-        const setor = Swal.getPopup().querySelector('#areaUso').value
-        if (!descricao || !motivo || !setor) {
-            Swal.showValidationMessage(`Preencha os campos para prosseguir`)
+        const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
+        const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
+        const categoria = Swal.getPopup().querySelector('#categoria').value;
+        const classificacao = Swal.getPopup().querySelector('#classificacao').value;
+        const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
+        const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
+        const motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
+        const setor = Swal.getPopup().querySelector('#areaUso').value;
+        const prioridade = Swal.getPopup().querySelector('#prioridade').value;
+        if (!motivo || !setor || !prioridade ) {
+            Swal.showValidationMessage(`Preencha os campos para Enviar a Solicitação`)
         }
         return { 
           nome: nomeItem,
           descricao: descricao, 
+          categoria: categoria,
+          classificacao: classificacao,
           quantidade: quantidade, 
           unidade: unidade,
           motivo: motivo, 
           setor: setor,
+          prioridade: prioridade,
         }
     }
     }).then((result2) => {
@@ -284,14 +289,26 @@ function solicitacaoCompra(){
             dataAtual = dia + '/' + mes + '/' + ano;
             const nomeItem = result2.value.nome;
             const descricao = result2.value.descricao;
+            const categoria = result2.value.categoria;
+            const classificacao = result2.value.classificacao;
             const quantidade = result2.value.quantidade;
             const unidade = result2.value.unidade;
             const motivo = result2.value.motivo;
             const setor = result2.value.setor;
-            const dict_values = {dataAtual,nomeItem , descricao, quantidade, unidade, motivo, setor};
-            console.log(dict_values)
-            const s = JSON.stringify(dict_values);
-            $.ajax({
+            const prioridade = result2.value.prioridade;
+            var qnt_itens = itens.length
+            if (itens.length == 0){
+              qnt_itens = qnt_itens + 1
+              itens.push(nomeItem);
+              itens.push(descricao);
+              itens.push(categoria);
+              itens.push(classificacao);
+              itens.push(quantidade);
+              itens.push(unidade);
+              const dict_values = {dataAtual, itens, motivo, setor, prioridade, qnt_itens};
+              console.log("Dados1: ",dict_values);
+              const s = JSON.stringify(dict_values);
+              $.ajax({
                 url:"/comprasInserir",
                 type: "POST",
                 contentType: "application/json",
@@ -307,31 +324,56 @@ function solicitacaoCompra(){
                   Swal.fire("Ocorreu algum erro!")
                 }
               })
+            }else{
+              const dict_values = {dataAtual, itens, motivo, setor, prioridade, qnt_itens};
+              console.log("Dados2: ",dict_values);
+              const s = JSON.stringify(dict_values);
+              $.ajax({
+                url:"/comprasInserir",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(s)
+            }).done((response) => {
+              if (response.value == true){
+                Swal.fire({
+                  confirmButtonColor:'hwb(216 31% 1%)',
+                  titleText: "Solicitação de compra enviada!!",
+                  icon: "success"
+                }
+              )} else{
+                Swal.fire("Ocorreu algum erro!")
               }
+            })
+          }
+        }
+            
+            
       });
     $('#addItem').click(function () {
-      var nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
-      var descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
-      var quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
-      var unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
-      var motivo = Swal.getPopup().querySelector('#motivo_solicitacao').value;
-      var setor = Swal.getPopup().querySelector('#areaUso').value;
-      var dictDadosItem = {
+      const nomeItem = Swal.getPopup().querySelector('#item_solicitacao').value;
+      const descricao = Swal.getPopup().querySelector('#descricao_solicitacao').value;
+      const categoria = Swal.getPopup().querySelector('#categoria').value;
+      const classificacao = Swal.getPopup().querySelector('#classificacao').value;
+      const quantidade = Swal.getPopup().querySelector('#quantidade_solicitacao').value;
+      const unidade = Swal.getPopup().querySelector('#unidade_solicitacao').value;
+      if (!nomeItem || !descricao || !categoria || !classificacao || !quantidade || !unidade ) {
+        Swal.showValidationMessage(`Preencha os campos para Adicionar um novo Item`)
+    }else{
+      const dictDadosItem = {
         nomeItem: nomeItem,
         descricao: descricao,
+        categoria: categoria,
+        classificacao: classificacao,
         quantidade: quantidade,
         unidade: unidade,
-        motivo: motivo,
-        setor: setor,
       };
       itens.push(dictDadosItem);
       Swal.getPopup().querySelector("#item_solicitacao").value = "";
       Swal.getPopup().querySelector("#descricao_solicitacao").value = "";
+      Swal.getPopup().querySelector("#categoria").value = "";
+      Swal.getPopup().querySelector("#classificacao").value = "";
       Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
       Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
-      Swal.getPopup().querySelector("#motivo_solicitacao").value = "";
-      Swal.getPopup().querySelector("#areaUso").value = "";
-      console.log(nomeItem);
       if (itens.length==1){
         htmlNovo = `
         <div class="row">
@@ -347,7 +389,7 @@ function solicitacaoCompra(){
       </div>`;
       }
       document.getElementById("itens").insertAdjacentHTML("beforeend", htmlNovo);
-
+    }
     });
   }
   });
