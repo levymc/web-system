@@ -121,6 +121,11 @@ def comprasPendentes(status):
         compras = []
         dados = cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall()
         for i in dados:
+            itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {i[0]}").fetchall()
+            itensDataTable = []
+            if not itens == []:
+                for j in range(len(itens)):
+                    itensDataTable.append(itens[j][2])
             qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
             qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
             if qnt_cotacao_rejeitada != 0:
@@ -128,18 +133,17 @@ def comprasPendentes(status):
             compras.append({
                 'id_solicitacao':i[0],
                 'solicitante': i[1],
+                'itens': itensDataTable,
+                'qnt_itens': i[4],
                 'data': i[2],
-                'nomeItem': i[3],
-                'descricao': i[4],
-                'quantidade': i[5],
-                'unidade': i[6],
-                'motivo': i[7],
-                'setor':i[8],
+                'motivo': i[3],
+                'setor':i[5],
                 'qnt_cotacao': qnt_cotacao,
             })
         conn.close()
         return {'aaData': compras}
     except Exception as e:
+        print(e)
         return {'value': False}
 
 def compras_updateSolicitacao(comprasPara_aprovar):

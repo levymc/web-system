@@ -418,8 +418,9 @@ function paginaAprovador(){
         <th scope="col">Data da Solicitação</th>
         <th scope="col">Usuário</th>
         <th scope="col">Itens</th>
-        <th scope="col">Área de Uso</th>
+        <th scope="col">Qnt. Itens</th>
         <th scope="col">Justificativa</th>
+        <th scope="col">Setor</th>
       </tr>
     </thead>    
   </table>
@@ -435,6 +436,7 @@ function paginaAprovador(){
   $(document).ready(function () {
     var tableAprovador = $('#dataTable4').DataTable({
       select: true,
+      selectionMode:"single",
       "processing" : true,
       "serverSide" : false,
       "serverMethod" : "post",
@@ -450,9 +452,10 @@ function paginaAprovador(){
       'columns': [
       { data : 'data', "width": "15%"},
       { data : 'solicitante', "width": "15%"}, 
-      { data : 'nomeItem', "width": "15%"}, 
-      { data : 'descricao', "width": "30%"},
+      { data : 'itens', "width": "15%"}, 
+      { data : 'qnt_itens', "width": "15%"}, 
       { data : 'motivo', "width": "25%"},
+      { data : 'setor', "width": "15%"},
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
@@ -460,8 +463,8 @@ function paginaAprovador(){
       "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
-  })
-  $('#button-aprovar').click(function () {
+  });
+  $('#button-aprovar').click(function() {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 1 ao status
     dadosSolicitacao = dadosSolicitacao[0];
     if (!dadosSolicitacao){
@@ -497,7 +500,7 @@ function paginaAprovador(){
     console.log(dadosSolicitacao);
     if (!dadosSolicitacao){
       Swal.fire({
-        titleText: "Selecione algum item para Rejeitar",
+        titleText: "Para ver mais informações selecione um item",
         icon: "warning",
         showConfirmButton: true,
         confirmButtonText: "Ok",

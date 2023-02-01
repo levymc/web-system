@@ -317,6 +317,9 @@ body{
     height: 2.5em;
     font-size:14px;
 }
+.select-item{
+    display: hidden;
+}
 .swal2-html-container{
     text-align: center;
     margin-top: 1.5em;
