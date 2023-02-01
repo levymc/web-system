@@ -417,9 +417,9 @@ function paginaAprovador(){
       <tr>
         <th scope="col">Data da Solicitação</th>
         <th scope="col">Usuário</th>
-        <th scope="col">Item</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Motivo</th>
+        <th scope="col">Itens</th>
+        <th scope="col">Área de Uso</th>
+        <th scope="col">Justificativa</th>
       </tr>
     </thead>    
   </table>
