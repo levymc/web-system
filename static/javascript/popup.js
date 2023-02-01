@@ -226,7 +226,7 @@ function solicitacaoCompra(){
           <select class="selectClass1" id="prioridade">
             <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
             <option style="font-size:14px;" value="Alta">Alta</option>
-            <option style="font-size:14px;" value="Baixa">Baixa</option>
+            <option style="font-size:14px;" value="Média">Média</option>
             <option style="font-size:14px;" value="Crítico">Crítico</option>
             <option style="font-size:14px;" value="Baixa">Baixa</option>
           </select>
@@ -234,6 +234,7 @@ function solicitacaoCompra(){
     </div>
   </div>
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-center" style="font-size:14px;"><strong> Em caso de mais de um item, clicar em 'Add Item' antes de Enviar a Solicitação</strong></p>
   
   `
       Swal.fire({
@@ -506,99 +507,108 @@ function paginaAprovador(){
         confirmButtonText: "Ok",
         confirmButtonColor:'hwb(216 31% 1%)',
       })}else{
-    Swal.fire({
-      title: "Informações da Solicitações",
-      width:'70em',
-      allowOutsideClick: false,
-      showCloseButton: true,
-      padding: 0 ,
-      showConfirmButton: false,
-      confirmButtonColor:'hwb(216 31% 1%)', 
-      html:`
-              <div class="pageInfoContainer" style="margin-bottom:2em;">
-                <div class="row">
-                  <div class="col fundinSol text-start"> 
-                    <div class="row pageInfo-linhas">
-                      <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante}</font></b>
+      const s = JSON.stringify(dadosSolicitacao);
+        $.ajax({
+          url:"/itensMaisInfo",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(s)
+        }).done((jade) => {
+          console.log(jade);
+          Swal.fire({
+            title: "Informações da Solicitações",
+            width:'70em',
+            allowOutsideClick: false,
+            showCloseButton: true,
+            padding: 0 ,
+            showConfirmButton: false,
+            confirmButtonColor:'hwb(216 31% 1%)', 
+            html:`
+                    <div class="pageInfoContainer" style="margin-bottom:2em;">
+                      <div class="row">
+                        <div class="col fundinSol text-start"> 
+                          <div class="row pageInfo-linhas">
+                            <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Data da Solicitação: <font color="#560101">${dadosSolicitacao.data}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Justificativa: <font color="#560101">${dadosSolicitacao.motivo}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
+                          </div>
+                        </div>
+                        <div class="col fundinItens text-start"> 
+                          <div class="row pageInfo-linhas">
+                            <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="row pageInfo-linhas">
-                      <b>Data da Solicitação: <font color="#560101">${dadosSolicitacao.data}</font></b>
+                    <div class="row" style="margin-bottom:1.5em;">
+                      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
+                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
                     </div>
-                    <div class="row pageInfo-linhas">
-                      <b>Justificativa: <font color="#560101">${dadosSolicitacao.motivo}</font></b>
-                    </div>
-                    <div class="row pageInfo-linhas">
-                      <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
-                    </div>
-                  </div>
-                  <div class="col fundinItens text-start"> 
-                    <div class="row pageInfo-linhas">
-                      <b>Oi</b>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row" style="margin-bottom:1.5em;">
-                <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
-                <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
-              </div>
-              `
-            });
-          };
-          $('#button-aprovar2').click(function () {
-            const s = JSON.stringify(dadosSolicitacao);
-            $.ajax({
-              url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
-              type: "POST",
-              contentType: "application/json",
-              data: JSON.stringify(s)
-            }).done((response) => {
-              if(response.value==true){
-                Swal.fire({
-                  titleText: "Solicitação de Compra Aprovada",
-                  text: "O processo de cotação já pode ser iniciado.",
-                  icon: "success",
-                  showConfirmButton: true,
-                  confirmButtonColor:'hwb(216 31% 1%)', 
+                    `
+                  });
+                }
+              )};
+                $('#button-aprovar2').click(function () {
+                  const s = JSON.stringify(dadosSolicitacao);
+                  $.ajax({
+                    url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(s)
+                  }).done((response) => {
+                    if(response.value==true){
+                      Swal.fire({
+                        titleText: "Solicitação de Compra Aprovada",
+                        text: "O processo de cotação já pode ser iniciado.",
+                        icon: "success",
+                        showConfirmButton: true,
+                        confirmButtonColor:'hwb(216 31% 1%)', 
+                      });
+                    };
                 });
-              };
-          });
-          });
-          $('#button-rejeitar2').click(function () {
-            Swal.fire({
-              titleText: "Deseja Rejeitar a Solicitação?",
-              showCancelButton: true,
-              icon: "question",
-              focusConfirmButton: false,
-              allowOutsideClick: false,
-              confirmButtonText: "Sim",
-              confirmButtonColor:'hwb(216 31% 1%)',
-              cancelButtonText: "Não",
-            }).then((result) => {
-              if (result.value==true){
-                const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
-                $.ajax({
-                  url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
-                  type: "POST",
-                  contentType: "application/json",
-                  data: JSON.stringify(id_reprovar)
-                }).done((response) => {
-                  if(response.value==true){
-                    Swal.fire({
-                      titleText: "Solicitação de Compra Rejeitada",
-                      icon: "info",
-                      showConfirmButton: true,
-                      confirmButtonColor:'hwb(216 31% 1%)', 
-                    });
-                  };
                 });
-              }else{
-                Swal.fire({
-                  titleText: "Solicitação Não Rejeitada",
-                  icon: "warning",
-                  showConfirmButton: true,
-                  confirmButtonColor:'hwb(216 31% 1%)', 
-                  confirmButtonText:"Ok",
+                $('#button-rejeitar2').click(function () {
+                  Swal.fire({
+                    titleText: "Deseja Rejeitar a Solicitação?",
+                    showCancelButton: true,
+                    icon: "question",
+                    focusConfirmButton: false,
+                    allowOutsideClick: false,
+                    confirmButtonText: "Sim",
+                    confirmButtonColor:'hwb(216 31% 1%)',
+                    cancelButtonText: "Não",
+                  }).then((result) => {
+                    if (result.value==true){
+                      const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+                      $.ajax({
+                        url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(id_reprovar)
+                      }).done((response) => {
+                        if(response.value==true){
+                          Swal.fire({
+                            titleText: "Solicitação de Compra Rejeitada",
+                            icon: "info",
+                            showConfirmButton: true,
+                            confirmButtonColor:'hwb(216 31% 1%)', 
+                          });
+                        };
+                      });
+                    }else{
+                      Swal.fire({
+                        titleText: "Solicitação Não Rejeitada",
+                        icon: "warning",
+                        showConfirmButton: true,
+                        confirmButtonColor:'hwb(216 31% 1%)', 
+                        confirmButtonText:"Ok",
                   
                 });
               }

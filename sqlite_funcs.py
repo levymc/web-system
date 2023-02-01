@@ -146,6 +146,16 @@ def comprasPendentes(status):
         print(e)
         return {'value': False}
 
+def itensMaisInfo(id_solicitacao):
+    try:
+        conn = sqlite3.connect('static/db/compras.db')
+        cursor = conn.cursor()
+        itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {id_solicitacao}").fetchall()
+        return itens
+    except Exception as e:
+        print(e)
+        return False
+
 def compras_updateSolicitacao(comprasPara_aprovar):
     try:
         conn = sqlite3.connect('static/db/compras.db')
