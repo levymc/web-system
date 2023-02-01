@@ -500,7 +500,7 @@ function paginaAprovador(){
     console.log(dadosSolicitacao);
     if (!dadosSolicitacao){
       Swal.fire({
-        titleText: "Para ver mais informações selecione um item",
+        titleText: "Para mais informações, selecione um item",
         icon: "warning",
         showConfirmButton: true,
         confirmButtonText: "Ok",
@@ -508,14 +508,14 @@ function paginaAprovador(){
       })}else{
     Swal.fire({
       title: "Informações da Solicitações",
-      width:'50em',
+      width:'70em',
       allowOutsideClick: false,
       showCloseButton: true,
       padding: 0 ,
       showConfirmButton: false,
       confirmButtonColor:'hwb(216 31% 1%)', 
       html:`
-              <div class="container-fluid" style="margin-left:2em; margin-right:2em; width:40em;">
+              <div class="container-fluid" style="margin-left:auto; margin-right:auto; margin-bottom:2em; width:40em;">
                 <div class="row pageMaisInfo">
                   <div class="col text-start"> 
                     <b>Solicitante (usuário):</b> <font color="#560101">${dadosSolicitacao.solicitante}</font>
