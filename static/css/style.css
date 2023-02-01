@@ -214,11 +214,6 @@ body{
 .container-fluid input{
     margin-left: 3em;   
 }
-.pageMaisInfo{
-    margin-top:0.5em;
-    line-height: 3em !important;
-    /* color:#560101 */
-}
 .card{
     margin: 2em;
 }
@@ -249,7 +244,23 @@ body{
     border-radius: 5px ;
     border: 1px solid rgba(0, 123, 255, 0.35);
 }
-
+.fundinItens{
+    margin-top: 2em;
+    margin-right: 2em;
+    padding-top: 1em; padding-bottom: 1.7em;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 5px ;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+}
+.pageInfoContainer{
+    margin-left: auto !important; margin-right: auto !important; margin-bottom:2em; 
+    width: 80%;
+}
+.pageInfo-linhas{
+    margin-top:0.5em;
+    line-height: 3em !important;
+    /* color:#560101 */
+}
 
 /* width */
 ::-webkit-scrollbar {

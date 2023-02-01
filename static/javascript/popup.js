@@ -515,40 +515,26 @@ function paginaAprovador(){
       showConfirmButton: false,
       confirmButtonColor:'hwb(216 31% 1%)', 
       html:`
-              <div class="container-fluid" style="margin-left:auto; margin-right:auto; margin-bottom:2em; width:40em;">
-                <div class="row pageMaisInfo">
-                  <div class="col text-start"> 
-                    <b>Solicitante (usuário):</b> <font color="#560101">${dadosSolicitacao.solicitante}</font>
+              <div class="pageInfoContainer" style="margin-bottom:2em;">
+                <div class="row">
+                  <div class="col fundinSol text-start"> 
+                    <div class="row pageInfo-linhas">
+                      <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante}</font></b>
+                    </div>
+                    <div class="row pageInfo-linhas">
+                      <b>Data da Solicitação: <font color="#560101">${dadosSolicitacao.data}</font></b>
+                    </div>
+                    <div class="row pageInfo-linhas">
+                      <b>Justificativa: <font color="#560101">${dadosSolicitacao.motivo}</font></b>
+                    </div>
+                    <div class="row pageInfo-linhas">
+                      <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
+                    </div>
                   </div>
-                  <div class="col text-start"> 
-                  <b>Data da Solicitação:</b> <font color="#560101">${dadosSolicitacao.data}</font>
-                  </div>
-                  
-                </div>
-                <div class="row pageMaisInfo"">
-                  <div class="col text-start"> 
-                  <b>Item Solicitado:</b> <font color="#560101">${dadosSolicitacao.nomeItem}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Descrição do Item:</b> <font color="#560101">${dadosSolicitacao.descricao}</font>
-                  </div>
-                </div>
-
-                <div class="row pageMaisInfo">
-                  <div class="col text-start" > 
-                  <b>Quantidade Solicitada:</b> <font color="#560101">${dadosSolicitacao.quantidade}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Unidade:</b> <font color="#560101">${dadosSolicitacao.unidade}</font>
-                  </div>
-                </div>
-
-                <div class="row pageMaisInfo">
-                  <div class="col text-start"> 
-                  <b>Justificativa da Compra:</b> <font color="#560101">${dadosSolicitacao.motivo}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Setor/Departamento:</b> <font color="#560101">${dadosSolicitacao.setor}</font>
+                  <div class="col fundinItens text-start"> 
+                    <div class="row pageInfo-linhas">
+                      <b>Oi</b>
+                    </div>
                   </div>
                 </div>
               </div>
