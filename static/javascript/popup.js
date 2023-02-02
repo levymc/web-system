@@ -460,6 +460,11 @@ function paginaAprovador(){
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
+      {targets: 2, render: function ( data, type, row ) {
+        return data.length > 25 ?
+            data.substr( 0, 25 ) +'…' :
+            data;
+    }},
       ],
       "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"

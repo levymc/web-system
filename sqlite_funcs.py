@@ -122,10 +122,13 @@ def comprasPendentes(status):
         dados = cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall()
         for i in dados:
             itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {i[0]}").fetchall()
-            itensDataTable = []
+            itensDataTable = ''
             if not itens == []:
                 for j in range(len(itens)):
-                    itensDataTable.append(itens[j][2])
+                    itensDataTable += itens[j][2] + ', '
+            itensDataTable = itensDataTable[:-1]
+            itensDataTable = itensDataTable[:-1]
+            print(itensDataTable)
             qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
             qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
             if qnt_cotacao_rejeitada != 0:
