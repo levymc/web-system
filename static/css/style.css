@@ -240,9 +240,15 @@ body{
     color: #0000007e !important;
     background: #0000007e !important;
 }
+#info-qntItens{
+    padding-top: 10px;
+    margin-bottom: -10em;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: left;
+}
 .fundinSol{
     margin-top: 2em;
-    margin-right: 2em;
     padding-top: 1em; padding-bottom: 1.7em;
     background: rgba(0, 123, 255, 0.15);
     border-radius: 5px ;
@@ -250,9 +256,9 @@ body{
 }
 .fundinItens{
     height: 10em;
-    margin-top: 2em;
-    margin-right: 2em;
-    padding-top: 1em; padding-bottom: 1.7em;
+    margin-top: 2em; margin-bottom: 2em;
+    width: 100% !important;
+    padding-top: 1em; padding-bottom: 1.7em !important;
     background: rgba(255, 255, 255, 0.793);
     border-radius: 5px ;
     border: 1px solid rgba(0, 0, 0, 0.35);

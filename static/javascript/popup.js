@@ -536,6 +536,7 @@ function paginaAprovador(){
                             <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
                           </div>
                         </div>
+                        <label for="carouselExample text-start" id="info-qntItens">Quantidade Solicitada: ${jade.length}</label>
                         <div id="carouselExample" class="carousel slide fundinItens">
                           <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -546,13 +547,6 @@ function paginaAprovador(){
 
                             `
             var html2 = `
-                            <div class="carousel-item">
-                              <img src="..." class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                              <img src="..." class="d-block w-100" alt="...">
-                            </div>
-                          </div>
                           <button class="carousel-control-prev" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
@@ -561,18 +555,32 @@ function paginaAprovador(){
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                           </button>
-                        </div>
+
+                    `
+            var html3 = `
+                    </div>
                       </div>
                     </div>
                     <div class="row" style="margin-bottom:1.5em;">
                       <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
                       <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
                     </div>
-                    `
+            `
           if (jade.length == 1){
-            var html = html1 + html2
+            var html = html1 + `</div>` + html3
           } else{
-            var html = html1 + html2
+            var html = html1
+            for (i in jade){
+              if (i==0){
+              }else{
+              html += `<div class="carousel-item">
+                                    <div class="row pageInfo-linhas">
+                                      <b>Item: <font color="#560101">${jade[i][2]}</font></b>
+                                    </div>
+                                  </div>`
+            }
+          }
+            html += html2 + html3
           }
           console.log('TAMANHO:', jade.length)
           Swal.fire({
