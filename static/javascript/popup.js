@@ -589,7 +589,7 @@ function paginaAprovador(){
                           </div>
                         </div>
                         <div class="col-8"> 
-                        <label for="carouselExample" style="margin-left:1px" id="info-qntItens">Quantidade Solicitada: ${jade.length}</label>
+                        <label for="carouselExample" style="margin-left:1px" id="info-qntItens">Quantidade de Itens Solicitados: ${jade.length}</label>
                         <div id="carouselExample" class="carousel slide fundinItens">
                           <div class="carousel-inner text-center">
                             <div class="carousel-item active">

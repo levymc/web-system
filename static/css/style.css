@@ -38,13 +38,16 @@ h1{
 }
 body,html{
     height: 100% !important;
-    background: radial-gradient(#ffffff, #a8a8a8) !important;
+    background-image: radial-gradient(#ffffff, #a8a8a8) !important;
     backface-visibility: hidden;
-    /* background-size: cover; */
+    background-size: cover !important;
 } 
 body{
     overflow-x: hidden;
     overflow-y: visible;
+}
+body.swal2-height-auto {
+    height: 100% !important
 }
 .tab-content{
     position: relative;
@@ -237,7 +240,7 @@ body{
     font-size: 16px !important;
 }
 #btn-slide{
-    color: #0000007e !important;
+    color: #00000007 !important;
     background: #0000007e !important;
 }
 #info-qntItens{
