@@ -519,7 +519,7 @@ function paginaAprovador(){
           data: JSON.stringify(s)
         }).done((jade) => {
           var html1 = `
-                    <div class="pageInfoContainer" style="margin-bottom:2em;">
+                    <div class="pageInfoContainer" style="margin-top:0 !important;">
                       <div class="row">
                         <div class="col fundinSol text-center"> 
                           <div class="row pageInfo-linhas">
@@ -535,34 +535,30 @@ function paginaAprovador(){
                             <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
                           </div>
                         </div>
-                        <label for="carouselExample text-start" id="info-qntItens">Quantidade Solicitada: ${jade.length}</label>
+                        <div class="col"> 
+                        <label for="carouselExample" style="margin-left:1px" id="info-qntItens">Quantidade Solicitada: ${jade.length}</label>
                         <div id="carouselExample" class="carousel slide fundinItens">
-                          <div class="carousel-inner">
+                          <div class="carousel-inner text-center">
                             <div class="carousel-item active">
                               <div class="row pageInfo-linhas">
-                                <div class="col text-end" style="margin-left:1.25em">
                                   <b>Item: <font color="#560101">${jade[0][2]}</font></b>
-                                </div>
-                                <div class="col text-start">
+                              </div>
+                              <div class="row pageInfo-linhas">
                                   <b>Descricao: <font color="#560101">${jade[0][3]}</font></b>
-                                </div>
                               </div>
-                              <div class="row pageInfo-linhas text-start">
-                                <div class="col text-end">
+                              <div class="row pageInfo-linhas">
                                   <b>Categoria: <font color="#560101">${jade[0][4]}</font></b>
-                                </div>
-                                <div class="col text-start">
+                              </div>
+                              <div class="row pageInfo-linhas">
                                   <b>Classificação: <font color="#560101">${jade[0][5]}</font></b>
-                                </div>
                               </div>
-                              <div class="row pageInfo-linhas text-start">
-                                <div class="col text-end">
-                                  <b>Quantidade: <font color="#560101">${jade[0][6]}</font></b>
-                                </div>
-                                <div class="col text-start">
+                              <div class="row pageInfo-linhas">
+                                <b>Quantidade: <font color="#560101">${jade[0][6]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
                                   <b>Unidade: <font color="#560101">${jade[0][7]}</font></b>
-                                </div>
                               </div>
+                            </div>
                             </div>
 
                             `
@@ -604,7 +600,7 @@ function paginaAprovador(){
           }
           Swal.fire({
             title: "Informações da Solicitações",
-            width:'50em',
+            width:'80em',
             allowOutsideClick: false,
             showCloseButton: true,
             padding: 0 ,
