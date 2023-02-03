@@ -502,6 +502,56 @@ function paginaAprovador(){
         };
     });
   });
+  $('#button-rejeitar').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Selecione algum item para Rejeitar",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })}else{
+        Swal.fire({
+          titleText: "Deseja Rejeitar a Solicitação?",
+          showCancelButton: true,
+          icon: "question",
+          focusConfirmButton: false,
+          allowOutsideClick: false,
+          confirmButtonText: "Sim",
+          confirmButtonColor:'hwb(216 31% 1%)',
+          cancelButtonText: "Não",
+        }).then((result) => {
+          if (result.value==true){
+            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+            $.ajax({
+              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(id_reprovar)
+            }).done((response) => {
+              if(response.value==true){
+                Swal.fire({
+                  titleText: "Solicitação de Compra Rejeitada",
+                  icon: "info",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                });
+              };
+            });
+          }else{
+            Swal.fire({
+              titleText: "Solicitação Não Rejeitada",
+              icon: "warning",
+              showConfirmButton: true,
+              confirmButtonColor:'hwb(216 31% 1%)', 
+              confirmButtonText:"Ok",
+            });
+          }
+        });
+      }
+    });
 
   $('#button-info').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
@@ -687,61 +737,10 @@ function paginaAprovador(){
       });
     }
 
-  $('#button-rejeitar').click(function () {
-    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
-    dadosSolicitacao = dadosSolicitacao[0];
-    if (!dadosSolicitacao){
-      Swal.fire({
-        titleText: "Selecione algum item para Rejeitar",
-        icon: "warning",
-        showConfirmButton: true,
-        confirmButtonText: "Ok",
-        confirmButtonColor:'hwb(216 31% 1%)',
-      })}else{
-        Swal.fire({
-          titleText: "Deseja Rejeitar a Solicitação?",
-          showCancelButton: true,
-          icon: "question",
-          focusConfirmButton: false,
-          allowOutsideClick: false,
-          confirmButtonText: "Sim",
-          confirmButtonColor:'hwb(216 31% 1%)',
-          cancelButtonText: "Não",
-        }).then((result) => {
-          if (result.value==true){
-            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
-            $.ajax({
-              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
-              type: "POST",
-              contentType: "application/json",
-              data: JSON.stringify(id_reprovar)
-            }).done((response) => {
-              if(response.value==true){
-                Swal.fire({
-                  titleText: "Solicitação de Compra Rejeitada",
-                  icon: "info",
-                  showConfirmButton: true,
-                  confirmButtonColor:'hwb(216 31% 1%)', 
-                });
-              };
-            });
-          }else{
-            Swal.fire({
-              titleText: "Solicitação Não Rejeitada",
-              icon: "warning",
-              showConfirmButton: true,
-              confirmButtonColor:'hwb(216 31% 1%)', 
-              confirmButtonText:"Ok",
-              
-            });
-          }
-        });
-      }
-      
-    });
+  
   });
 }
-  )};
+)};
 
 function confereComprasPendentes(){
   $.ajax({
