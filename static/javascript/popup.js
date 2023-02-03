@@ -580,7 +580,7 @@ function paginaAprovador(){
                     </div>
                     <div class="row" style="margin-bottom:1.5em;">
                       <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
-                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
+                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar2">Rejeitar</button></div>
                     </div>
             `
           if (jade.length == 1){
