@@ -164,11 +164,12 @@ def compras_updateSolicitacao(comprasPara_aprovar):
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         cursor.execute(f"UPDATE solicitacao SET status=1 WHERE id_solicitacao='{comprasPara_aprovar['id_solicitacao']}'")
+        print("Aprovou!")
         conn.commit()
         conn.close()
         return True
     except Exception as e:
-        print(e)
+        print("Nao Aprovou: ",e)
         return e
 
 def rejeitarCompra(id):
