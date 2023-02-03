@@ -518,7 +518,6 @@ function paginaAprovador(){
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((jade) => {
-          itens = [];
           var html1 = `
                     <div class="pageInfoContainer" style="margin-bottom:2em;">
                       <div class="row">
@@ -546,7 +545,7 @@ function paginaAprovador(){
                             </div>
 
                             `
-            var html2 = `
+          var html2 = `
                           <button class="carousel-control-prev" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
@@ -557,7 +556,7 @@ function paginaAprovador(){
                           </button>
 
                     `
-            var html3 = `
+          var html3 = `
                     </div>
                       </div>
                     </div>
@@ -582,7 +581,6 @@ function paginaAprovador(){
           }
             html += html2 + html3
           }
-          console.log('TAMANHO:', jade.length)
           Swal.fire({
             title: "Informações da Solicitações",
             width:'50em',
