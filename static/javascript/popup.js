@@ -465,6 +465,9 @@ function paginaAprovador(){
             data.substr( 0, 25 ) +'…' :
             data;
     }},
+    {targets:1, render:function(data){
+      return data.charAt(0).toUpperCase() + data.slice(1)
+    }}
       ],
       "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
@@ -523,7 +526,7 @@ function paginaAprovador(){
                       <div class="row">
                         <div class="col-4 fundinSol text-start"> 
                           <div class="row pageInfo-linhas">
-                            <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante}</font></b>
+                            <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante.charAt(0).toUpperCase() + dadosSolicitacao.solicitante.slice(1)}</font></b>
                           </div>
                           <div class="row pageInfo-linhas">
                             <b>Data da Solicitação: <font color="#560101">${dadosSolicitacao.data}</font></b>
