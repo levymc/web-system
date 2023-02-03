@@ -226,7 +226,7 @@ function solicitacaoCompra(){
           <select class="selectClass1" id="prioridade">
             <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
             <option style="font-size:14px;" value="Alta">Alta</option>
-            <option style="font-size:14px;" value="Baixa">Baixa</option>
+            <option style="font-size:14px;" value="Média">Média</option>
             <option style="font-size:14px;" value="Crítico">Crítico</option>
             <option style="font-size:14px;" value="Baixa">Baixa</option>
           </select>
@@ -234,6 +234,7 @@ function solicitacaoCompra(){
     </div>
   </div>
   <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-center" style="font-size:14px;"><strong> Em caso de mais de um item, clicar em 'Add Item' antes de Enviar a Solicitação</strong></p>
   
   `
       Swal.fire({
@@ -376,6 +377,7 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
       Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
       if (itens.length==1){
+        document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
         htmlNovo = `
         <div class="row">
           <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
@@ -416,9 +418,10 @@ function paginaAprovador(){
       <tr>
         <th scope="col">Data da Solicitação</th>
         <th scope="col">Usuário</th>
-        <th scope="col">Item</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Motivo</th>
+        <th scope="col">Itens</th>
+        <th scope="col">Qnt. Itens</th>
+        <th scope="col">Justificativa</th>
+        <th scope="col">Setor</th>
       </tr>
     </thead>    
   </table>
@@ -434,6 +437,7 @@ function paginaAprovador(){
   $(document).ready(function () {
     var tableAprovador = $('#dataTable4').DataTable({
       select: true,
+      selectionMode:"single",
       "processing" : true,
       "serverSide" : false,
       "serverMethod" : "post",
@@ -449,18 +453,27 @@ function paginaAprovador(){
       'columns': [
       { data : 'data', "width": "15%"},
       { data : 'solicitante', "width": "15%"}, 
-      { data : 'nomeItem', "width": "15%"}, 
-      { data : 'descricao', "width": "30%"},
+      { data : 'itens', "width": "15%"}, 
+      { data : 'qnt_itens', "width": "15%"}, 
       { data : 'motivo', "width": "25%"},
+      { data : 'setor', "width": "15%"},
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
+      {targets: 2, render: function ( data, type, row ) {
+        return data.length > 25 ?
+            data.substr( 0, 25 ) +'…' :
+            data;
+    }},
+    {targets:1, render:function(data){
+      return data.charAt(0).toUpperCase() + data.slice(1)
+    }}
       ],
       "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
-  })
-  $('#button-aprovar').click(function () {
+  });
+  $('#button-aprovar').click(function() {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 1 ao status
     dadosSolicitacao = dadosSolicitacao[0];
     if (!dadosSolicitacao){
@@ -489,11 +502,9 @@ function paginaAprovador(){
         };
     });
   });
-
-  $('#button-info').click(function () {
+  $('#button-rejeitar').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
     dadosSolicitacao = dadosSolicitacao[0];
-    console.log(dadosSolicitacao);
     if (!dadosSolicitacao){
       Swal.fire({
         titleText: "Selecione algum item para Rejeitar",
@@ -502,59 +513,168 @@ function paginaAprovador(){
         confirmButtonText: "Ok",
         confirmButtonColor:'hwb(216 31% 1%)',
       })}else{
-    Swal.fire({
-      title: "Informações da Solicitações",
-      width:'50em',
-      allowOutsideClick: false,
-      showCloseButton: true,
-      padding: 0 ,
-      showConfirmButton: false,
-      confirmButtonColor:'hwb(216 31% 1%)', 
-      html:`
-              <div class="container-fluid" style="margin-left:2em; margin-right:2em; width:40em;">
-                <div class="row pageMaisInfo">
-                  <div class="col text-start"> 
-                    <b>Solicitante (usuário):</b> <font color="#560101">${dadosSolicitacao.solicitante}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Data da Solicitação:</b> <font color="#560101">${dadosSolicitacao.data}</font>
-                  </div>
-                  
-                </div>
-                <div class="row pageMaisInfo"">
-                  <div class="col text-start"> 
-                  <b>Item Solicitado:</b> <font color="#560101">${dadosSolicitacao.nomeItem}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Descrição do Item:</b> <font color="#560101">${dadosSolicitacao.descricao}</font>
-                  </div>
-                </div>
-
-                <div class="row pageMaisInfo">
-                  <div class="col text-start" > 
-                  <b>Quantidade Solicitada:</b> <font color="#560101">${dadosSolicitacao.quantidade}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Unidade:</b> <font color="#560101">${dadosSolicitacao.unidade}</font>
-                  </div>
-                </div>
-
-                <div class="row pageMaisInfo">
-                  <div class="col text-start"> 
-                  <b>Justificativa da Compra:</b> <font color="#560101">${dadosSolicitacao.motivo}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Setor/Departamento:</b> <font color="#560101">${dadosSolicitacao.setor}</font>
-                  </div>
-                </div>
-              </div>
-              <div class="row" style="margin-bottom:1.5em;">
-                <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
-                <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
-              </div>
-              `
+        Swal.fire({
+          titleText: "Deseja Rejeitar a Solicitação?",
+          showCancelButton: true,
+          icon: "question",
+          focusConfirmButton: false,
+          allowOutsideClick: false,
+          confirmButtonText: "Sim",
+          confirmButtonColor:'hwb(216 31% 1%)',
+          cancelButtonText: "Não",
+        }).then((result) => {
+          if (result.value==true){
+            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+            $.ajax({
+              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(id_reprovar)
+            }).done((response) => {
+              if(response.value==true){
+                Swal.fire({
+                  titleText: "Solicitação de Compra Rejeitada",
+                  icon: "info",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                });
+              };
             });
-          };
+          }else{
+            Swal.fire({
+              titleText: "Solicitação Não Rejeitada",
+              icon: "warning",
+              showConfirmButton: true,
+              confirmButtonColor:'hwb(216 31% 1%)', 
+              confirmButtonText:"Ok",
+            });
+          }
+        });
+      }
+    });
+
+  $('#button-info').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Para mais informações, selecione um item",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })}else{
+      const s = JSON.stringify(dadosSolicitacao);
+        $.ajax({
+          url:"/itensMaisInfo",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(s)
+        }).done((jade) => {
+          var html1 = `
+                    <div class="pageInfoContainer" style="margin-top:0 !important;">
+                      <div class="row">
+                        <div class="col-4 fundinSol text-start"> 
+                          <div class="row pageInfo-linhas">
+                            <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante.charAt(0).toUpperCase() + dadosSolicitacao.solicitante.slice(1)}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Data da Solicitação: <font color="#560101">${dadosSolicitacao.data}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Justificativa: <font color="#560101">${dadosSolicitacao.motivo}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
+                          </div>
+                        </div>
+                        <div class="col-8"> 
+                        <label for="carouselExample" style="margin-left:1px" id="info-qntItens">Quantidade Solicitada: ${jade.length}</label>
+                        <div id="carouselExample" class="carousel slide fundinItens">
+                          <div class="carousel-inner text-center">
+                            <div class="carousel-item active">
+                              <div class="row pageInfo-linhas">
+                                  <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Descricao: <font color="#560101">${jade[0][3]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Categoria: <font color="#560101">${jade[0][4]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Classificação: <font color="#560101">${jade[0][5]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                <b>Quantidade: <font color="#560101">${jade[0][6]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Unidade: <font color="#560101">${jade[0][7]}</font></b>
+                              </div>
+                            </div>
+                            `
+          var html2 = `
+                          <button class="carousel-control-prev" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+
+                    `
+          var html3 = `
+                    </div>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom:1.5em;">
+                      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
+                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar2">Rejeitar</button></div>
+                    </div>
+            `
+          if (jade.length == 1){
+            var html = html1 + `</div>` + html3
+          } else{
+            var html = html1
+            for (i in jade){
+              if (i==0){
+              }else{
+              html += `<div class="carousel-item">
+                          <div class="row pageInfo-linhas">
+                            <b>Item: <font color="#560101">${jade[i][2]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Descricao: <font color="#560101">${jade[i][3]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Categoria: <font color="#560101">${jade[i][4]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Classificação: <font color="#560101">${jade[i][5]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Quantidade: <font color="#560101">${jade[i][6]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Unidade: <font color="#560101">${jade[i][7]}</font></b>
+                          </div>
+                        </div>`
+            }
+          }
+            html += html2 + html3
+          }
+          Swal.fire({
+            title: "Informações da Solicitações",
+            width:'65em',
+            allowOutsideClick: false,
+            showCloseButton: true,
+            padding: 0 ,
+            showConfirmButton: false,
+            confirmButtonColor:'hwb(216 31% 1%)', 
+            html:html,
+          });
+
           $('#button-aprovar2').click(function () {
             const s = JSON.stringify(dadosSolicitacao);
             $.ajax({
@@ -609,68 +729,18 @@ function paginaAprovador(){
                   showConfirmButton: true,
                   confirmButtonColor:'hwb(216 31% 1%)', 
                   confirmButtonText:"Ok",
-                  
-                });
+                
+              });
               }
             });
           });
-  });
-  
+      });
+    }
 
-  $('#button-rejeitar').click(function () {
-    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
-    dadosSolicitacao = dadosSolicitacao[0];
-    if (!dadosSolicitacao){
-      Swal.fire({
-        titleText: "Selecione algum item para Rejeitar",
-        icon: "warning",
-        showConfirmButton: true,
-        confirmButtonText: "Ok",
-        confirmButtonColor:'hwb(216 31% 1%)',
-      })}else{
-        Swal.fire({
-          titleText: "Deseja Rejeitar a Solicitação?",
-          showCancelButton: true,
-          icon: "question",
-          focusConfirmButton: false,
-          allowOutsideClick: false,
-          confirmButtonText: "Sim",
-          confirmButtonColor:'hwb(216 31% 1%)',
-          cancelButtonText: "Não",
-        }).then((result) => {
-          if (result.value==true){
-            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
-            $.ajax({
-              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
-              type: "POST",
-              contentType: "application/json",
-              data: JSON.stringify(id_reprovar)
-            }).done((response) => {
-              if(response.value==true){
-                Swal.fire({
-                  titleText: "Solicitação de Compra Rejeitada",
-                  icon: "info",
-                  showConfirmButton: true,
-                  confirmButtonColor:'hwb(216 31% 1%)', 
-                });
-              };
-            });
-          }else{
-            Swal.fire({
-              titleText: "Solicitação Não Rejeitada",
-              icon: "warning",
-              showConfirmButton: true,
-              confirmButtonColor:'hwb(216 31% 1%)', 
-              confirmButtonText:"Ok",
-              
-            });
-          }
-        });
-      }
-      
-    });
+  
   });
-};
+}
+)};
 
 function confereComprasPendentes(){
   $.ajax({

@@ -121,6 +121,14 @@ def comprasPendentes(status):
         compras = []
         dados = cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall()
         for i in dados:
+            itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {i[0]}").fetchall()
+            itensDataTable = ''
+            if not itens == []:
+                for j in range(len(itens)):
+                    itensDataTable += itens[j][2] + ', '
+            itensDataTable = itensDataTable[:-1]
+            itensDataTable = itensDataTable[:-1]
+            print(itensDataTable)
             qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
             qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
             if qnt_cotacao_rejeitada != 0:
@@ -128,30 +136,40 @@ def comprasPendentes(status):
             compras.append({
                 'id_solicitacao':i[0],
                 'solicitante': i[1],
+                'itens': itensDataTable,
+                'qnt_itens': i[4],
                 'data': i[2],
-                'nomeItem': i[3],
-                'descricao': i[4],
-                'quantidade': i[5],
-                'unidade': i[6],
-                'motivo': i[7],
-                'setor':i[8],
+                'motivo': i[3],
+                'setor':i[5],
                 'qnt_cotacao': qnt_cotacao,
             })
         conn.close()
         return {'aaData': compras}
     except Exception as e:
+        print(e)
         return {'value': False}
+
+def itensMaisInfo(id_solicitacao):
+    try:
+        conn = sqlite3.connect('static/db/compras.db')
+        cursor = conn.cursor()
+        itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {id_solicitacao}").fetchall()
+        return itens
+    except Exception as e:
+        print(e)
+        return False
 
 def compras_updateSolicitacao(comprasPara_aprovar):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         cursor.execute(f"UPDATE solicitacao SET status=1 WHERE id_solicitacao='{comprasPara_aprovar['id_solicitacao']}'")
+        print("Aprovou!")
         conn.commit()
         conn.close()
         return True
     except Exception as e:
-        print(e)
+        print("Nao Aprovou: ",e)
         return e
 
 def rejeitarCompra(id):
