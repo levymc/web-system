@@ -503,7 +503,6 @@ function paginaAprovador(){
   $('#button-info').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
     dadosSolicitacao = dadosSolicitacao[0];
-    console.log(dadosSolicitacao);
     if (!dadosSolicitacao){
       Swal.fire({
         titleText: "Para mais informações, selecione um item",
@@ -519,19 +518,11 @@ function paginaAprovador(){
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((jade) => {
-          console.log(jade);
-          Swal.fire({
-            title: "Informações da Solicitações",
-            width:'70em',
-            allowOutsideClick: false,
-            showCloseButton: true,
-            padding: 0 ,
-            showConfirmButton: false,
-            confirmButtonColor:'hwb(216 31% 1%)', 
-            html:`
+          itens = [];
+          var html1 = `
                     <div class="pageInfoContainer" style="margin-bottom:2em;">
                       <div class="row">
-                        <div class="col fundinSol text-start"> 
+                        <div class="col fundinSol text-center"> 
                           <div class="row pageInfo-linhas">
                             <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante}</font></b>
                           </div>
@@ -545,10 +536,31 @@ function paginaAprovador(){
                             <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
                           </div>
                         </div>
-                        <div class="col fundinItens text-start"> 
-                          <div class="row pageInfo-linhas">
-                            <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                        <div id="carouselExample" class="carousel slide fundinItens">
+                          <div class="carousel-inner">
+                            <div class="carousel-item active">
+                              <div class="row pageInfo-linhas">
+                                <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                              </div>
+                            </div>
+
+                            `
+            var html2 = `
+                            <div class="carousel-item">
+                              <img src="..." class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                              <img src="..." class="d-block w-100" alt="...">
+                            </div>
                           </div>
+                          <button class="carousel-control-prev" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -557,6 +569,21 @@ function paginaAprovador(){
                       <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
                     </div>
                     `
+          if (jade.length == 1){
+            var html = html1 + html2
+          } else{
+            var html = html1 + html2
+          }
+          console.log('TAMANHO:', jade.length)
+          Swal.fire({
+            title: "Informações da Solicitações",
+            width:'50em',
+            allowOutsideClick: false,
+            showCloseButton: true,
+            padding: 0 ,
+            showConfirmButton: false,
+            confirmButtonColor:'hwb(216 31% 1%)', 
+            html:html,
                   });
                 }
               )};

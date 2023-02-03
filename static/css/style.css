@@ -236,6 +236,10 @@ body{
 #titleItens{
     font-size: 16px !important;
 }
+#btn-slide{
+    color: #0000007e !important;
+    background: #0000007e !important;
+}
 .fundinSol{
     margin-top: 2em;
     margin-right: 2em;
@@ -245,10 +249,11 @@ body{
     border: 1px solid rgba(0, 123, 255, 0.35);
 }
 .fundinItens{
+    height: 10em;
     margin-top: 2em;
     margin-right: 2em;
     padding-top: 1em; padding-bottom: 1.7em;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.793);
     border-radius: 5px ;
     border: 1px solid rgba(0, 0, 0, 0.35);
 }
