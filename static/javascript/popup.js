@@ -521,7 +521,7 @@ function paginaAprovador(){
           var html1 = `
                     <div class="pageInfoContainer" style="margin-top:0 !important;">
                       <div class="row">
-                        <div class="col fundinSol text-center"> 
+                        <div class="col-4 fundinSol text-start"> 
                           <div class="row pageInfo-linhas">
                             <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante}</font></b>
                           </div>
@@ -535,7 +535,7 @@ function paginaAprovador(){
                             <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
                           </div>
                         </div>
-                        <div class="col"> 
+                        <div class="col-8"> 
                         <label for="carouselExample" style="margin-left:1px" id="info-qntItens">Quantidade Solicitada: ${jade.length}</label>
                         <div id="carouselExample" class="carousel slide fundinItens">
                           <div class="carousel-inner text-center">
@@ -600,7 +600,7 @@ function paginaAprovador(){
           }
           Swal.fire({
             title: "Informações da Solicitações",
-            width:'80em',
+            width:'65em',
             allowOutsideClick: false,
             showCloseButton: true,
             padding: 0 ,
