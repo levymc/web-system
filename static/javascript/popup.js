@@ -559,8 +559,6 @@ function paginaAprovador(){
                                   <b>Unidade: <font color="#560101">${jade[0][7]}</font></b>
                               </div>
                             </div>
-                            </div>
-
                             `
           var html2 = `
                           <button class="carousel-control-prev" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -590,10 +588,25 @@ function paginaAprovador(){
               if (i==0){
               }else{
               html += `<div class="carousel-item">
-                                    <div class="row pageInfo-linhas">
-                                      <b>Item: <font color="#560101">${jade[i][2]}</font></b>
-                                    </div>
-                                  </div>`
+                          <div class="row pageInfo-linhas">
+                            <b>Item: <font color="#560101">${jade[i][2]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Descricao: <font color="#560101">${jade[i][3]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Categoria: <font color="#560101">${jade[i][4]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Classificação: <font color="#560101">${jade[i][5]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Quantidade: <font color="#560101">${jade[i][6]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Unidade: <font color="#560101">${jade[i][7]}</font></b>
+                          </div>
+                        </div>`
             }
           }
             html += html2 + html3
