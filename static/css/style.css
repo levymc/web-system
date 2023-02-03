@@ -270,6 +270,7 @@ body{
 .pageInfo-linhas{
     margin-top:0.5em;
     line-height: 3em !important;
+    font-size: 14px;
     /* color:#560101 */
 }
 

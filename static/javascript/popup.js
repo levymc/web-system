@@ -540,7 +540,28 @@ function paginaAprovador(){
                           <div class="carousel-inner">
                             <div class="carousel-item active">
                               <div class="row pageInfo-linhas">
-                                <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                                <div class="col text-end" style="margin-left:1.25em">
+                                  <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                                </div>
+                                <div class="col text-start">
+                                  <b>Descricao: <font color="#560101">${jade[0][3]}</font></b>
+                                </div>
+                              </div>
+                              <div class="row pageInfo-linhas text-start">
+                                <div class="col text-end">
+                                  <b>Categoria: <font color="#560101">${jade[0][4]}</font></b>
+                                </div>
+                                <div class="col text-start">
+                                  <b>Classificação: <font color="#560101">${jade[0][5]}</font></b>
+                                </div>
+                              </div>
+                              <div class="row pageInfo-linhas text-start">
+                                <div class="col text-end">
+                                  <b>Quantidade: <font color="#560101">${jade[0][6]}</font></b>
+                                </div>
+                                <div class="col text-start">
+                                  <b>Unidade: <font color="#560101">${jade[0][7]}</font></b>
+                                </div>
                               </div>
                             </div>
 
