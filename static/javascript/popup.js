@@ -699,6 +699,7 @@ function paginaAprovador(){
               titleText: "Deseja Rejeitar a Solicitação?",
               showCancelButton: true,
               icon: "question",
+              focusConfirmButton: false,
               allowOutsideClick: false,
               confirmButtonText: "Sim",
               confirmButtonColor:'hwb(216 31% 1%)',
