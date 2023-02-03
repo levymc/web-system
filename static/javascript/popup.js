@@ -502,6 +502,56 @@ function paginaAprovador(){
         };
     });
   });
+  $('#button-rejeitar').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Selecione algum item para Rejeitar",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })}else{
+        Swal.fire({
+          titleText: "Deseja Rejeitar a Solicitação?",
+          showCancelButton: true,
+          icon: "question",
+          focusConfirmButton: false,
+          allowOutsideClick: false,
+          confirmButtonText: "Sim",
+          confirmButtonColor:'hwb(216 31% 1%)',
+          cancelButtonText: "Não",
+        }).then((result) => {
+          if (result.value==true){
+            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+            $.ajax({
+              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(id_reprovar)
+            }).done((response) => {
+              if(response.value==true){
+                Swal.fire({
+                  titleText: "Solicitação de Compra Rejeitada",
+                  icon: "info",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                });
+              };
+            });
+          }else{
+            Swal.fire({
+              titleText: "Solicitação Não Rejeitada",
+              icon: "warning",
+              showConfirmButton: true,
+              confirmButtonColor:'hwb(216 31% 1%)', 
+              confirmButtonText:"Ok",
+            });
+          }
+        });
+      }
+    });
 
   $('#button-info').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
@@ -580,7 +630,7 @@ function paginaAprovador(){
                     </div>
                     <div class="row" style="margin-bottom:1.5em;">
                       <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
-                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
+                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar2">Rejeitar</button></div>
                     </div>
             `
           if (jade.length == 1){
@@ -623,125 +673,73 @@ function paginaAprovador(){
             showConfirmButton: false,
             confirmButtonColor:'hwb(216 31% 1%)', 
             html:html,
-                  });
-                }
-              )};
-                $('#button-aprovar2').click(function () {
-                  const s = JSON.stringify(dadosSolicitacao);
-                  $.ajax({
-                    url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(s)
-                  }).done((response) => {
-                    if(response.value==true){
-                      Swal.fire({
-                        titleText: "Solicitação de Compra Aprovada",
-                        text: "O processo de cotação já pode ser iniciado.",
-                        icon: "success",
-                        showConfirmButton: true,
-                        confirmButtonColor:'hwb(216 31% 1%)', 
-                      });
-                    };
-                });
-                });
-                $('#button-rejeitar2').click(function () {
-                  Swal.fire({
-                    titleText: "Deseja Rejeitar a Solicitação?",
-                    showCancelButton: true,
-                    icon: "question",
-                    focusConfirmButton: false,
-                    allowOutsideClick: false,
-                    confirmButtonText: "Sim",
-                    confirmButtonColor:'hwb(216 31% 1%)',
-                    cancelButtonText: "Não",
-                  }).then((result) => {
-                    if (result.value==true){
-                      const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
-                      $.ajax({
-                        url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify(id_reprovar)
-                      }).done((response) => {
-                        if(response.value==true){
-                          Swal.fire({
-                            titleText: "Solicitação de Compra Rejeitada",
-                            icon: "info",
-                            showConfirmButton: true,
-                            confirmButtonColor:'hwb(216 31% 1%)', 
-                          });
-                        };
-                      });
-                    }else{
-                      Swal.fire({
-                        titleText: "Solicitação Não Rejeitada",
-                        icon: "warning",
-                        showConfirmButton: true,
-                        confirmButtonColor:'hwb(216 31% 1%)', 
-                        confirmButtonText:"Ok",
-                  
-                });
-              }
-            });
           });
-  });
-  
 
-  $('#button-rejeitar').click(function () {
-    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
-    dadosSolicitacao = dadosSolicitacao[0];
-    if (!dadosSolicitacao){
-      Swal.fire({
-        titleText: "Selecione algum item para Rejeitar",
-        icon: "warning",
-        showConfirmButton: true,
-        confirmButtonText: "Ok",
-        confirmButtonColor:'hwb(216 31% 1%)',
-      })}else{
-        Swal.fire({
-          titleText: "Deseja Rejeitar a Solicitação?",
-          showCancelButton: true,
-          icon: "question",
-          focusConfirmButton: false,
-          allowOutsideClick: false,
-          confirmButtonText: "Sim",
-          confirmButtonColor:'hwb(216 31% 1%)',
-          cancelButtonText: "Não",
-        }).then((result) => {
-          if (result.value==true){
-            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+          $('#button-aprovar2').click(function () {
+            const s = JSON.stringify(dadosSolicitacao);
             $.ajax({
-              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+              url:"/comprasAprovar", // Envia status = 1 na tabela solicitacao
               type: "POST",
               contentType: "application/json",
-              data: JSON.stringify(id_reprovar)
+              data: JSON.stringify(s)
             }).done((response) => {
               if(response.value==true){
                 Swal.fire({
-                  titleText: "Solicitação de Compra Rejeitada",
-                  icon: "info",
+                  titleText: "Solicitação de Compra Aprovada",
+                  text: "O processo de cotação já pode ser iniciado.",
+                  icon: "success",
                   showConfirmButton: true,
                   confirmButtonColor:'hwb(216 31% 1%)', 
                 });
               };
-            });
-          }else{
+          });
+          });
+          $('#button-rejeitar2').click(function () {
             Swal.fire({
-              titleText: "Solicitação Não Rejeitada",
-              icon: "warning",
-              showConfirmButton: true,
-              confirmButtonColor:'hwb(216 31% 1%)', 
-              confirmButtonText:"Ok",
-              
+              titleText: "Deseja Rejeitar a Solicitação?",
+              showCancelButton: true,
+              icon: "question",
+              allowOutsideClick: false,
+              confirmButtonText: "Sim",
+              confirmButtonColor:'hwb(216 31% 1%)',
+              cancelButtonText: "Não",
+            }).then((result) => {
+              if (result.value==true){
+                const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+                $.ajax({
+                  url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+                  type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(id_reprovar)
+                }).done((response) => {
+                  if(response.value==true){
+                    Swal.fire({
+                      titleText: "Solicitação de Compra Rejeitada",
+                      icon: "info",
+                      showConfirmButton: true,
+                      confirmButtonColor:'hwb(216 31% 1%)', 
+                    });
+                  };
+                });
+              }else{
+                Swal.fire({
+                  titleText: "Solicitação Não Rejeitada",
+                  icon: "warning",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                  confirmButtonText:"Ok",
+                
+              });
+              }
             });
-          }
-        });
-      }
-      
-    });
+          });
+      });
+    }
+
+  
   });
-};
+}
+)};
 
 function confereComprasPendentes(){
   $.ajax({
