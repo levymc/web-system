@@ -3,11 +3,12 @@ import sqlite3, requests, sqlite_funcs, json, hashlib
 from flask_mail import Mail, Message
 from werkzeug.exceptions import abort
 from datetime import timedelta
+from waitress import serve
+
+mode = "."
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.permanent_session_lifetime = timedelta(seconds=2)
-# app.config['SERVER_NAME'] = 'sistema.tecplas:3000'
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -221,4 +222,7 @@ def confere():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=3000) #, use_reloader=False
+    if mode == 'dev':
+        app.run(debug=True, host='0.0.0.0', port=3000)
+    else:
+        serve(app, host='0.0.0.0', port=3000, threads=5) #, use_reloader=False

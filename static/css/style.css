@@ -91,6 +91,10 @@ body.swal2-height-auto {
 }
 .loginCompras{
     text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    margin-bottom: 2em;
 }
 .loginFormContainer{
     z-index: 0;

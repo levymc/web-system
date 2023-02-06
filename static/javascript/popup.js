@@ -2,9 +2,9 @@ function newPopup(){
     Swal.fire({
         title: 'Contato Processo',
         html: `<div class="loginCompras">
-            <input type="text" id="nome_contato" name="nome" class="swal2-input" placeholder="Nome">
-            <input type="text" id="motivo_contato" name="motivo" class="swal2-input" placeholder="Motivo">
-            <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="500" style="resize:none; height:10em !important;" class="swal2-textarea"  maxlength="200" placeholder="Descrição"></textarea>
+            <input type="text" id="nome_contato" style="margin-top:1.2em;" name="nome" class="form-control" placeholder="Nome">
+            <input type="text" id="motivo_contato" style="margin-top:1.2em;" name="motivo" class="form-control" placeholder="Motivo">
+            <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="8" style="margin-top:1.2em;" class="form-control"  maxlength="200" placeholder="Descrição"></textarea>
             </div>`,
         confirmButtonText: 'Enviar',
         confirmButtonColor:'hwb(216 31% 1%)',
