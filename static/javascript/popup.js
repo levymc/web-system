@@ -2,9 +2,21 @@ function newPopup(){
     Swal.fire({
         title: 'Contato Processo',
         html: `<div class="loginCompras">
+<<<<<<< HEAD
             <input type="text" id="nome_contato" style="margin-top:1.2em;" name="nome" class="form-control" placeholder="Nome">
             <input type="text" id="motivo_contato" style="margin-top:1.2em;" name="motivo" class="form-control" placeholder="Motivo">
             <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="8" style="margin-top:1.2em;" class="form-control"  maxlength="200" placeholder="Descrição"></textarea>
+=======
+        <div class="row" style="width:60%; margin-bottom:1em, margin-left:auto; margin-right:auto">
+            <input type="text" id="nome_contato" name="nome" class="swal2-input" placeholder="Nome">
+        </div>
+        <div class="row" style="width:60%; margin-bottom:1em, margin-left:auto; margin-right:auto">
+            <input type="text" id="motivo_contato" name="motivo" class="swal2-input" placeholder="Motivo">
+        </div>
+        <div class="row" style="width:60%; margin-bottom:1em, margin-left:auto !important; margin-right:auto !important">
+            <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="500" style="height:10em !important;" class="swal2-textarea"  maxlength="200" placeholder="Descrição"></textarea>
+        </div>
+>>>>>>> pagePendAJAX
             </div>`,
         confirmButtonText: 'Enviar',
         confirmButtonColor:'hwb(216 31% 1%)',
@@ -781,8 +793,6 @@ function loginComprador(){
         <tr>
           <th scope="col">Data da Solicitação</th>
           <th scope="col">Usuário</th>
-          <th scope="col">Item</th>
-          <th scope="col">Descrição</th>
           <th scope="col">Justificativa</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
@@ -813,8 +823,6 @@ function loginComprador(){
         'columns': [
         { data : 'data', "width": "10%"},
         { data : 'solicitante', "width": "12.5%"}, 
-        { data : 'nomeItem', "width": "9.375%"},
-        { data : 'descricao', "width": "23%"},
         { data : 'motivo', "width": "15.625%"},
         { data : 'setor', "width": "12.5%"},
         { data : 'qnt_cotacao', "width": "8%"},
