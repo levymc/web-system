@@ -359,8 +359,16 @@ body.swal2-height-auto {
 }
 .swal2-input{
     padding:1em;
-    margin: 0 !important;
     box-sizing: border-box;
+    margin-left: 40%;
+    margin-right: 60%;
+}
+.swal2-textarea{
+    padding:1em;
+    box-sizing: border-box;
+    margin-left: 40%;
+    margin-right: 60%;
+    margin-bottom: 2em;
 }
 .swal2-html-container input{
     font-size: 14px;
