@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 from datetime import timedelta
 from waitress import serve
 
-mode = "."
+mode = "dev"
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -49,15 +49,12 @@ def second():
 @app.route("/acesso", methods=["POST", "GET"])
 def acessoSistema():
     global result
-    usuario = None
     result = {
         'usuario': str(request.values.get('formLoginUsuario')),
         'senha': str(request.values.get('formLoginSenha')),
     }
     resposta = sqlite_funcs.confereUsuario(result['usuario'], result['senha'])
     if resposta == True:
-        # if 'usuario' in session:
-        #     usuario = session['usuario']
         return render_template('second.html')
     elif resposta == "vazio":
         flash(f"Digite o usuário e a senha!", "warning")

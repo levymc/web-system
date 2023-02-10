@@ -86,7 +86,7 @@ def confereUsuario(usuario, senha):
 def solicitacaoComprasInserir(result):
     resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
     itens = result['itens']
-    # print(resultado, itens)
+    # print("AAAAA: ", resultado, itens)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
@@ -101,12 +101,22 @@ def solicitacaoComprasInserir(result):
                                         WHERE solicitante = '{result['usuario']}'
                                         AND motivo = '{result['motivo']}'
                                         AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
-        for i in itens:
+        try:
+            for i in itens: #### FAZER DIFERENCA PARA QUNDO TEM MAIS DE 1 ITEM OU apenas 1
+                print("OII!")
+                cursor.execute(f"""
+                               INSERT INTO itens
+                               (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
+                               VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                               (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
+        except TypeError:
+            print(itens)
             cursor.execute(f"""
-                           INSERT INTO itens
-                           (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
-                           VALUES (?, ?, ?, ?, ?, ?, ?)""",
-                           (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
+                            INSERT INTO itens
+                            (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
+                            VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                            (id_solicitacao, itens[0], itens[1], itens[2], itens[3], itens[4],itens[5]))
+                
         conn.commit()
         conn.close()
         return True
