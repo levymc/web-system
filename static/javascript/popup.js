@@ -132,7 +132,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Nome do Item (forma genérica)</label>
-        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="Nome do Item" style="width: 80%">
+        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="Nome do Item" style="width: 80%; margin-left:0 !important;">
         </div>
       <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
         <label for="descricao_solicitacao">Descrição  (especificações)</label>
@@ -170,7 +170,7 @@ function solicitacaoCompra(){
     <div class="col">
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="quantidade_solicitacao">Quantidade</label>             
-        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="Quantidade solicitada" style="width: 80%">
+        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="Quantidade solicitada" style="width: 80%; margin-left:0 !important;">
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
@@ -199,7 +199,7 @@ function solicitacaoCompra(){
           <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
         </select>
       </div>
-        <div class="fundinSol">
+        <div class="fundinSol" style="width:90% !important; ">
           <div class="row text-start" style="margin-top:0.9em;">
             <label for="motivo_solicitacao" style="margin-left:1.25em !important;">Justificativa</label>
             <input type="text" id="motivo_solicitacao" name="motivo_solicitacao" class="swal2-input" placeholder="Justificativa da Solicitação"></input>
@@ -239,7 +239,7 @@ function solicitacaoCompra(){
         </div>
     </div>
   </div>
-  <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-end" style="padding-right:3em;padding-top:0.5em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
   <p class="text-center" style="font-size:14px;"><strong> Em caso de mais de um item, clicar em 'Add Item' antes de Enviar a Solicitação</strong></p>
   
   `
