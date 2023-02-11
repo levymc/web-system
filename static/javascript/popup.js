@@ -838,6 +838,9 @@ function loginComprador(){
         }else{
           novaCotacao(data_Solicitacao); 
         }
+        }else{
+          novaCotacao(data_Solicitacao); 
+        }
     });
 
     $('#button-cotacao').click(function () {
