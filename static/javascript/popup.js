@@ -154,6 +154,7 @@ function solicitacaoCompra(){
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="classificacao">Classificação </label>
         <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="classificacao">
+        <option value="" disabled selected>Classificação</option>
           <optgroup label="Material Novo">
             <option>Investimento</option>
             <option>Obra/Infraestrutura</option>
