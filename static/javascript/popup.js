@@ -835,8 +835,9 @@ function loginComprador(){
         data_Solicitacao = data_Solicitacao[0]
         if (!data_Solicitacao){
           Swal.fire({icon:"error", titleText:"Selecione Alguma Compra", confirmButtonColor:'hwb(216 31% 1%)',})
+        }else{
+          novaCotacao(data_Solicitacao); 
         }
-        novaCotacao(data_Solicitacao); 
     });
 
     $('#button-cotacao').click(function () {
@@ -1252,6 +1253,15 @@ function editarCotacao(id){
 };
 
 function novaCotacao(data_Solicitacao){
+  const s = JSON.stringify(data_Solicitacao);
+  $.ajax({
+    url:"/itensMaisInfo", /// ARRUMAR A PARTIR DAQUI!!
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(s)
+  }).done((itens) => {console.log(itens)
+
+  });
   Swal.fire({
     title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
     width: '70em',
