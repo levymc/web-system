@@ -1325,20 +1325,12 @@ function novaCotacao(data_Solicitacao){
           </div>
           <div class="fundoItensGrupo">
             <div class="row">
-              <div class="col">
+              <div class="col text-start">
                 <div class="text-start seletorNone" id="labelItemCotado">Item Cotado: </div>
                 <select class="selectClass2" id="itemCotacao">
                   <option value="" disabled selected>Selecione Um item para Cotar</option>
                   ${htmlItens}
                 </select>
-              </div>
-              <div class="col">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="mesmoFornecedor" name="mesmoFornecedor">
-                  <label class="form-check-label seletorNone" for="mesmoFornecedor">
-                    Mesmo Fornecedor
-                  </label>
-                </div>
               </div>
               <div class="col">
                 <div class="text-center seletorNone" style="padding-top:2.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></div>
@@ -1440,46 +1432,58 @@ function novaCotacao(data_Solicitacao){
         })
       }
     });
+    var dict = new Map();
     $('#addCotacao').click(function(){ //
+      Swal.getPopup().querySelector('#swal2-validation-message').style.display = 'none';
       clicks += 1;
       var fornecedor = Swal.getPopup().querySelector('#fornecedor').value
       var contato = Swal.getPopup().querySelector('#contato_fornecedor').value
       var frete = Swal.getPopup().querySelector('#frete').value
       var inf_extra = Swal.getPopup().querySelector('#inf_extra').value
       var validade_cotacao = Swal.getPopup().querySelector('#validade_cotacao').value
-      var mesmoFornecedor = Swal.getPopup().querySelector('#mesmoFornecedor')
       var infoCotacao = {
         fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
         valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
         unidade: Swal.getPopup().querySelector('#unidade').value
       }
       var itemCotacaoAtual = Swal.getPopup().querySelector('#itemCotacao');
-      var itemText= itemCotacaoAtual.options[itemCotacaoAtual.selectedIndex].text;
-      var table = document.getElementById("tableCotacoes"); 
-      if (table.rows.length == 0){
-        var htmlItemCotacao = `
-          <thead style="background:white;">
-            <tr>
-              <th scope="col">nº</th>
-              <th scope="col">Item</th>
-            </tr>
-          </thead>
-          <tbody>
+      if (itemCotacaoAtual.value != ''){
+        var itemText= itemCotacaoAtual.options[itemCotacaoAtual.selectedIndex].text;
+        var table = document.getElementById("tableCotacoes"); 
+          console.log(dict.has(itemText));
+          if (table.rows.length == 0){
+            var htmlItemCotacao = `
+              <thead style="background:white;">
+                <tr>
+                  <th scope="col">nº</th>
+                  <th scope="col">Item</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" style="background:white;">${clicks}</th>
+                  <td style="background:white;">${itemText}</td>
+                </tr>
+            `
+            dict.set(itemText, itemCotacaoAtual.value);
+            document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlItemCotacao+'</tbody>');
+          }else if (dict.has(itemText) == false){
+            var htmlItemCotacao = `
             <tr>
               <th scope="row" style="background:white;">${clicks}</th>
               <td style="background:white;">${itemText}</td>
             </tr>
-        `
+            `
+            dict.set(itemText, itemCotacaoAtual.value);
+            document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlItemCotacao+'</tbody>');
+          }else{
+            Swal.showValidationMessage(`Item Já Cotado`);
+          }
       }else{
-        var htmlItemCotacao = `
-        <tr>
-          <th scope="row" style="background:white;">${clicks}</th>
-          <td style="background:white;">${itemTextAQW}</td>
-        </tr>
-        `
+        Swal.showValidationMessage(`Selecione um Item`);
+        clicks = 0;
       }
-      document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlItemCotacao+'</tbody>');
-      console.log(infoCotacao);
+
       // Swal.getPopup().querySelector('#fornecedor').value = '';
       // Swal.getPopup().querySelector('#contato').value = '';
       // Swal.getPopup().querySelector('#frete').value = '';
