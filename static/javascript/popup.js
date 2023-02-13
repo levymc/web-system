@@ -1427,7 +1427,9 @@ function novaCotacao(data_Solicitacao){
       if (resposta.length == 1){
         var item = resposta[0][2];
       }else {
-        var item = resposta[clicks-1][2];
+        if(clicks <= resposta.length){
+          var item = resposta[clicks-1][2];
+        }
       }
       if (table.rows.length == 0){
         var htmlCotacoes1 = `
@@ -1444,6 +1446,8 @@ function novaCotacao(data_Solicitacao){
           </tr>
         `
         document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
+      }else if(clicks > resposta.length){
+        Swal.showValidationMessage(`Cada Item já possui a sua Cotação`)
       }else{
         var htmlCotacoes2 = ``
         htmlCotacoes2 += `
