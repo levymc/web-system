@@ -1441,29 +1441,51 @@ function novaCotacao(data_Solicitacao){
       }
     });
     $('#addCotacao').click(function(){ //
+      clicks += 1;
       var fornecedor = Swal.getPopup().querySelector('#fornecedor').value
       var contato = Swal.getPopup().querySelector('#contato_fornecedor').value
       var frete = Swal.getPopup().querySelector('#frete').value
       var inf_extra = Swal.getPopup().querySelector('#inf_extra').value
       var validade_cotacao = Swal.getPopup().querySelector('#validade_cotacao').value
       var mesmoFornecedor = Swal.getPopup().querySelector('#mesmoFornecedor')
-      if(mesmoFornecedor.checked){
-        var infoCotacao = {
-          fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
-          valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
-          unidade: Swal.getPopup().querySelector('#unidade').value
-        }
-        console.log(infoCotacao);
-      }else{
-        Swal.getPopup().querySelector('#fornecedor').value = '';
-        Swal.getPopup().querySelector('#contato').value = '';
-        Swal.getPopup().querySelector('#frete').value = '';
-        Swal.getPopup().querySelector('#inf_extra').value = '';
-        Swal.getPopup().querySelector('#validade_cotacao').value = '';
-        console.log("limpo")
+      var infoCotacao = {
+        fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
+        valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+        unidade: Swal.getPopup().querySelector('#unidade').value
       }
-      clicks += 1;
-      console.log("itemCotacao: ",Swal.getPopup().querySelector('#itemCotacao').value);
+      var itemCotacaoAtual = Swal.getPopup().querySelector('#itemCotacao');
+      var itemText= itemCotacaoAtual.options[itemCotacaoAtual.selectedIndex].text;
+      var table = document.getElementById("tableCotacoes"); 
+      if (table.rows.length == 0){
+        var htmlItemCotacao = `
+          <thead style="background:white;">
+            <tr>
+              <th scope="col">nº</th>
+              <th scope="col">Item</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" style="background:white;">${clicks}</th>
+              <td style="background:white;">${itemText}</td>
+            </tr>
+        `
+      }else{
+        var htmlItemCotacao = `
+        <tr>
+          <th scope="row" style="background:white;">${clicks}</th>
+          <td style="background:white;">${itemTextAQW}</td>
+        </tr>
+        `
+      }
+      document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlItemCotacao+'</tbody>');
+      console.log(infoCotacao);
+      // Swal.getPopup().querySelector('#fornecedor').value = '';
+      // Swal.getPopup().querySelector('#contato').value = '';
+      // Swal.getPopup().querySelector('#frete').value = '';
+      // Swal.getPopup().querySelector('#inf_extra').value = '';
+      // Swal.getPopup().querySelector('#validade_cotacao').value = '';
+      // console.log("limpo")
       var dict_values = {
         id_solicitacao: data_Solicitacao.id_solicitacao.value,
         solicitante: data_Solicitacao.solicitante, 
@@ -1475,43 +1497,6 @@ function novaCotacao(data_Solicitacao){
         frete: Swal.getPopup().querySelector('#frete').value,
         inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
         validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
-      }
-      // console.log(`CLicks: ${clicks}`,resposta);
-      var table = document.getElementById("tableCotacoes");
-      if (resposta.length == 1){
-        var item = resposta[0][2];
-      }else {
-        if(clicks <= resposta.length){
-          var item = resposta[clicks-1][2];
-        }
-      }
-      if (table.rows.length == 0){
-        var htmlCotacoes1 = `
-        <thead style="background:white;">
-          <tr>
-            <th scope="col">nº</th>
-            <th scope="col">Item</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row" style="background:white;">${clicks}</th>
-            <td style="background:white;">${item}</td>
-          </tr>
-        `
-        document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
-      }else if(clicks > resposta.length){
-        Swal.showValidationMessage(`Cada Item já possui a sua Cotação`)
-      }else{
-        var htmlCotacoes2 = ``
-        htmlCotacoes2 += `
-          <tr>
-            <th scope="row" style="background:white;">${clicks}</th>
-            <td style="background:white;">${item}</td>
-          </tr>
-        </tbody>
-      `
-      document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes2);      
       }
     })
     clicks = 0;
