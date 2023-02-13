@@ -933,6 +933,7 @@ function loginComprador(){
         });
       
       $('#button-novaCotacao2').click(function () {
+        console.log("TESTE: ", data)
         Swal.fire({
           // titleText: text,
           title: `${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
@@ -953,10 +954,7 @@ function loginComprador(){
       <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
           <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
           <b>Data da Solicitação:</b> <font color="#560101">${data.data}</font><br />
-          <b>Item Solicitado:</b> <font color="#560101">${data.nomeItem}</font><br />
-          <b>Descrição:</b> <font color="#560101">${data.descricao}</font><br />
-          <b>Quantidade Solicitada:</b> <font color="#560101">${data.quantidade}</font><br />
-          <b>Unidade:</b> <font color="#560101">${data.unidade}</font><br />
+          <b>Item Solicitado:</b> <font color="#560101">OOOOI</font><br />
           <b>Setor:</b> <font color="#560101">${data.setor}</font><br />
           <b>Justificativa:</b> <font color="#560101">${data.motivo}</font><br />
       </div>
@@ -1259,9 +1257,15 @@ function novaCotacao(data_Solicitacao){
     type: "POST",
     contentType: "application/json",
     data: JSON.stringify(s)
-  }).done((itens) => {console.log(itens)
-
-  });
+  }).done((resposta) => {
+    var itens = ""
+    for (var i in resposta){
+      console.log(resposta[i][1])
+      itens += String(resposta[i][2])
+      itens += ", "
+    }
+    console.log(itens);
+  
   Swal.fire({
     title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
     width: '70em',
@@ -1279,10 +1283,7 @@ function novaCotacao(data_Solicitacao){
       <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
           <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
           <b>Data da Solicitação:</b> <font color="#560101">${data_Solicitacao.data}</font><br />
-          <b>Item Solicitado:</b> <font color="#560101">${data_Solicitacao.nomeItem}</font><br />
-          <b>Descrição:</b> <font color="#560101">${data_Solicitacao.descricao}</font><br />
-          <b>Quantidade Solicitada:</b> <font color="#560101">${data_Solicitacao.quantidade}</font><br />
-          <b>Unidade:</b> <font color="#560101">${data_Solicitacao.unidade}</font><br />
+          <b>Item Solicitado:</b> <font color="#560101">${itens}</font><br />
           <b>Setor:</b> <font color="#560101">${data_Solicitacao.setor}</font><br />
           <b>Justificativa:</b> <font color="#560101">${data_Solicitacao.motivo}</font><br />
       </div>
@@ -1394,4 +1395,5 @@ function novaCotacao(data_Solicitacao){
         })
       }
     });
+  });
 };
