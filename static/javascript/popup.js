@@ -1298,19 +1298,63 @@ function novaCotacao(data_Solicitacao){
         </div>
       </div>
       <div class="col">
-          <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
-              <div class="col" style="width:110%">
-                <div class="input-group mb-3">
-                    <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
-                    <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+        <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+            <div class="col" style="width:110%">
+              <div class="input-group mb-3">
+                  <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                  <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+              </div>
+              <div class="input-group mb-3">
+                  <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                  <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+              </div>
+              <div class="input-group mb-3">
+                  <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                  <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+              </div>
+          </div>
+          <div class="col" style="margin-left:3em;">
+            <div class="input-group mb-3">
+                <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+            </div>
+          </div>
+          <div class="fundoItensGrupo">
+            <div class="row">
+              <div class="col">
+                <div class="text-start seletorNone" id="labelItemCotado">Item Cotado: </div>
+                <select class="selectClass2" id="itemCotacao">
+                  <option value="" disabled selected>Selecione Um item para Cotar</option>
+                  ${htmlItens}
+                </select>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label seletorNone" for="flexCheckDefault">
+                    Mesmo Fornecedor
+                  </label>
                 </div>
+              </div>
+              <div class="col">
+                <div class="text-center seletorNone" style="padding-top:2.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
                 <div class="input-group mb-3">
-                    <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
-                    <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                  <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                  <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
                 </div>
+              </div>
+              <div class="col">
                 <div class="input-group mb-3">
-                    <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
-                    <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
+                  <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                  <select class="selectClass2" aria-label="UN" id="unidade" style="width:80px; background:white !important; font-weight: normal; color: black !important">
                     <option style="font-size:14px;" value="" disabled selected>UN</option>
                     <option style="font-size:14px;">Bloco</option>
                     <option style="font-size:14px;">Bobina</option>
@@ -1333,41 +1377,18 @@ function novaCotacao(data_Solicitacao){
                     <option style="font-size:14px;">Saco</option>
                     <option style="font-size:14px;">Unidade</option>
                     <option style="font-size:14px;">Outro... (complementar na descrição)</option>
-                    </select>
-                </div>
-                <div class="input-group mb-3">
-                    <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
-                    <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
-                    <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
-                </div>
-            </div>
-            <div class="col" style="margin-left:3em;">
-                <div class="input-group mb-3">
-                    <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
-                    <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
-                </div>
-                <div class="input-group mb-3">
-                    <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
-                    <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
-                </div>
-                <div class="row noMeio">
-                  <label for="classificacao" id="labelItemCotado">Item Cotado: </label>
-                  <select class="selectClass2" id="itemCotacao">
-                    <option value="" disabled selected>Selecione Um item para Cotar</option>
-                    ${htmlItens}
                   </select>
                 </div>
-                <div class="row">
-                  <p class="text-end" style="padding-top:0.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
-                </div>
-                <div class="tableCotacoes">
-                  <table class="table" id="tableCotacoes">
-                  </table>
-                </div>
+              </div>
             </div>
+            <div class="row">
+              <div class="tableCotacoes">
+                <table class="table" id="tableCotacoes">
+                </table>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
   </div>
@@ -1445,7 +1466,7 @@ function novaCotacao(data_Solicitacao){
       }
       if (table.rows.length == 0){
         var htmlCotacoes1 = `
-        <thead>
+        <thead style="background:white;">
           <tr>
             <th scope="col">nº</th>
             <th scope="col">Item</th>
@@ -1453,8 +1474,8 @@ function novaCotacao(data_Solicitacao){
         </thead>
         <tbody>
           <tr>
-            <th scope="row">${clicks}</th>
-            <td>${item}</td>
+            <th scope="row" style="background:white;">${clicks}</th>
+            <td style="background:white;">${item}</td>
           </tr>
         `
         document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
@@ -1464,8 +1485,8 @@ function novaCotacao(data_Solicitacao){
         var htmlCotacoes2 = ``
         htmlCotacoes2 += `
           <tr>
-            <th scope="row">${clicks}</th>
-            <td>${item}</td>
+            <th scope="row" style="background:white;">${clicks}</th>
+            <td style="background:white;">${item}</td>
           </tr>
         </tbody>
       `

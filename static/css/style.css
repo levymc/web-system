@@ -285,7 +285,8 @@ body.swal2-height-auto {
 }
 .form-check{
     line-height: 1.2em !important;
-    text-align: left;
+    text-align: center;
+    padding-top: 2.5em !important;
 }
 .form-check-input{
     padding-bottom: 2px !important;
@@ -293,8 +294,8 @@ body.swal2-height-auto {
     width: 15px !important;
 }
 .form-check-label{
-    padding-top: 3px !important;
-    font-size: 12px;
+    font-size: 14px;
+    margin-top: 3px;
 }
 .fundoItensGrupo{
     margin-top: 1.25em;
@@ -386,11 +387,20 @@ body.swal2-height-auto {
 }
 #labelItemCotado{
     margin-top: 1em;
-    text-align: left;
+    text-align: left !important;
     font-weight: bold;
     color: #550000;
     font-size: 16px;
+    padding-bottom: 0.75em;
 }
+.seletorNone{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+ }
 .noMeio{
     margin-left: auto !important;
     margin-right: auto !important;
