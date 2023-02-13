@@ -1250,6 +1250,8 @@ function editarCotacao(id){
   });
 };
 
+var clicks = 0;
+
 function novaCotacao(data_Solicitacao){
   const s = JSON.stringify(data_Solicitacao);
   $.ajax({
@@ -1407,7 +1409,26 @@ function novaCotacao(data_Solicitacao){
       }
     });
     $('#addCotacao').click(function(){ //
+      clicks += 1;
+      var dict_values = {
+        id_solicitacao: data_Solicitacao.id_solicitacao.value,
+        solicitante: data_Solicitacao.solicitante, 
+        qnt_solicitada: data_Solicitacao.quantidade,
+        unidade: unidade.value,
+        solicitante: data_Solicitacao.solicitante,
+        fornecedor: fornecedor.value,
+        valor_unitario: valor_unitario.value,
+        frete: Swal.getPopup().querySelector('#frete').value,
+        inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+        validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
+      }
+      console.log(`CLicks: ${clicks}`,resposta);
       var table = document.getElementById("tableCotacoes");
+      if (resposta.length == 1){
+        var item = resposta[0][2];
+      }else {
+        var item = resposta[clicks-1][2];
+      }
       if (table.rows.length == 0){
         var htmlCotacoes1 = `
         <thead>
@@ -1418,8 +1439,8 @@ function novaCotacao(data_Solicitacao){
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td>Levy</td>
+            <th scope="row">${clicks}</th>
+            <td>${item}</td>
           </tr>
         `
         document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
@@ -1427,13 +1448,14 @@ function novaCotacao(data_Solicitacao){
         var htmlCotacoes2 = ``
         htmlCotacoes2 += `
           <tr>
-            <th scope="row">2</th>
-            <td>Levy</td>
+            <th scope="row">${clicks}</th>
+            <td>${item}</td>
           </tr>
         </tbody>
       `
       document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes2);      
       }
     })
+    clicks = 0;
   });
 };
