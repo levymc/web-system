@@ -1261,10 +1261,14 @@ function novaCotacao(data_Solicitacao){
     data: JSON.stringify(s)
   }).done((resposta) => {
     var itens = ""
+    var htmlItens = ''
     for (var i in resposta){
       console.log(resposta[i][1])
       itens += String(resposta[i][2])
       itens += ", "
+      htmlItens += `
+        <option value="${resposta[i][1]}">${resposta[i][2]}</option>
+      `
     }
     itens = itens.substring(0, itens.length-2);
   
@@ -1349,6 +1353,13 @@ function novaCotacao(data_Solicitacao){
                     <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
                     <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
                 </div>
+                <div class="row noMeio">
+                  <label for="classificacao" id="labelItemCotado">Item Cotado: </label>
+                  <select class="selectClass2" id="itemCotacao">
+                    <option value="" disabled selected>Selecione Um item para Cotar</option>
+                    ${htmlItens}
+                  </select>
+                </div>
                 <div class="row">
                   <p class="text-end" style="padding-top:0.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
                 </div>
@@ -1410,6 +1421,7 @@ function novaCotacao(data_Solicitacao){
     });
     $('#addCotacao').click(function(){ //
       clicks += 1;
+      console.log("itemCotacao: ",Swal.getPopup().querySelector('#itemCotacao').value);
       var dict_values = {
         id_solicitacao: data_Solicitacao.id_solicitacao.value,
         solicitante: data_Solicitacao.solicitante, 
@@ -1422,7 +1434,7 @@ function novaCotacao(data_Solicitacao){
         inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
         validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
       }
-      console.log(`CLicks: ${clicks}`,resposta);
+      // console.log(`CLicks: ${clicks}`,resposta);
       var table = document.getElementById("tableCotacoes");
       if (resposta.length == 1){
         var item = resposta[0][2];
