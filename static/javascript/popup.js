@@ -1461,7 +1461,7 @@ function novaCotacao(data_Solicitacao){
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row" style="background:white;">${clicks}</th>
+                  <th scope="row" style="background:white;">${table.rows.length+1}</th>
                   <td style="background:white;">${itemText}</td>
                 </tr>
             `
@@ -1470,7 +1470,7 @@ function novaCotacao(data_Solicitacao){
           }else if (dict.has(itemText) == false){
             var htmlItemCotacao = `
             <tr>
-              <th scope="row" style="background:white;">${clicks}</th>
+              <th scope="row" style="background:white;">${table.rows.length}</th>
               <td style="background:white;">${itemText}</td>
             </tr>
             `
