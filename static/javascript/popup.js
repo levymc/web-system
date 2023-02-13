@@ -1250,14 +1250,6 @@ function editarCotacao(id){
   });
 };
 
-function grupoOuItem(valor){
-  if (valor == 1){
-    console.log(111111)
-  }else if (valor == 2){
-    console.log(222222)
-  }
-}
-
 function novaCotacao(data_Solicitacao){
   const s = JSON.stringify(data_Solicitacao);
   $.ajax({
@@ -1355,20 +1347,13 @@ function novaCotacao(data_Solicitacao){
                     <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
                     <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="porGrupo">
-                  <label class="form-check-label" for="porGrupo">
-                    Cotação por Grupo
-                  </label>
+                <div class="row">
+                  <p class="text-end" style="padding-top:0.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
                 </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="porItem">
-                  <label class="form-check-label" for="porItem">
-                    Cotação por Item
-                  </label>
+                <div class="tableCotacoes">
+                  <table class="table" id="tableCotacoes">
+                  </table>
                 </div>
-              <div class="row" id="campoItensGrupo">
-              </div>
             </div>
         </div>
       </div>
@@ -1421,40 +1406,29 @@ function novaCotacao(data_Solicitacao){
         })
       }
     });
-    $('#porGrupo').click(function(){ //
-      // console.log(Swal.getPopup().querySelector('#porGrupo').value)
-      $('#campoItensGrupo').empty();
-      var htmlPorGrupo1 = `<section class="fundoItensGrupo"><p style="margin-top:1em;">Selecione os Itens para formar o Grupo: </p>`
-      var htmlPorGrupo2 = ``
-      for (var i in resposta){
-        console.log("nomeItem: ", resposta[i][2])
-        htmlPorGrupo2 += `
-        <div class="form-check" style="margin-bottom: 1em">
-          <input class="form-check-input" type="checkbox" value="${i}" id="item${i}">
-          <label class="form-check-label" for="item${i}">
-            ${resposta[i][2]}
-          </label>
-        </div>
-        `
-      }
-      var htmlPorGrupo = htmlPorGrupo1 + htmlPorGrupo2 + "</section>"
-      document.getElementById("campoItensGrupo").insertAdjacentHTML("beforeend", htmlPorGrupo)
-    })
-    $('#porItem').click(function(){
-      // console.log(Swal.getPopup().querySelector('#porItem').value)
-      $('#campoItensGrupo').empty();
-      var htmlPorItem1 = `
-      <select class="selectClass1" style="width: 80%; margin-top: 1.2em">
-        <option value='' disabled selected>Selecione um Item</option>
+    $('#addCotacao').click(function(){ //
+      var table = document.getElementById("tableCotacoes");
+      if (table.rows.length == 0){
+        var htmlCotacoes1 = `
+        <thead>
+          <tr>
+            <th scope="col">nº</th>
+            <th scope="col">Item</th>
+          </tr>
+        </thead>
+        <tbody>`
+        document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
+      }else{
+        var htmlCotacoes2 = ``
+        htmlCotacoes2 += `
+          <tr>
+            <th scope="row">1</th>
+            <td>Levy</td>
+          </tr>
+        </tbody>
       `
-      var htmlPorItem2 = ``
-      for (var i in resposta){
-        htmlPorItem2 += `
-        <option value="${i}">${resposta[i][2]}</option>
-        `
+      document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes2);      
       }
-      var htmlPorItem = htmlPorItem1 + htmlPorItem2 + '</select>'
-      document.getElementById("campoItensGrupo").insertAdjacentHTML("beforeend", htmlPorItem)
     })
   });
 };

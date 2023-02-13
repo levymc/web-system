@@ -563,13 +563,26 @@ body.swal2-height-auto {
     margin-top: 1%;
     z-index: 1005;
 }
-#addItem{
+#addItem, #addCotacao{
     font-size:19px;
     color:#02d224;
     cursor:pointer;
 }
-#addItem:hover{
+#addItem:hover, #addCotacao:hover{
     color:#0d6efd;
+}
+#tableCotacoes:hover{
+    background: transparent;
+}
+#tableCotacoes{
+    font-size: 13px !important;
+}
+.tableCotacoes{
+    height: 10em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 5px;
+    border: #000000;
 }
 
 
