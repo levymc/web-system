@@ -1416,13 +1416,18 @@ function novaCotacao(data_Solicitacao){
             <th scope="col">Item</th>
           </tr>
         </thead>
-        <tbody>`
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Levy</td>
+          </tr>
+        `
         document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
       }else{
         var htmlCotacoes2 = ``
         htmlCotacoes2 += `
           <tr>
-            <th scope="row">1</th>
+            <th scope="row">2</th>
             <td>Levy</td>
           </tr>
         </tbody>
