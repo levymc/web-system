@@ -1334,8 +1334,8 @@ function novaCotacao(data_Solicitacao){
               </div>
               <div class="col">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label seletorNone" for="flexCheckDefault">
+                  <input class="form-check-input" type="checkbox" value="" id="mesmoFornecedor" name="mesmoFornecedor">
+                  <label class="form-check-label seletorNone" for="mesmoFornecedor">
                     Mesmo Fornecedor
                   </label>
                 </div>
@@ -1441,6 +1441,27 @@ function novaCotacao(data_Solicitacao){
       }
     });
     $('#addCotacao').click(function(){ //
+      var fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+      var contato = Swal.getPopup().querySelector('#contato_fornecedor').value
+      var frete = Swal.getPopup().querySelector('#frete').value
+      var inf_extra = Swal.getPopup().querySelector('#inf_extra').value
+      var validade_cotacao = Swal.getPopup().querySelector('#validade_cotacao').value
+      var mesmoFornecedor = Swal.getPopup().querySelector('#mesmoFornecedor')
+      if(mesmoFornecedor.checked){
+        var infoCotacao = {
+          fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
+          valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
+          unidade: Swal.getPopup().querySelector('#unidade').value
+        }
+        console.log(infoCotacao);
+      }else{
+        Swal.getPopup().querySelector('#fornecedor').value = '';
+        Swal.getPopup().querySelector('#contato').value = '';
+        Swal.getPopup().querySelector('#frete').value = '';
+        Swal.getPopup().querySelector('#inf_extra').value = '';
+        Swal.getPopup().querySelector('#validade_cotacao').value = '';
+        console.log("limpo")
+      }
       clicks += 1;
       console.log("itemCotacao: ",Swal.getPopup().querySelector('#itemCotacao').value);
       var dict_values = {
