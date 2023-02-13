@@ -935,6 +935,7 @@ function loginComprador(){
       
       $('#button-novaCotacao2').click(function () {
         console.log("TESTE: ", data)
+        console.log("TESTE: ", data)
         Swal.fire({
           // titleText: text,
           title: `${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
@@ -1265,7 +1266,7 @@ function novaCotacao(data_Solicitacao){
       itens += String(resposta[i][2])
       itens += ", "
     }
-    itens = itens.substring(0, itens.length-2);
+    console.log(itens);
   
   Swal.fire({
     title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
