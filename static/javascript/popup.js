@@ -836,6 +836,7 @@ function loginComprador(){
         if (!data_Solicitacao){
           Swal.fire({icon:"error", titleText:"Selecione Alguma Compra", confirmButtonColor:'hwb(216 31% 1%)',})
         }else{
+          // console.log(data_Solicitacao)
           novaCotacao(data_Solicitacao); 
         }
     });
@@ -1260,15 +1261,15 @@ function novaCotacao(data_Solicitacao){
     contentType: "application/json",
     data: JSON.stringify(s)
   }).done((resposta) => {
-    var itens = ""
-    var htmlItens = ''
+    var itens = "";
+    var htmlItens = '';
     for (var i in resposta){
-      console.log(resposta[i][1])
       itens += String(resposta[i][2])
       itens += ", "
       htmlItens += `
         <option value="${resposta[i][1]}">${resposta[i][2]}</option>
       `
+      
     }
     itens = itens.substring(0, itens.length-2);
   
@@ -1419,6 +1420,7 @@ function novaCotacao(data_Solicitacao){
         confirmButtonColor:'hwb(216 31% 1%)',
       })
   }else{
+    console.log(qnt_solicitada);
       const dict_values = result.value;
       const s = JSON.stringify(dict_values);
       $.ajax({
@@ -1433,6 +1435,7 @@ function novaCotacao(data_Solicitacao){
       }
     });
     var dict = new Map();
+    var infoCotacao = new Object();
     $('#addCotacao').click(function(){ //
       Swal.getPopup().querySelector('#swal2-validation-message').style.display = 'none';
       clicks += 1;
@@ -1442,7 +1445,7 @@ function novaCotacao(data_Solicitacao){
       var inf_extra = Swal.getPopup().querySelector('#inf_extra').value
       var validade_cotacao = Swal.getPopup().querySelector('#validade_cotacao').value
       var infoCotacao = {
-        fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
+        solicitante: data_Solicitacao.solicitante, id_solicitacao:data_Solicitacao.id_solicitacao,fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
         valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
         unidade: Swal.getPopup().querySelector('#unidade').value
       }
@@ -1450,7 +1453,6 @@ function novaCotacao(data_Solicitacao){
       if (itemCotacaoAtual.value != ''){
         var itemText= itemCotacaoAtual.options[itemCotacaoAtual.selectedIndex].text;
         var table = document.getElementById("tableCotacoes"); 
-          console.log(dict.has(itemText));
           if (table.rows.length == 0){
             var htmlItemCotacao = `
               <thead style="background:white;">
@@ -1479,28 +1481,18 @@ function novaCotacao(data_Solicitacao){
           }else{
             Swal.showValidationMessage(`Item Já Cotado`);
           }
+          var itemId = "";
+          for (const [key, value] of dict){
+            itemId += value + ', '
+          }
+          itemId = itemId.substring(0, itemId.length-2);
+          infoCotacao = {
+            solicitante: data_Solicitacao.solicitante, id_solicitacao:data_Solicitacao.id_solicitacao, id_itens: itemId, fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
+          }
+        console.log("AHA: ", infoCotacao)
       }else{
         Swal.showValidationMessage(`Selecione um Item`);
         clicks = 0;
-      }
-
-      // Swal.getPopup().querySelector('#fornecedor').value = '';
-      // Swal.getPopup().querySelector('#contato').value = '';
-      // Swal.getPopup().querySelector('#frete').value = '';
-      // Swal.getPopup().querySelector('#inf_extra').value = '';
-      // Swal.getPopup().querySelector('#validade_cotacao').value = '';
-      // console.log("limpo")
-      var dict_values = {
-        id_solicitacao: data_Solicitacao.id_solicitacao.value,
-        solicitante: data_Solicitacao.solicitante, 
-        qnt_solicitada: data_Solicitacao.quantidade,
-        unidade: unidade.value,
-        solicitante: data_Solicitacao.solicitante,
-        fornecedor: fornecedor.value,
-        valor_unitario: valor_unitario.value,
-        frete: Swal.getPopup().querySelector('#frete').value,
-        inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
-        validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
       }
     })
     clicks = 0;
