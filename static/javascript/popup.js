@@ -1504,7 +1504,6 @@ function novaCotacao(data_Solicitacao){
     })
     $('#buttonEnviarCotacao').click(function(){
       if(confirm("Deseja Enviar a Cotação ??")){
-
         const s = JSON.stringify({infoCotacao:infoCotacao,infoItensCotacao:infoItensCotacao});
         console.log(s)
         $.ajax({
@@ -1514,10 +1513,9 @@ function novaCotacao(data_Solicitacao){
             data: JSON.stringify(s)
         }).done((response) => {
           if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})
-        } else if (response.value == 'vazio'){Swal.fire({icon: 'warning', title:'Nenhum item foi selecionado.'})
-      }else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
-          })
-
+            }else if (response.value == 'vazio'){Swal.fire({icon: 'warning', title:'Nenhum item foi selecionado.'})
+            }else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+      })
         Swal.close();
       }
     });

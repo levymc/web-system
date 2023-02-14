@@ -197,27 +197,36 @@ def rejeitarCompra(id):
 def cotacaoInserirDB(resultado):
     infoCotacao = resultado['infoCotacao']
     infoItensCotacao = resultado['infoItensCotacao']
-    for i in infoItensCotacao:
-        print(i)
     if infoItensCotacao == []:
         return 'vazio'
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        cursor.execute(f"""
-            INSERT INTO cotacao 
-            (id_solicitacao, usuario, fornecedor, contato_fornecedor, id_ItemCotacao, frete, inf_extra, validade_cotacao, data)
-            VALUES (?,?,?,?,?,?,?,?,?)
-            """,
-            (infoCotacao['id_solicitacao'], infoCotacao['solicitante'], infoCotacao['fornecedor'],  infoCotacao['contato'],
-            infoCotacao['id_itens'], infoCotacao['frete'], infoCotacao['inf_extra'], infoCotacao['validade_cotacao'], hoje))
-        conn.commit()
-        conn.close()
-        print("Informações enviadas ao DB com sucesso!")
-        return True
-    except Exception as e:
-        print("Erro: ",e, type(e))
-        return False
+    else:
+        try:
+            conn = sqlite3.connect('static/db/compras.db')
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                INSERT INTO cotacao 
+                (id_solicitacao, usuario, fornecedor, contato_fornecedor, id_ItemCotacao, frete, inf_extra, validade_cotacao, data)
+                VALUES (?,?,?,?,?,?,?,?,?)
+                """,
+                (infoCotacao['id_solicitacao'], infoCotacao['solicitante'], infoCotacao['fornecedor'],  infoCotacao['contato'],
+                infoCotacao['id_itens'], infoCotacao['frete'], infoCotacao['inf_extra'], infoCotacao['validade_cotacao'], hoje))
+            conn.commit()
+            id_cotacao = cursor.lastrowid
+            for i in infoItensCotacao:
+                valor_total = int(i['qnt_solicitada'])*int(i['valor_unitario'])
+                cursor.execute(f"""
+                    INSERT INTO itensCotacao
+                    (id_solicitacao, id_cotacao, nomeItem, qnt, un_solicitada, valor_unitario, un_comercializada, valor_total)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                (infoCotacao['id_solicitacao'], id_cotacao, i['nomeItem'], i['qnt_solicitada'], i['un_solicitada'], i['valor_unitario'], i['un_comercializada'], valor_total))
+            conn.commit()
+            conn.close()
+            print("Informações enviadas ao DB com sucesso!")
+            return True
+        except Exception as e:
+            print("Erro: ",e, type(e))
+            return False
 
 def cotacaoUpdate(dados):
     try:
