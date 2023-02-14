@@ -401,6 +401,29 @@ body.swal2-height-auto {
     -ms-user-select: none;
     user-select: none;
  }
+.botoesPageCotacao{
+    padding-top: 1.25em;
+}
+#buttonEnviarCotacao{
+    background:hwb(216 31% 1%);
+    width: 9em;
+    height: 3em;
+    color: white;
+    font-size: 16px;
+}
+#buttonEnviarCotacao:hover{
+    background: #0a58ca;
+}
+#buttonCancelarCotacao{
+    background: #6e7881;
+    width: 9em;
+    height: 3em;
+    color: white;
+    font-size: 16px;
+}
+#buttonCancelarCotacao:hover{
+    background: #5b636a;
+}
 .noMeio{
     margin-left: auto !important;
     margin-right: auto !important;

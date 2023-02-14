@@ -1251,8 +1251,6 @@ function editarCotacao(id){
   });
 };
 
-var clicks = 0;
-
 function novaCotacao(data_Solicitacao){
   const s = JSON.stringify(data_Solicitacao);
   $.ajax({
@@ -1276,7 +1274,7 @@ function novaCotacao(data_Solicitacao){
   Swal.fire({
     title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
     width: '70em',
-    confirmButtonText: 'Enviar Cotação',
+    showConfirmButton: false,
     confirmButtonColor: '#007bff',
     padding: '1em 1em 1.25em',
     html: `
@@ -1384,11 +1382,13 @@ function novaCotacao(data_Solicitacao){
           </div>
         </div>
       </div>
-  </div>
+    </div>
+    <div class="row botoesPageCotacao">
+      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="buttonEnviarCotacao">Aprovar</button></div>
+      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="buttonCancelarCotacao">Rejeitar</button></div>
+    </div>
     `,
-    showCancelButton: true,
-    cancelButtonText: 'Cancelar',
-    focusConfirm: false,
+    showCancelButton: false,
     preConfirm: () => {
     const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
     const unidade = Swal.getPopup().querySelector('#unidade').value
@@ -1437,17 +1437,11 @@ function novaCotacao(data_Solicitacao){
     var dict = new Map();
     $('#addCotacao').click(function(){ //
       Swal.getPopup().querySelector('#swal2-validation-message').style.display = 'none';
-      clicks += 1;
       var fornecedor = Swal.getPopup().querySelector('#fornecedor').value
       var contato = Swal.getPopup().querySelector('#contato_fornecedor').value
       var frete = Swal.getPopup().querySelector('#frete').value
       var inf_extra = Swal.getPopup().querySelector('#inf_extra').value
       var validade_cotacao = Swal.getPopup().querySelector('#validade_cotacao').value
-      var infoCotacao = {
-        solicitante: data_Solicitacao.solicitante, id_solicitacao:data_Solicitacao.id_solicitacao,fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
-        valor_unitario: Swal.getPopup().querySelector('#valor_unitario').value,
-        unidade: Swal.getPopup().querySelector('#unidade').value
-      }
       var itemCotacaoAtual = Swal.getPopup().querySelector('#itemCotacao');
       if (itemCotacaoAtual.value != ''){
         var itemText= itemCotacaoAtual.options[itemCotacaoAtual.selectedIndex].text;
@@ -1505,9 +1499,7 @@ function novaCotacao(data_Solicitacao){
           }
       }else{
         Swal.showValidationMessage(`Selecione um Item`);
-        clicks = 0;
       }
     })
-    clicks = 0;
   });
 };
