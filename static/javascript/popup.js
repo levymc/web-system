@@ -1435,8 +1435,10 @@ function novaCotacao(data_Solicitacao){
       }
     });
     var dict = new Map();
+    var infoCotacao = new Map();
+    var infoItensCotacao = [];
     $('#addCotacao').click(function(){ //
-      Swal.getPopup().querySelector('#swal2-validation-message').style.display = 'none';
+      Swal.resetValidationMessage();
       var fornecedor = Swal.getPopup().querySelector('#fornecedor').value
       var contato = Swal.getPopup().querySelector('#contato_fornecedor').value
       var frete = Swal.getPopup().querySelector('#frete').value
@@ -1477,7 +1479,6 @@ function novaCotacao(data_Solicitacao){
 
           // Declarando os dict com as informacoes da Cotacao (infoCotacao) e dos itens cotados (infoItensCotacao)
           var itemId = "";
-          var infoItensCotacao = [];
           for (const [key, value] of dict){
             itemId += value + ', '
             for (var i in resposta){
@@ -1494,12 +1495,30 @@ function novaCotacao(data_Solicitacao){
             infoItensCotacao.push(infoItem); // Informacoes dos Itens Cotados
           }
           itemId = itemId.substring(0, itemId.length-2);
-          var infoCotacao = { // Informacoes da Cotacao
+          infoCotacao = { // Informacoes da Cotacao
             solicitante: data_Solicitacao.solicitante, id_solicitacao:data_Solicitacao.id_solicitacao, id_itens: itemId, fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
           }
       }else{
         Swal.showValidationMessage(`Selecione um Item`);
       }
     })
+    $('#buttonEnviarCotacao').click(function(){
+      if(confirm("Deseja Enviar a Cotação ??")){
+
+        const s = JSON.stringify({infoCotacao:infoCotacao,infoItensCotacao:infoItensCotacao});
+        console.log(s)
+        $.ajax({
+            url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(s)
+        }).done((response) => {
+          if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
+            else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+          })
+
+        Swal.close();
+      }
+    });
   });
 };

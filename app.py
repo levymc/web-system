@@ -83,7 +83,7 @@ def itensMaisInfo():
     output = request.get_json()
     result_ = json.loads(output)
     itens = sqlite_funcs.itensMaisInfo(result_['id_solicitacao'])
-    print(itens)
+    # print(itens)
     return itens
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
@@ -120,7 +120,7 @@ def cotacaoInserir():
 def cotacaoUpdate():
     output = request.get_json()
     resultado = json.loads(output)
-    print("Resultado: ",resultado)
+    # print("Resultado: ",resultado)
     inserirDB = sqlite_funcs.cotacaoUpdate(resultado)
     return {'value': True}
 
@@ -152,7 +152,7 @@ def send():
         flash("Você não está conectado. Refaça o login!")
     output = request.get_json()
     result = json.loads(output) #this converts the json output to a python dictionary
-    print(result) # Printing the new dictionary
+    # print(result) # Printing the new dictionary
     insert_message = sqlite_funcs.inserir(result)
     nome = result['nome']
     motivo = result['motivo']
@@ -193,7 +193,7 @@ def pendConsulta():
         pendencias = sqlite_funcs.pendConsulta()
         return jsonify(pendencias)
     except Exception as e:
-        print("e")
+        print(e)
         return e
 
 @app.route("/requisicao/confere", methods = ["POST", "GET"])
@@ -206,7 +206,7 @@ def confere():
         cursor = conn.cursor()
         user_find = cursor.execute(f"SELECT * FROM usuarios WHERE senha='{senha}'").fetchall()[0][1]
         print("Login realizado com Sucesso!")
-        print(result)
+        # print(result)
         # AQUI ENTRA O SCRIPT DE ENVIO AO BANCO DE DADOS!
         return render_template('requisicao.html')
     except IndexError as passwordError: 

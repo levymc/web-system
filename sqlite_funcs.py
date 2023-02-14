@@ -1,6 +1,6 @@
 import sqlite3, hashlib
 from datetime import datetime
-
+hoje = datetime.today().strftime('%d-%m-%Y')
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
@@ -52,7 +52,7 @@ def pendConsulta():
 def insertReqEng(codigos, quantidades):
     conn = sqlite3.connect('static/db/requisicao.db')
     cursor = conn.cursor()
-    hoje = datetime.today().strftime('%d-%m-%Y')
+    
     cursor.execute(f"INSERT INTO req_eng (solicitante_eng, data_solicitacao) VALUES (?, ?)", ("LEVY", hoje))
     conn.commit()
     id_req = cursor.execute(f"SELECT id_req_eng FROM req_eng WHERE id_req_eng=(SELECT max(id_req_eng) FROM req_eng)").fetchall()
@@ -195,54 +195,25 @@ def rejeitarCompra(id):
         return e
 
 def cotacaoInserirDB(resultado):
-    print("Resultado22: ",resultado)
+    infoCotacao = resultado['infoCotacao']
+    print(infoCotacao)
+    infoItensCotacao = resultado['infoItensCotacao']
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
-        qnt_solicitada = ''
-        if str(resultado["qnt_solicitada"]).isnumeric() == False: 
-            for i in resultado["qnt_solicitada"]:
-                if i.isnumeric():
-                    qnt_solicitada+=i
-            if resultado["frete"] != "":
-                resultado["valor_total"] = float(resultado["valor_unitario"])*int(qnt_solicitada)+int(resultado["frete"])
-            else: resultado["valor_total"] = float(resultado["valor_unitario"])*int(qnt_solicitada)
-            cursor.execute(f"""
-                INSERT INTO cotacao 
-                (id_solicitacao, usuario, fornecedor, quantidade, unidade, valor_un, valor_total, frete, inf_extra, validade_cotacao)
-                VALUES (?,?,?,?,?,?,?,?,?)
-                """,
-                (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
-                qnt_solicitada, resultado['unidade'], float(resultado['valor_unitario']), resultado['valor_total'],
-                resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
-            qnt_cotacao = cursor.execute(f"SELECT qnt_cotacao FROM solicitacao WHERE id_solicitacao = {resultado['id_solicitacao']}").fetchall()[0][0]
-            qnt_cotacao_rejeitada = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {resultado['id_solicitacao']} AND status_cotacao = 2").fetchall()
-            qnt_cotacao = qnt_cotacao - len(qnt_cotacao_rejeitada)
-            cursor.execute(f"""UPDATE solicitacao SET qnt_cotacao = {int(qnt_cotacao)+1} WHERE id_solicitacao = {resultado['id_solicitacao']}""")
-            print(qnt_cotacao)
-            conn.commit()
-            conn.close()
-        else: 
-            qnt_solicitada = resultado["qnt_solicitada"]
-            if resultado["frete"] != "":
-                resultado["valor_total"] = float(resultado["valor_unitario"])*qnt_solicitada+int(resultado["frete"])
-            else: resultado["valor_total"] = float(resultado["valor_unitario"])*qnt_solicitada
-            cursor.execute(f"""
-                INSERT INTO cotacao 
-                (id_solicitacao, usuario, fornecedor, quantidade, unidade, valor_un, valor_total, frete, inf_extra, validade_cotacao)
-                VALUES (?,?,?,?,?,?,?,?,?,?)
-                """,
-                (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
-                qnt_solicitada, resultado['unidade'], resultado['valor_unitario'], resultado['valor_total'],
-                resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
-            qnt_cotacao = cursor.execute(f"SELECT qnt_cotacao FROM solicitacao WHERE id_solicitacao = {resultado['id_solicitacao']}").fetchall()[0][0]
-            cursor.execute(f"""UPDATE solicitacao SET qnt_cotacao = {int(qnt_cotacao)+1} WHERE id_solicitacao = {resultado['id_solicitacao']}""")
-            conn.commit()
-            conn.close()
+        cursor.execute(f"""
+            INSERT INTO cotacao 
+            (id_solicitacao, usuario, fornecedor, contato_fornecedor, id_ItemCotacao, frete, inf_extra, validade_cotacao, data)
+            VALUES (?,?,?,?,?,?,?,?,?)
+            """,
+            (infoCotacao['id_solicitacao'], infoCotacao['solicitante'], infoCotacao['fornecedor'],  infoCotacao['contato'],
+            infoCotacao['id_itens'], infoCotacao['frete'], infoCotacao['inf_extra'], infoCotacao['validade_cotacao'], hoje))
+        conn.commit()
+        conn.close()
         print("Informações enviadas ao DB com sucesso!")
         return True
     except Exception as e:
-        print("Erro: ",e)
+        print("Erro: ",e, type(e))
         return False
 
 def cotacaoUpdate(dados):
