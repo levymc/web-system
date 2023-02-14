@@ -1503,20 +1503,27 @@ function novaCotacao(data_Solicitacao){
       }
     })
     $('#buttonEnviarCotacao').click(function(){
-      if(confirm("Deseja Enviar a Cotação ??")){
-        const s = JSON.stringify({infoCotacao:infoCotacao,infoItensCotacao:infoItensCotacao});
-        console.log(s)
-        $.ajax({
-            url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(s)
-        }).done((response) => {
-          if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})
-            }else if (response.value == 'vazio'){Swal.fire({icon: 'warning', title:'Nenhum item foi selecionado.'})
-            }else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
-      })
-        Swal.close();
+      var itemCotacaoAtual = Swal.getPopup().querySelector('#itemCotacao');
+      var fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+      var frete = Swal.getPopup().querySelector('#frete').value
+      if (!fornecedor || !frete || itemCotacaoAtual=='' || !Swal.getPopup().querySelector('#valor_unitario').value){
+        Swal.showValidationMessage(`Preencha, pelo menos, os campos: Fornecedor | Frete | Item Cotado | Valor Unitário`);
+        }else{
+        if(confirm("Deseja Enviar a Cotação ??")){
+          const s = JSON.stringify({infoCotacao:infoCotacao,infoItensCotacao:infoItensCotacao});
+          console.log(s)
+          $.ajax({
+              url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(s)
+          }).done((response) => {
+            if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})
+              }else if (response.value == 'vazio'){Swal.fire({icon: 'warning', title:'Nenhum item foi selecionado.'})
+              }else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+        })
+          Swal.close();
+        }
       }
     });
   });
