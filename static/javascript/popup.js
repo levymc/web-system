@@ -1435,7 +1435,6 @@ function novaCotacao(data_Solicitacao){
       }
     });
     var dict = new Map();
-    var infoCotacao = new Object();
     $('#addCotacao').click(function(){ //
       Swal.getPopup().querySelector('#swal2-validation-message').style.display = 'none';
       clicks += 1;
@@ -1481,15 +1480,29 @@ function novaCotacao(data_Solicitacao){
           }else{
             Swal.showValidationMessage(`Item Já Cotado`);
           }
+
+          // Declarando os dict com as informacoes da Cotacao (infoCotacao) e dos itens cotados (infoItensCotacao)
           var itemId = "";
+          var infoItensCotacao = [];
           for (const [key, value] of dict){
             itemId += value + ', '
+            for (var i in resposta){
+              if (key == resposta[i][2]){
+                var infoItem = {
+                  nomeItem : resposta[i][2],
+                  qnt_solicitada : resposta[i][6],
+                  un_solicitada : resposta[i][7],
+                  valor_unitario : Swal.getPopup().querySelector('#valor_unitario').value,
+                  un_comercializada : Swal.getPopup().querySelector('#unidade').value
+                }
+              }
+            }
+            infoItensCotacao.push(infoItem); // Informacoes dos Itens Cotados
           }
           itemId = itemId.substring(0, itemId.length-2);
-          infoCotacao = {
+          var infoCotacao = { // Informacoes da Cotacao
             solicitante: data_Solicitacao.solicitante, id_solicitacao:data_Solicitacao.id_solicitacao, id_itens: itemId, fornecedor: fornecedor, contato: contato, frete: frete, inf_extra: inf_extra, validade_cotacao: validade_cotacao,
           }
-        console.log("AHA: ", infoCotacao)
       }else{
         Swal.showValidationMessage(`Selecione um Item`);
         clicks = 0;
