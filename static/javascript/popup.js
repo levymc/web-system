@@ -1513,8 +1513,9 @@ function novaCotacao(data_Solicitacao){
             contentType: "application/json",
             data: JSON.stringify(s)
         }).done((response) => {
-          if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
-            else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+          if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})
+        } else if (response.value == 'vazio'){Swal.fire({icon: 'warning', title:'Nenhum item foi selecionado.'})
+      }else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
           })
 
         Swal.close();

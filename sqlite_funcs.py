@@ -196,8 +196,11 @@ def rejeitarCompra(id):
 
 def cotacaoInserirDB(resultado):
     infoCotacao = resultado['infoCotacao']
-    print(infoCotacao)
     infoItensCotacao = resultado['infoItensCotacao']
+    for i in infoItensCotacao:
+        print(i)
+    if infoItensCotacao == []:
+        return 'vazio'
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
