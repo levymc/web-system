@@ -110,7 +110,6 @@ def solicitacaoComprasInserir(result):
                                VALUES (?, ?, ?, ?, ?, ?, ?)""",
                                (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
         except TypeError:
-            print(itens)
             cursor.execute(f"""
                             INSERT INTO itens
                             (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
@@ -138,7 +137,6 @@ def comprasPendentes(status):
                     itensDataTable += itens[j][2] + ', '
             itensDataTable = itensDataTable[:-1]
             itensDataTable = itensDataTable[:-1]
-            print(itensDataTable)
             qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
             qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
             if qnt_cotacao_rejeitada != 0:
@@ -266,8 +264,11 @@ def cotacaoInformacoesDB(infoLinha):
         dict_informacoes = {}
         informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={infoLinha['id_solicitacao']} AND status_cotacao=0").fetchall()
         if len(informacoes)<=1:
+            infoItens = cursor.execute(f"SELECT * FROM itensCotacao WHERE id_solicitacao={informacoes[0][1]} AND id_cotacao={informacoes[0][0]}").fetchall()
+            valor_totalItens = 0 #Soma dos valores totais de todos os itens da COTAÇÃO
+            for j in infoItens:
+                valor_totalItens += int(j[8])
             informacoes = informacoes[0]
-            print(informacoes)
             dict_informacoes['id_cotacao']=informacoes[0]
             dict_informacoes['id_solicitacao']=informacoes[1]
             dict_informacoes['solicitante']=informacoes[2]
@@ -278,10 +279,16 @@ def cotacaoInformacoesDB(infoLinha):
             dict_informacoes['inf_extra']=informacoes[7]
             dict_informacoes['validade_cotacao']=informacoes[8]
             dict_informacoes['status_cotacao']=informacoes[9]
+            dict_informacoes['valor_totalItens']=valor_totalItens
             return dict_informacoes
         else:
             dict_lista_informacoes = []
             for i in informacoes:
+                ## Pegando as informacoes dos Itens da Cotacao
+                infoItens = cursor.execute(f"SELECT * FROM itensCotacao WHERE id_solicitacao={i[1]} AND id_cotacao={i[0]}").fetchall()
+                valor_totalItens = 0 #Soma dos valores totais de todos os itens da COTAÇÃO
+                for j in infoItens:
+                    valor_totalItens += int(j[8])
                 dict_lista_informacoes.append({
                     'id_cotacao':i[0],
                     'id_solicitacao':i[1],
@@ -293,9 +300,10 @@ def cotacaoInformacoesDB(infoLinha):
                     'inf_extra':i[7],
                     'validade_cotacao':i[8],
                     'status_cotacao':i[9],
+                    'valor_totalItens':valor_totalItens,
                 })
+            conn.close()
             return dict_lista_informacoes
-        conn.close()
     except Exception as e:
         print(e)
         return False
@@ -320,7 +328,6 @@ def dadosCotacao(id_cotacao):
         dict_informacoes['inf_extra']=informacoes[10]
         dict_informacoes['validade_cotacao']=informacoes[11]
         dict_informacoes['status_cotacao']=informacoes[12]
-        print(dict_informacoes)
         return dict_informacoes
     except Exception as e:
         print(e)
