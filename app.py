@@ -137,8 +137,8 @@ def cotacaoInformacoes():
     output = request.get_json()
     infoLinha = json.loads(output)
     informacoes = sqlite_funcs.cotacaoInformacoesDB(infoLinha)
-    print(informacoes)
-    return informacoes ## Devolve as cotações refentes ao id_solicitacao
+    # print(informacoes)
+    return informacoes ## Devolve as informacoes da Cotacao ao JS
 
 @app.route("/dadosCotacao", methods=["POST", "GET"])
 def dadosCotacao():

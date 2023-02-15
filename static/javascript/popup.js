@@ -862,7 +862,7 @@ function loginComprador(){
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((response) => {
-          console.log(response);
+          // console.log(response);
           if (response.length){
             var html = ``
             for (var i in response){
@@ -874,6 +874,7 @@ function loginComprador(){
                   <p class="card-text"><b>Contato:</b> ${response[i].contato_fornecedor}</p>
                 </div>
                 <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><b>Valor Total: <font color="#560101">${response[i].valor_totalItens.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</font></b></li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
                   <li class="list-group-item"><b>Validade Cotação:</b> ${response[i].validade_cotacao}</li>
@@ -895,6 +896,7 @@ function loginComprador(){
                 <p class="card-text"><b>Contato:</b> ${response.contato_fornecedor}<p>
               </div>
               <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Valor Total: <font color="#560101">${response.valor_totalItens.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</font></b></li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
                 <li class="list-group-item"><b>Validade Cotação:</b> ${response.validade_cotacao}</li>
@@ -1245,8 +1247,8 @@ function novaCotacao(data_Solicitacao){
       </div>
     </div>
     <div class="row botoesPageCotacao">
-      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="buttonEnviarCotacao">Aprovar</button></div>
-      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="buttonCancelarCotacao">Rejeitar</button></div>
+      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="buttonEnviarCotacao">Enviar</button></div>
+      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="buttonCancelarCotacao">Cancelar</button></div>
     </div>
     `,
     showCancelButton: false,
