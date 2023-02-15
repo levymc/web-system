@@ -259,26 +259,25 @@ def cotacaoApagar(id_cotacao):
         print(e)
         return False
 
-def cotacaoInformacoesDB(id_solicitacao):
+def cotacaoInformacoesDB(infoLinha):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         dict_informacoes = {}
-        informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={id_solicitacao} AND status_cotacao=0").fetchall()
+        informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={infoLinha['id_solicitacao']} AND status_cotacao=0").fetchall()
         if len(informacoes)<=1:
             informacoes = informacoes[0]
+            print(informacoes)
             dict_informacoes['id_cotacao']=informacoes[0]
             dict_informacoes['id_solicitacao']=informacoes[1]
             dict_informacoes['solicitante']=informacoes[2]
             dict_informacoes['fornecedor']=informacoes[3]
             dict_informacoes['contato_fornecedor']=informacoes[4]
-            dict_informacoes['unidade']=informacoes[6]
-            dict_informacoes['qnt_solicitada']=informacoes[5]
-            dict_informacoes['valor_unitario']=informacoes[7]
-            dict_informacoes['frete']=informacoes[9]
-            dict_informacoes['inf_extra']=informacoes[10]
-            dict_informacoes['validade_cotacao']=informacoes[11]
-            dict_informacoes['status_cotacao']=informacoes[12]
+            dict_informacoes['id_ItemCotacao']=informacoes[5]
+            dict_informacoes['frete']=informacoes[6]
+            dict_informacoes['inf_extra']=informacoes[7]
+            dict_informacoes['validade_cotacao']=informacoes[8]
+            dict_informacoes['status_cotacao']=informacoes[9]
             return dict_informacoes
         else:
             dict_lista_informacoes = []
@@ -289,13 +288,11 @@ def cotacaoInformacoesDB(id_solicitacao):
                     'solicitante':i[2],
                     'fornecedor':i[3],
                     'contato_fornecedor':i[4],
-                    'qnt_solicitada':i[5],
-                    'unidade':i[6],
-                    'valor_unitario':i[7],
-                    'frete':i[9],
-                    'inf_extra':i[10],
-                    'validade_cotacao':i[11],
-                    'status_cotacao':i[12],
+                    'id_ItemCotacao':i[5],
+                    'frete':i[6],
+                    'inf_extra':i[7],
+                    'validade_cotacao':i[8],
+                    'status_cotacao':i[9],
                 })
             return dict_lista_informacoes
         conn.close()

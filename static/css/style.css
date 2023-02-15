@@ -272,6 +272,10 @@ body.swal2-height-auto {
     border-radius: 5px ;
     border: 1px solid rgba(0, 0, 0, 0.35);
 }
+.carousel,.carousel-item {
+    transition-duration: 1s !important;
+    transition: -webkit-transform 0.2s ease-in !important;
+}
 .pageInfoContainer{
     margin-left: auto !important; margin-right: auto !important; margin-bottom:2em; 
     width: 80%;
