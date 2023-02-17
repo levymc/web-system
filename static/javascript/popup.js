@@ -788,6 +788,7 @@ function loginComprador(){
         <tr>
           <th scope="col">Data da Solicitação</th>
           <th scope="col">Usuário</th>
+          <th scope="col">Itens</th>
           <th scope="col">Justificativa</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
@@ -818,6 +819,7 @@ function loginComprador(){
         'columns': [
         { data : 'data', "width": "10%"},
         { data : 'solicitante', "width": "12.5%"}, 
+        { data : 'itens', "width": "12.5%"}, 
         { data : 'motivo', "width": "15.625%"},
         { data : 'setor', "width": "12.5%"},
         { data : 'qnt_cotacao', "width": "8%"},
