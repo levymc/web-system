@@ -991,8 +991,6 @@ function editarCotacao(id){
         data: JSON.stringify(s)
       }).done((dadosCotacao)=> {
         var htmlItens = ``
-        // console.log(dadosCotacao['infoItens'].length)
-        console.log(typeof dadosCotacao['infoItens'][0])
         if (typeof dadosCotacao['infoItens'][0] == 'object'){
           for (var i in dadosCotacao['infoItens']){
             htmlItens += `
@@ -1007,7 +1005,7 @@ function editarCotacao(id){
         Swal.fire({
           title: `Modificação da Cotação`,
           width: '70em',
-          confirmButtonText: 'Enviar Cotação',
+          showConfirmButton: false,
           confirmButtonColor: '#007bff',
           padding: '1em 1em 1.25em',
           html: `
@@ -1113,14 +1111,11 @@ function editarCotacao(id){
           </div>
         </div>
         <div class="row botoesPageCotacao">
-          <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="buttonEnviarCotacao">Enviar</button></div>
+          <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="buttonUpdateCotacao">Atualizar Cotação</button></div>
           <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="buttonCancelarCotacao">Cancelar</button></div>
         </div>
           </div>
           `,
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-          focusConfirm: false,
           preConfirm: () => {
             const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
             if (!fornecedor) {
@@ -1150,6 +1145,9 @@ function editarCotacao(id){
               else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
           });
         });
+        $('#buttonUpdateCotacao').click(function(){
+          console.log("OAOSOA")
+        });
       });
     };
   });
@@ -1165,7 +1163,7 @@ function novaCotacao(data_Solicitacao){
   }).done((resposta) => {
     var itens = "";
     var htmlItens = '';
-    for (var i in resposta){
+    for (var i in resposta){ /// Gerando a lista de itens da caixa de selecao
       itens += String(resposta[i][2])
       itens += ", "
       htmlItens += `

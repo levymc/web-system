@@ -408,20 +408,20 @@ body.swal2-height-auto {
 .botoesPageCotacao{
     padding-top: 1.25em;
 }
-#buttonEnviarCotacao{
+#buttonEnviarCotacao, #buttonUpdateCotacao{
     background:hwb(216 31% 1%);
     width: 9em;
-    height: 3em;
+    height: 4em;
     color: white;
     font-size: 16px;
 }
-#buttonEnviarCotacao:hover{
+#buttonEnviarCotacao:hover, #buttonUpdateCotacao:hover{
     background: #0a58ca;
 }
 #buttonCancelarCotacao{
     background: #6e7881;
     width: 9em;
-    height: 3em;
+    height: 4em;
     color: white;
     font-size: 16px;
 }
