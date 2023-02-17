@@ -313,21 +313,29 @@ def dadosCotacao(id_cotacao):
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         dict_informacoes = {}
-        dados = cursor.execute(f"SELECT * FROM cotacao WHERE id_cotacao={id_cotacao} AND status_cotacao=0").fetchall()
-        informacoes = dados[0]
+        id_ItemCotacao = {}
+        informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_cotacao={id_cotacao} AND status_cotacao=0").fetchall()[0]
+        print(type(informacoes[5]))
+        if type(informacoes[5]) == str:
+            infoItens = []
+            for i in range(len(informacoes[5])):
+                if informacoes[5][i].isnumeric() == True:
+                    id_ItemCotacao[f'id{len(id_ItemCotacao)+1}'] = informacoes[5][i]
+                    infoItens.append(cursor.execute(f"SELECT * FROM itensCotacao WHERE id_itemCotacao = {informacoes[5][i]}").fetchall()[0])
+        elif type(informacoes[5]) == int:
+            id_ItemCotacao[f'id{len(id_ItemCotacao)+1}'] = informacoes[5]
+            infoItens = cursor.execute(f"SELECT * FROM itensCotacao WHERE id_itemCotacao = {informacoes[5]}").fetchall()[0]
+            
         dict_informacoes['id_cotacao']=informacoes[0]
         dict_informacoes['id_solicitacao']=informacoes[1]
         dict_informacoes['solicitante']=informacoes[2]
         dict_informacoes['fornecedor']=informacoes[3]
         dict_informacoes['contato_fornecedor']=informacoes[4]
-        dict_informacoes['qnt_solicitada']=informacoes[5]
-        dict_informacoes['unidade']=informacoes[6]
-        dict_informacoes['valor_unitario']=informacoes[7]
-        dict_informacoes['valor_total']=informacoes[8]
-        dict_informacoes['frete']=informacoes[9]
-        dict_informacoes['inf_extra']=informacoes[10]
-        dict_informacoes['validade_cotacao']=informacoes[11]
-        dict_informacoes['status_cotacao']=informacoes[12]
+        dict_informacoes['frete']=informacoes[6]
+        dict_informacoes['inf_extra']=informacoes[7]
+        dict_informacoes['validade_cotacao']=informacoes[8]
+        dict_informacoes['status_cotacao']=informacoes[9]
+        dict_informacoes['data']=informacoes[10]
         return dict_informacoes
     except Exception as e:
         print(e)

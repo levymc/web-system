@@ -1008,8 +1008,6 @@ function editarCotacao(id){
             <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
                 <b>Fornecedor:</b> <font color="#560101">${dadosCotacao.fornecedor.charAt(0).toUpperCase() + dadosCotacao.fornecedor.slice(1)}</font> <br />
                 <b>Contato:</b> <font color="#560101">${dadosCotacao.contato_fornecedor}</font><br />
-                <b>Unidade Comercializada:</b> <font color="#560101">${dadosCotacao.unidade}</font><br />
-                <b>Valor Unitário:</b> <font color="#560101">${dadosCotacao.valor_unitario}</font><br />
                 <b>Valor Frete:</b> <font color="#560101">${dadosCotacao.frete}</font><br />
                 <b>Informações Extra:</b> <font color="#560101">${dadosCotacao.inf_extra}</font><br />
                 <b>Validade Cotação:</b> <font color="#560101">${dadosCotacao.validade_cotacao}</font><br />
@@ -1080,9 +1078,7 @@ function editarCotacao(id){
           focusConfirm: false,
           preConfirm: () => {
             const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
-            const unidade = Swal.getPopup().querySelector('#unidade').value
-            const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
-            if (!fornecedor || !unidade || !valor_unitario) {
+            if (!fornecedor) {
                 Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
             }
             return { 
@@ -1090,9 +1086,7 @@ function editarCotacao(id){
               id_solicitacao: dadosCotacao.id_solicitacao,
               solicitante: dadosCotacao.solicitante, 
               qnt_solicitada: dadosCotacao.quantidade,
-              unidade: unidade,
               fornecedor: fornecedor,
-              valor_unitario: valor_unitario,
               frete: Swal.getPopup().querySelector('#frete').value,
               inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
               validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
