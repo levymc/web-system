@@ -990,7 +990,20 @@ function editarCotacao(id){
         contentType: "application/json",
         data: JSON.stringify(s)
       }).done((dadosCotacao)=> {
-        console.log(dadosCotacao);
+        var htmlItens = ``
+        // console.log(dadosCotacao['infoItens'].length)
+        console.log(typeof dadosCotacao['infoItens'][0])
+        if (typeof dadosCotacao['infoItens'][0] == 'object'){
+          for (var i in dadosCotacao['infoItens']){
+            htmlItens += `
+              <option value="${dadosCotacao['infoItens'][i][0]}">${dadosCotacao['infoItens'][i][3]}</option>
+            `
+          }
+        }else{
+          htmlItens += `
+            <option value="${dadosCotacao['infoItens'][0]}">${dadosCotacao['infoItens'][3]}</option>
+          `
+        }
         Swal.fire({
           title: `Modificação da Cotação`,
           width: '70em',
@@ -1013,65 +1026,97 @@ function editarCotacao(id){
                 <b>Validade Cotação:</b> <font color="#560101">${dadosCotacao.validade_cotacao}</font><br />
             </div>
             <div class="col">
-                <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
-                    <div class="col" style="width:110%">
-                      <div class="input-group mb-3">
-                          <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
-                          <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
-                      </div>
-                      <div class="input-group mb-3">
-                          <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
-                          <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
-                      </div>
-                      <div class="input-group mb-3">
-                          <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
-                          <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                            <option style="font-size:14px;" value="" disabled selected>UN</option>
-                            <option style="font-size:14px;">Bloco</option>
-                            <option style="font-size:14px;">Bobina</option>
-                            <option style="font-size:14px;">Caixa</option>
-                            <option style="font-size:14px;">Chapa</option>
-                            <option style="font-size:14px;">Conjunto</option>
-                            <option style="font-size:14px;">Folha</option>
-                            <option style="font-size:14px;">Frasco</option>
-                            <option style="font-size:14px;">Galão</option>
-                            <option style="font-size:14px;">Kilograma (Kg)</option>
-                            <option style="font-size:14px;">Lata</option>
-                            <option style="font-size:14px;">Litro (l)</option>
-                            <option style="font-size:14px;">Metro (m)</option>
-                            <option style="font-size:14px;">Metro² (m²)</option>
-                            <option style="font-size:14px;">Pacote</option>
-                            <option style="font-size:14px;">Par</option>
-                            <option style="font-size:14px;">Peça</option>
-                            <option style="font-size:14px;">Pote</option>
-                            <option style="font-size:14px;">Rolo</option>
-                            <option style="font-size:14px;">Saco</option>
-                            <option style="font-size:14px;">Unidade</option>
-                            <option style="font-size:14px;">Outro... (complementar na descrição)</option>
-                          </select>
-                      </div>
-                      <div class="input-group mb-3">
-                          <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
-                          <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
-                      </div>
-                      <div class="input-group mb-3">
-                          <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
-                          <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
-                      </div>
+            <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+                <div class="col" style="width:110%">
+                  <div class="input-group mb-3">
+                      <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                      <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
                   </div>
-                  <div class="col" style="margin-left:3em;">
-                      <div class="input-group mb-3">
-                          <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
-                          <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
-                      </div>
-                      <div class="input-group mb-3">
-                          <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
-                          <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
-                      </div>
+                  <div class="input-group mb-3">
+                      <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                      <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                      <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
                   </div>
               </div>
+              <div class="col" style="margin-left:3em;">
+                <div class="input-group mb-3">
+                    <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                    <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                </div>
+                <div class="input-group mb-3">
+                    <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                    <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                </div>
+              </div>
+              <div class="fundoItensGrupo">
+                <div class="row">
+                  <div class="col text-start">
+                    <div class="text-start seletorNone" id="labelItemCotado">Item Cotado: </div>
+                    <select class="selectClass2" id="itemCotacao">
+                      <option value="" disabled selected>Selecione Um item para Cotar</option>
+                      ${htmlItens}
+                    </select>
+                  </div>
+                  <div class="col">
+                    <div class="text-center seletorNone" style="padding-top:2.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="input-group mb-3">
+                      <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                      <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="input-group mb-3">
+                      <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                      <select class="selectClass2" aria-label="UN" id="unidade" style="width:80px; background:white !important; font-weight: normal; color: black !important">
+                        <option style="font-size:14px;" value="" disabled selected>UN</option>
+                        <option style="font-size:14px;">Bloco</option>
+                        <option style="font-size:14px;">Bobina</option>
+                        <option style="font-size:14px;">Caixa</option>
+                        <option style="font-size:14px;">Chapa</option>
+                        <option style="font-size:14px;">Conjunto</option>
+                        <option style="font-size:14px;">Folha</option>
+                        <option style="font-size:14px;">Frasco</option>
+                        <option style="font-size:14px;">Galão</option>
+                        <option style="font-size:14px;">Kilograma (Kg)</option>
+                        <option style="font-size:14px;">Lata</option>
+                        <option style="font-size:14px;">Litro (l)</option>
+                        <option style="font-size:14px;">Metro (m)</option>
+                        <option style="font-size:14px;">Metro² (m²)</option>
+                        <option style="font-size:14px;">Pacote</option>
+                        <option style="font-size:14px;">Par</option>
+                        <option style="font-size:14px;">Peça</option>
+                        <option style="font-size:14px;">Pote</option>
+                        <option style="font-size:14px;">Rolo</option>
+                        <option style="font-size:14px;">Saco</option>
+                        <option style="font-size:14px;">Unidade</option>
+                        <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="tableCotacoes">
+                    <table class="table" id="tableCotacoes">
+                    </table>
+                  </div>
+                </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+        <div class="row botoesPageCotacao">
+          <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="buttonEnviarCotacao">Enviar</button></div>
+          <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="buttonCancelarCotacao">Cancelar</button></div>
+        </div>
+          </div>
           `,
           showCancelButton: true,
           cancelButtonText: 'Cancelar',

@@ -336,6 +336,7 @@ def dadosCotacao(id_cotacao):
         dict_informacoes['validade_cotacao']=informacoes[8]
         dict_informacoes['status_cotacao']=informacoes[9]
         dict_informacoes['data']=informacoes[10]
+        dict_informacoes['infoItens']=infoItens
         return dict_informacoes
     except Exception as e:
         print(e)
