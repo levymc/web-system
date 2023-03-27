@@ -6,7 +6,6 @@ def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO contato_processo (nome, motivo, descricao) VALUES (?, ?, ?)", (result['nome'], result['motivo'], result['descricao']))
-    print(result['nome'], result['motivo'], result['descricao'])
     conn.commit()
     conn.close()
     return "Informações inseridas no DB"
@@ -56,10 +55,8 @@ def insertReqEng(codigos, quantidades):
     cursor.execute(f"INSERT INTO req_eng (solicitante_eng, data_solicitacao) VALUES (?, ?)", ("LEVY", hoje))
     conn.commit()
     id_req = cursor.execute(f"SELECT id_req_eng FROM req_eng WHERE id_req_eng=(SELECT max(id_req_eng) FROM req_eng)").fetchall()
-    print(id_req[0][0])
     for a, b in enumerate(quantidades):
         if quantidades[b] != 0:
-            print(b+":"+str(quantidades[b]))
             cursor.execute(f"INSERT INTO requisicoes (id_item, id_requisicao, qnt_requisicao) VALUES (?, ?, ?)", (int(b), id_req[0][0], quantidades[b]))
             conn.commit()
 
@@ -86,7 +83,6 @@ def confereUsuario(usuario, senha):
 def solicitacaoComprasInserir(result):
     resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
     itens = result['itens']
-    # print("AAAAA: ", resultado, itens)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
@@ -103,14 +99,12 @@ def solicitacaoComprasInserir(result):
                                         AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
         try:
             for i in itens: #### FAZER DIFERENCA PARA QUNDO TEM MAIS DE 1 ITEM OU apenas 1
-                print("OII!")
                 cursor.execute(f"""
                                INSERT INTO itens
                                (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
                                VALUES (?, ?, ?, ?, ?, ?, ?)""",
                                (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
         except TypeError:
-            print(itens)
             cursor.execute(f"""
                             INSERT INTO itens
                             (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
@@ -138,7 +132,6 @@ def comprasPendentes(status):
                     itensDataTable += itens[j][2] + ', '
             itensDataTable = itensDataTable[:-1]
             itensDataTable = itensDataTable[:-1]
-            print(itensDataTable)
             qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
             qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
             if qnt_cotacao_rejeitada != 0:
@@ -163,7 +156,8 @@ def itensMaisInfo(id_solicitacao):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
-        itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {id_solicitacao}").fetchall()
+        itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {1}").fetchall()
+        print(itens)
         return itens
     except Exception as e:
         print(e)
@@ -195,7 +189,6 @@ def rejeitarCompra(id):
         return e
 
 def cotacaoInserirDB(resultado):
-    print("Resultado22: ",resultado)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
@@ -252,7 +245,6 @@ def cotacaoInformacoesDB(id_solicitacao):
         cursor = conn.cursor()
         informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={id_solicitacao} AND status_cotacao=0").fetchall()
         dict_lista_informacoes = []
-        print(informacoes)
         for i in informacoes:
             dict_lista_informacoes.append({
                 'id_cotacao':i[0],
@@ -267,9 +259,9 @@ def cotacaoInformacoesDB(id_solicitacao):
                 'validade_cotacao':i[10],
                 'status_cotacao':i[11],
             })
-            print(dict_lista_informacoes)
-            return dict_lista_informacoes
         conn.close()
+        return dict_lista_informacoes
+        
     except Exception as e:
         print(e)
         return False
@@ -300,17 +292,9 @@ def dadosCotacao(id_cotacao):
         print(e)
         return False
 
-
 def selec_status(var):
     conn = sqlite3.connect('./static/db/fpq_status.db')
     cursor = conn.cursor()
     posts = cursor.execute(f'SELECT * FROM status_fpq WHERE cemb={var} OR pn_topo="{var}"').fetchall()
     conn.close()
     return posts
-
-# solicitacaoComprasInserir()
-# pendConsulta()
-# print(pendConsulta())
-# print(reqConsulta())
-# confereUsuario('teste', 'teste')
-# print(comprasPendentes())
