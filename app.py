@@ -112,7 +112,6 @@ def comprasPendentes():
 def cotacaoInserir():
     output = request.get_json()
     resultado = json.loads(output)
-    # print("Resultado: ",resultado)
     inserirDB = sqlite_funcs.cotacaoInserirDB(resultado)
     return {'value': inserirDB}
 

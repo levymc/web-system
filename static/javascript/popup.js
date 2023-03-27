@@ -843,6 +843,7 @@ function loginComprador(){
     $('#button-cotacao').click(function () {
       var data = table.rows('.selected').data();// Recebe os valores da linha selecionada
       data = data[0]
+      console.log(data)
       if (!data){
         Swal.fire({icon:"error", titleText:"Selecione Alguma Compra", confirmButtonColor:'hwb(216 31% 1%)',})
       };
@@ -861,7 +862,6 @@ function loginComprador(){
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((response) => {
-          console.log(response);
           if (response.length){
             var html = ``
             for (var i in response){
@@ -874,7 +874,6 @@ function loginComprador(){
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
-                  <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
                   <li class="list-group-item"><b>Unidade:</b> ${response[i].unidade}</li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
@@ -898,7 +897,6 @@ function loginComprador(){
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
-                <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
                 <li class="list-group-item"><b>Unidade:</b> ${response.unidade}</li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
@@ -1043,7 +1041,7 @@ function loginComprador(){
           }
       }
         }).then((result) => {
-          console.log(result)
+          // console.log(result)
           if (!result.value){
             Swal.fire({
               title:"Cotação Cancelada.",
@@ -1377,6 +1375,7 @@ function novaCotacao(data_Solicitacao){
       solicitante: data_Solicitacao.solicitante,
       fornecedor: fornecedor,
       valor_unitario: valor_unitario,
+      contato_fornecedor: Swal.getPopup().querySelector("#contato_fornecedor").value,
       frete: Swal.getPopup().querySelector('#frete').value,
       inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
       validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,

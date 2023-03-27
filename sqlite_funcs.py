@@ -199,46 +199,16 @@ def cotacaoInserirDB(resultado):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
-        qnt_solicitada = ''
-        if str(resultado["qnt_solicitada"]).isnumeric() == False: 
-            for i in resultado["qnt_solicitada"]:
-                if i.isnumeric():
-                    qnt_solicitada+=i
-            if resultado["frete"] != "":
-                resultado["valor_total"] = float(resultado["valor_unitario"])*int(qnt_solicitada)+int(resultado["frete"])
-            else: resultado["valor_total"] = float(resultado["valor_unitario"])*int(qnt_solicitada)
-            cursor.execute(f"""
-                INSERT INTO cotacao 
-                (id_solicitacao, usuario, fornecedor, quantidade, unidade, valor_un, valor_total, frete, inf_extra, validade_cotacao)
-                VALUES (?,?,?,?,?,?,?,?,?)
-                """,
-                (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
-                qnt_solicitada, resultado['unidade'], float(resultado['valor_unitario']), resultado['valor_total'],
-                resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
-            qnt_cotacao = cursor.execute(f"SELECT qnt_cotacao FROM solicitacao WHERE id_solicitacao = {resultado['id_solicitacao']}").fetchall()[0][0]
-            qnt_cotacao_rejeitada = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {resultado['id_solicitacao']} AND status_cotacao = 2").fetchall()
-            qnt_cotacao = qnt_cotacao - len(qnt_cotacao_rejeitada)
-            cursor.execute(f"""UPDATE solicitacao SET qnt_cotacao = {int(qnt_cotacao)+1} WHERE id_solicitacao = {resultado['id_solicitacao']}""")
-            print(qnt_cotacao)
-            conn.commit()
-            conn.close()
-        else: 
-            qnt_solicitada = resultado["qnt_solicitada"]
-            if resultado["frete"] != "":
-                resultado["valor_total"] = float(resultado["valor_unitario"])*qnt_solicitada+int(resultado["frete"])
-            else: resultado["valor_total"] = float(resultado["valor_unitario"])*qnt_solicitada
-            cursor.execute(f"""
-                INSERT INTO cotacao 
-                (id_solicitacao, usuario, fornecedor, quantidade, unidade, valor_un, valor_total, frete, inf_extra, validade_cotacao)
-                VALUES (?,?,?,?,?,?,?,?,?,?)
-                """,
-                (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
-                qnt_solicitada, resultado['unidade'], resultado['valor_unitario'], resultado['valor_total'],
-                resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
-            qnt_cotacao = cursor.execute(f"SELECT qnt_cotacao FROM solicitacao WHERE id_solicitacao = {resultado['id_solicitacao']}").fetchall()[0][0]
-            cursor.execute(f"""UPDATE solicitacao SET qnt_cotacao = {int(qnt_cotacao)+1} WHERE id_solicitacao = {resultado['id_solicitacao']}""")
-            conn.commit()
-            conn.close()
+        cursor.execute(f"""
+            INSERT INTO cotacao 
+            (id_solicitacao, usuario, fornecedor, contato_fornecedor, unidade, valor_un, frete, inf_extra, validade_cotacao)
+            VALUES (?,?,?,?,?,?,?,?,?)
+            """,
+            (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
+            resultado['contato_fornecedor'], resultado['unidade'], resultado['valor_unitario'],
+            resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
+        conn.commit()
+        conn.close()
         print("Informações enviadas ao DB com sucesso!")
         return True
     except Exception as e:
@@ -280,40 +250,24 @@ def cotacaoInformacoesDB(id_solicitacao):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
-        dict_informacoes = {}
         informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={id_solicitacao} AND status_cotacao=0").fetchall()
-        if len(informacoes)<=1:
-            informacoes = informacoes[0]
-            dict_informacoes['id_cotacao']=informacoes[0]
-            dict_informacoes['id_solicitacao']=informacoes[1]
-            dict_informacoes['solicitante']=informacoes[2]
-            dict_informacoes['fornecedor']=informacoes[3]
-            dict_informacoes['contato_fornecedor']=informacoes[4]
-            dict_informacoes['unidade']=informacoes[6]
-            dict_informacoes['qnt_solicitada']=informacoes[5]
-            dict_informacoes['valor_unitario']=informacoes[7]
-            dict_informacoes['frete']=informacoes[9]
-            dict_informacoes['inf_extra']=informacoes[10]
-            dict_informacoes['validade_cotacao']=informacoes[11]
-            dict_informacoes['status_cotacao']=informacoes[12]
-            return dict_informacoes
-        else:
-            dict_lista_informacoes = []
-            for i in informacoes:
-                dict_lista_informacoes.append({
-                    'id_cotacao':i[0],
-                    'id_solicitacao':i[1],
-                    'solicitante':i[2],
-                    'fornecedor':i[3],
-                    'contato_fornecedor':i[4],
-                    'qnt_solicitada':i[5],
-                    'unidade':i[6],
-                    'valor_unitario':i[7],
-                    'frete':i[9],
-                    'inf_extra':i[10],
-                    'validade_cotacao':i[11],
-                    'status_cotacao':i[12],
-                })
+        dict_lista_informacoes = []
+        print(informacoes)
+        for i in informacoes:
+            dict_lista_informacoes.append({
+                'id_cotacao':i[0],
+                'id_solicitacao':i[1],
+                'solicitante':i[2],
+                'fornecedor':i[3],
+                'contato_fornecedor':i[4],
+                'unidade':i[5],
+                'valor_unitario':i[6],
+                'frete':i[8],
+                'inf_extra':i[9],
+                'validade_cotacao':i[10],
+                'status_cotacao':i[11],
+            })
+            print(dict_lista_informacoes)
             return dict_lista_informacoes
         conn.close()
     except Exception as e:
