@@ -972,7 +972,7 @@ function loginComprador(){
                 <div class="col" style="width:110%">
                   <div class="selecItem">
                     <label id="selecItemLabel" for="item-select">Selecione um item:</label>
-                    <select class="form-control selecItemForm" id="item-select">
+                    <select class="form-select selecItemForm" id="item-select">
                       ${opcoes}
                     </select>
                   </div>
@@ -986,7 +986,7 @@ function loginComprador(){
                   </div>
                   <div class="input-group mb-3">
                       <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
-                      <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
+                      <select class="form-select" style="font-size:14px" aria-label="UN" id="unidade">
                         <option style="font-size:14px;" value="" disabled selected>UN</option>
                         <option style="font-size:14px;">Bloco</option>
                         <option style="font-size:14px;">Bobina</option>
