@@ -1033,14 +1033,15 @@ function loginComprador(){
             unidade: unidade,
             solicitante: data.solicitante,
             fornecedor: fornecedor,
-            valor_unitario: valor_unitario.replace(',','.'),
+            valor_unitario: valor_unitario,
+            contato_fornecedor: Swal.getPopup().querySelector("#contato_fornecedor").value,
             frete: Swal.getPopup().querySelector('#frete').value,
             inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
             validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
           }
       }
         }).then((result) => {
-          // console.log(result)
+          console.log("AQUIOOOOA",result)
           if (!result.value){
             Swal.fire({
               title:"Cotação Cancelada.",
