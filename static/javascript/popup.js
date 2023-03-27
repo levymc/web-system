@@ -955,11 +955,7 @@ function loginComprador(){
         <div class="h2" style="margin-left:1em">
           <div class="row" style="line-height: 1.5em;">
             <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
-            <div class=" h5 col-sm text-center">
-              <label for="item-select">Selecione um item:</label>
-              <select class="form-control" id="item-select">
-                ${opcoes}
-              </select>
+            <div class="h5 col-sm text-center cabe-selecioneItem">
               <b>Informações da Cotação</b>
             </div>
           </div>
@@ -967,13 +963,19 @@ function loginComprador(){
         <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
             <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
             <b>Data da Solicitação:</b> <font color="#560101">${data.data}</font><br />
-            <b>Item Solicitado:</b> <font color="#560101">${data.itens}</font><br />
+            <b>Item(ns) Solicitado(s):</b> <font color="#560101">${data.itens}</font><br />
             <b>Setor:</b> <font color="#560101">${data.setor}</font><br />
             <b>Justificativa:</b> <font color="#560101">${data.motivo}</font><br />
         </div>
         <div class="col">
             <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
                 <div class="col" style="width:110%">
+                  <div class="selecItem">
+                    <label id="selecItemLabel" for="item-select">Selecione um item:</label>
+                    <select class="form-control selecItemForm" id="item-select">
+                      ${opcoes}
+                    </select>
+                  </div>
                   <div class="input-group mb-3">
                       <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
                       <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
@@ -1013,12 +1015,12 @@ function loginComprador(){
                       <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
                       <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
                   </div>
+              </div>
+              <div class="col" style="margin-left:3em;">
                   <div class="input-group mb-3">
                       <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
                       <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
                   </div>
-              </div>
-              <div class="col" style="margin-left:3em;">
                   <div class="input-group mb-3">
                       <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
                       <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
