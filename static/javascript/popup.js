@@ -315,7 +315,6 @@ function solicitacaoCompra(){
               itens.push(quantidade);
               itens.push(unidade);
               const dict_values ={dataAtual, itens, motivo, setor, prioridade, qnt_itens};
-              console.log("Dados1: ",dict_values);
               const s = JSON.stringify(dict_values);
               $.ajax({
                 url:"/comprasInserir",
