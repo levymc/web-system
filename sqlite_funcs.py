@@ -189,15 +189,16 @@ def rejeitarCompra(id):
         return e
 
 def cotacaoInserirDB(resultado):
+    print(resultado)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
         cursor.execute(f"""
             INSERT INTO cotacao 
-            (id_solicitacao, usuario, fornecedor, contato_fornecedor, unidade, valor_un, frete, inf_extra, validade_cotacao)
-            VALUES (?,?,?,?,?,?,?,?,?)
+            (id_solicitacao, id_item, item, usuario, fornecedor, contato_fornecedor, unidade, valor_un, frete, inf_extra, validade_cotacao)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?)
             """,
-            (resultado['id_solicitacao'], resultado['solicitante'], resultado['fornecedor'], 
+            (resultado['id_solicitacao'], resultado['id_item'], resultado['item'], resultado['solicitante'], resultado['fornecedor'], 
             resultado['contato_fornecedor'], resultado['unidade'], resultado['valor_unitario'],
             resultado['frete'], resultado['inf_extra'], resultado['validade_cotacao']))
         conn.commit()
@@ -249,15 +250,17 @@ def cotacaoInformacoesDB(id_solicitacao):
             dict_lista_informacoes.append({
                 'id_cotacao':i[0],
                 'id_solicitacao':i[1],
-                'solicitante':i[2],
-                'fornecedor':i[3],
-                'contato_fornecedor':i[4],
-                'unidade':i[5],
-                'valor_unitario':i[6],
-                'frete':i[8],
-                'inf_extra':i[9],
-                'validade_cotacao':i[10],
-                'status_cotacao':i[11],
+                'id_item':i[2],
+                'item':i[3],
+                'solicitante':i[4],
+                'fornecedor':i[5],
+                'contato_fornecedor':i[6],
+                'unidade':i[7],
+                'valor_unitario':i[8],
+                'frete':i[9],
+                'inf_extra':i[10],
+                'validade_cotacao':i[11],
+                'status_cotacao':i[12],
             })
         conn.close()
         return dict_lista_informacoes

@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 from datetime import timedelta
 from waitress import serve
 
-mode = "dev"
+mode = "prod"
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'

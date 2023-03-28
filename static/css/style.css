@@ -382,6 +382,10 @@ body.swal2-height-auto {
     align-items: center;
     margin-bottom: 1.2em;
 }
+.border-card{
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+}
 .cabe-selecioneItem .selecItemForm{
     justify-content: flex-start;
 }
