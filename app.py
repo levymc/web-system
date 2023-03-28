@@ -4,6 +4,7 @@ from flask_mail import Mail, Message
 from werkzeug.exceptions import abort
 from datetime import timedelta
 from waitress import serve
+import logging
 
 mode = "prod"
 
@@ -217,4 +218,4 @@ if __name__ == '__main__':
     if mode == 'dev':
         app.run(debug=True, host='0.0.0.0', port=3000)
     else:
-        serve(app, host='0.0.0.0', port=3000, threads=5) #, use_reloader=False
+        serve(app, host='0.0.0.0', port=3000, threads=5, url_scheme='https') #, use_reloader=False
