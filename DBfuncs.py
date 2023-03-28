@@ -4,11 +4,17 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
+from app import mode
 
-engine = create_engine(r'sqlite://///NasTecplas/Pintura/DB/compras.db', echo=False)
+if mode == "dev":
+    engine = create_engine(r'sqlite:///compras.db', echo=False)
+elif mode == "prod":
+    engine = create_engine(r'sqlite://///NasTecplas/Pintura/DB/compras.db', echo=False)
+    
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
+
 
 class Cotacao(Base):
     __tablename__ = "cotacao"
@@ -93,6 +99,25 @@ class Cotacao(Base):
         finally:
             session.close()
     
+    @classmethod
+    def update(cls, id_cotacao, **kwargs):
+        session = Session()
+        try:
+            cotacao = session.query(cls).filter(cls.id_cotacao == id_cotacao).one()
+            for key, value in kwargs.items():
+                setattr(cotacao, key, value)
+            session.commit()
+        except NoResultFound:
+            print(f"Não existe cotação com o id_cotacao {id_cotacao}")
+        except IntegrityError as e:
+            session.rollback()
+            print(f"Erro de integridade ao atualizar a cotação com o id_cotacao {id_cotacao}: {str(e)}")
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao atualizar a cotação com o id_cotacao {id_cotacao}: {str(e)}")
+        finally:
+            session.close()
+
     
     
 class Itens(Base):
@@ -159,6 +184,36 @@ class Itens(Base):
             print(f"Erro ao deletar item com o id_solicitacao {id_solicitacao} e id_item {id_item}: {str(e)}")
         finally:
             session.close()
+    
+    @classmethod
+    def update(cls, id_item, nomeItem=None, descricao=None, categoria=None, classificacao=None, quantidade=None, unidade=None):
+        session = Session()
+        try:
+            item = session.query(cls).filter(cls.id_item == id_item).one()
+            if nomeItem:
+                item.nomeItem = nomeItem
+            if descricao:
+                item.descricao = descricao
+            if categoria:
+                item.categoria = categoria
+            if classificacao:
+                item.classificacao = classificacao
+            if quantidade:
+                item.quantidade = quantidade
+            if unidade:
+                item.unidade = unidade
+            session.commit()
+        except NoResultFound:
+            print(f"Não existe item com o id_item {id_item}")
+        except IntegrityError as e:
+            session.rollback()
+            print(f"Erro de integridade ao atualizar item com o id_item {id_item}: {str(e)}")
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao atualizar item com o id_item {id_item}: {str(e)}")
+        finally:
+            session.close()
+
     
     
 class Solicitacao(Base):
@@ -262,3 +317,5 @@ class Solicitacao(Base):
             print(f"Erro ao atualizar solicitação com o id_solicitacao {id_solicitacao}: {str(e)}")
         finally:
             session.close()
+
+
