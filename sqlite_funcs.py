@@ -213,12 +213,12 @@ def cotacaoUpdate(dados):
     try:
         conn = sqlite3.connect('static/db/compras.db') 
         cursor = conn.cursor()
-        cursor.execute(f"UPDATE cotacao SET fornecedor='{dados['fornecedor']}' WHERE id_cotacao={dados['id_cotacao']}")
-        cursor.execute(f"UPDATE cotacao SET valor_un='{dados['valor_unitario']}' WHERE id_cotacao={dados['id_cotacao']}")
-        cursor.execute(f"UPDATE cotacao SET unidade='{dados['unidade']}' WHERE id_cotacao={dados['id_cotacao']}")
-        cursor.execute(f"UPDATE cotacao SET frete='{dados['frete']}' WHERE id_cotacao={dados['id_cotacao']}")
-        cursor.execute(f"UPDATE cotacao SET inf_extra='{dados['inf_extra']}' WHERE id_cotacao={dados['id_cotacao']}")
-        cursor.execute(f"UPDATE cotacao SET validade_cotacao='{dados['validade_cotacao']}' WHERE id_cotacao={dados['id_cotacao']}")
+        cursor.execute(f"UPDATE cotacao SET fornecedor='{dados['fornecedor']}' WHERE id_cotacao={dados['id_cotacao']} AND id_item={dados['id_item']}")
+        cursor.execute(f"UPDATE cotacao SET valor_un='{dados['valor_unitario']}' WHERE id_cotacao={dados['id_cotacao']} AND id_item={dados['id_item']}")
+        cursor.execute(f"UPDATE cotacao SET unidade='{dados['unidade']}' WHERE id_cotacao={dados['id_cotacao']} AND id_item={dados['id_item']}")
+        cursor.execute(f"UPDATE cotacao SET frete='{dados['frete']}' WHERE id_cotacao={dados['id_cotacao']} AND id_item={dados['id_item']}")
+        cursor.execute(f"UPDATE cotacao SET inf_extra='{dados['inf_extra']}' WHERE id_cotacao={dados['id_cotacao']} AND id_item={dados['id_item']}")
+        cursor.execute(f"UPDATE cotacao SET validade_cotacao='{dados['validade_cotacao']}' WHERE id_cotacao={dados['id_cotacao']} AND id_item={dados['id_item']}")
         conn.commit()
         conn.close()
         return True
@@ -278,13 +278,13 @@ def dadosCotacao(id_cotacao):
         informacoes = dados[0]
         dict_informacoes['id_cotacao']=informacoes[0]
         dict_informacoes['id_solicitacao']=informacoes[1]
-        dict_informacoes['solicitante']=informacoes[2]
-        dict_informacoes['fornecedor']=informacoes[3]
-        dict_informacoes['contato_fornecedor']=informacoes[4]
-        dict_informacoes['qnt_solicitada']=informacoes[5]
-        dict_informacoes['unidade']=informacoes[6]
-        dict_informacoes['valor_unitario']=informacoes[7]
-        dict_informacoes['valor_total']=informacoes[8]
+        dict_informacoes['id_item']=informacoes[2]
+        dict_informacoes['item']=informacoes[3]
+        dict_informacoes['solicitante']=informacoes[4]
+        dict_informacoes['fornecedor']=informacoes[5]
+        dict_informacoes['contato_fornecedor']=informacoes[6]
+        dict_informacoes['unidade']=informacoes[7]
+        dict_informacoes['valor_unitario']=informacoes[8]
         dict_informacoes['frete']=informacoes[9]
         dict_informacoes['inf_extra']=informacoes[10]
         dict_informacoes['validade_cotacao']=informacoes[11]
