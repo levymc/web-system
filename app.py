@@ -3,11 +3,12 @@ import sqlite3, requests, sqlite_funcs, json, hashlib
 from flask_mail import Mail, Message
 from werkzeug.exceptions import abort
 from datetime import timedelta
+from waitress import serve
+
+mode = "prod"
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
-app.permanent_session_lifetime = timedelta(seconds=2)
-# app.config['SERVER_NAME'] = 'sistema.tecplas:3000'
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -38,7 +39,6 @@ def consultaFPQ():
 def cotacao():
     output = request.get_json()
     result = json.loads(output)
-    # print(result)
     return render_template('cotacao.html')
 
 @app.route("/second/", methods=["POST", "GET"])
@@ -48,15 +48,12 @@ def second():
 @app.route("/acesso", methods=["POST", "GET"])
 def acessoSistema():
     global result
-    usuario = None
     result = {
         'usuario': str(request.values.get('formLoginUsuario')),
         'senha': str(request.values.get('formLoginSenha')),
     }
     resposta = sqlite_funcs.confereUsuario(result['usuario'], result['senha'])
     if resposta == True:
-        # if 'usuario' in session:
-        #     usuario = session['usuario']
         return render_template('second.html')
     elif resposta == "vazio":
         flash(f"Digite o usuário e a senha!", "warning")
@@ -79,6 +76,15 @@ def comprasInserir():
     result_['usuario'] = result['usuario']
     salvarDB = sqlite_funcs.solicitacaoComprasInserir(result_)
     return {'value': True}
+
+@app.route("/itensMaisInfo", methods=["POST", "GET"])
+def itensMaisInfo():
+    output = request.get_json()
+    result_ = json.loads(output)
+    print("result__", result_)
+    itens = sqlite_funcs.itensMaisInfo(result_)
+    print("itens:",itens)
+    return itens
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
 def comprasPendentesAprovacao():
@@ -106,7 +112,6 @@ def comprasPendentes():
 def cotacaoInserir():
     output = request.get_json()
     resultado = json.loads(output)
-    # print("Resultado: ",resultado)
     inserirDB = sqlite_funcs.cotacaoInserirDB(resultado)
     return {'value': inserirDB}
 
@@ -114,7 +119,6 @@ def cotacaoInserir():
 def cotacaoUpdate():
     output = request.get_json()
     resultado = json.loads(output)
-    print("Resultado: ",resultado)
     inserirDB = sqlite_funcs.cotacaoUpdate(resultado)
     return {'value': True}
 
@@ -122,7 +126,6 @@ def cotacaoUpdate():
 def cotacaoApagar():
     output = request.get_json()
     resultado = json.loads(output)
-    # print("Resultado: ",resultado)
     apagou = sqlite_funcs.cotacaoApagar(resultado)
     return {'value': apagou}
 
@@ -146,7 +149,6 @@ def send():
         flash("Você não está conectado. Refaça o login!")
     output = request.get_json()
     result = json.loads(output) #this converts the json output to a python dictionary
-    print(result) # Printing the new dictionary
     insert_message = sqlite_funcs.inserir(result)
     nome = result['nome']
     motivo = result['motivo']
@@ -200,7 +202,6 @@ def confere():
         cursor = conn.cursor()
         user_find = cursor.execute(f"SELECT * FROM usuarios WHERE senha='{senha}'").fetchall()[0][1]
         print("Login realizado com Sucesso!")
-        print(result)
         # AQUI ENTRA O SCRIPT DE ENVIO AO BANCO DE DADOS!
         return render_template('requisicao.html')
     except IndexError as passwordError: 
@@ -213,4 +214,7 @@ def confere():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=3000) #, use_reloader=False
+    if mode == 'dev':
+        app.run(debug=True, host='0.0.0.0', port=3000)
+    else:
+        serve(app, host='0.0.0.0', port=3000, threads=5) #, use_reloader=False

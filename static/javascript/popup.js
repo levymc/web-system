@@ -1,10 +1,16 @@
-function newPopup(){
+function newPopup(){ /* Contato Processo */
     Swal.fire({
         title: 'Contato Processo',
         html: `<div class="loginCompras">
+        <div class="row" style="width:60%; margin-bottom:1em, margin-left:auto; margin-right:auto">
             <input type="text" id="nome_contato" name="nome" class="swal2-input" placeholder="Nome">
+        </div>
+        <div class="row" style="width:60%; margin-bottom:1em, margin-left:auto; margin-right:auto">
             <input type="text" id="motivo_contato" name="motivo" class="swal2-input" placeholder="Motivo">
-            <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="500" style="resize:none; height:10em !important;" class="swal2-textarea"  maxlength="200" placeholder="Descrição"></textarea>
+        </div>
+        <div class="row" style="width:60%; margin-bottom:1em, margin-left:auto !important; margin-right:auto !important">
+            <textarea id="descricao_contato" name="descricao_contato" cols="30" rows="500" style="height:10em !important;" class="swal2-textarea"  maxlength="200" placeholder="Descrição"></textarea>
+        </div>
             </div>`,
         confirmButtonText: 'Enviar',
         confirmButtonColor:'hwb(216 31% 1%)',
@@ -106,7 +112,6 @@ function acessoResponsavel(){
   })     
 };
 
-
 function solicitacaoCompra(){
   var itens = [];
   $.ajax({
@@ -127,7 +132,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Nome do Item (forma genérica)</label>
-        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="  Nome do Item" style="width: 80%">
+        <input type="text" MAXLENGTH=25 id="item_solicitacao" name="item_solicitacao" class="swal2-input" placeholder="Nome do Item" style="width: 80%; margin-left:0 !important;">
         </div>
       <div class="row text-start" style="margin-left:1em !important;; margin-top:0.9em;">
         <label for="descricao_solicitacao">Descrição  (especificações)</label>
@@ -135,7 +140,7 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="item_solicitacao">Categoria </label>
-        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="categoria">
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="categoria">
           <option style="font-size:14px;" value="" disabled selected>Categoria</option>
           <option style="font-size:14px;" value="Componente">Componente</option>
           <option style="font-size:14px;" value="EPI">EPI</option>
@@ -148,7 +153,8 @@ function solicitacaoCompra(){
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="classificacao">Classificação </label>
-        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="classificacao">
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="classificacao">
+        <option value="" disabled selected>Classificação</option>
           <optgroup label="Material Novo">
             <option>Investimento</option>
             <option>Obra/Infraestrutura</option>
@@ -165,11 +171,11 @@ function solicitacaoCompra(){
     <div class="col">
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="quantidade_solicitacao">Quantidade</label>             
-        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="  Quantidade solicitada" style="width: 80%">
+        <input type="number" id="quantidade_solicitacao" name="quantidade_solicitacao" class="swal2-input" placeholder="Quantidade solicitada" style="width: 80%; margin-left:0 !important;">
       </div>
       <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
         <label for="unidade_solicitacao">Unidade de Venda do Item</label>             
-        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="unidade_solicitacao">
+        <select style="margin-left:-0em !important;font-size:14px;width:80%" class="selectClass1" id="unidade_solicitacao">
           <option style="font-size:14px;" value="" disabled selected>UN</option>
           <option style="font-size:14px;" value="Bloco">Bloco</option>
           <option style="font-size:14px;" value="Bobina">Bobina</option>
@@ -194,45 +200,48 @@ function solicitacaoCompra(){
           <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
         </select>
       </div>
-      <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
-        <label for="motivo_solicitacao">Justificativa</label>
-        <input type="text" id="motivo_solicitacao" name="movito_solicitacao" style="margin-left:-0em !important; width: 80%" class="swal2-input" placeholder="  Justificativa da Solicitação"></input>
-      </div>
-      <div class="row text-start" style="margin-left:1em !important;margin-top:0.9em;">
-        <label for="areaUso" style="margin-bottom:-0.3em">Área de Uso</label>
-        <select style="margin-left:-0em !important;font-size:14px;" class="form-control" id="areaUso">
-          <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
-          <option style="font-size:14px;" value="Administração">Administração</option>
-          <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
-          <option style="font-size:14px;" value="AutoClave">AutoClave</option>
-          <option style="font-size:14px;" value="Colmeia">Colmeia</option>
-          <option style="font-size:14px;" value="Engenharia">Engenharia</option>
-          <option style="font-size:14px;" value="Ferramental">Ferramental</option>
-          <option style="font-size:14px;" value="Manutenção">Manutenção</option>
-          <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
-          <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
-          <option style="font-size:14px;" value="Pintura">Pintura</option>
-          <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
-          <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
-          <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
-          <option style="font-size:14px;" value="Qualidade">Qualidade</option>
-          <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
-          <option style="font-size:14px;" value="Termoformado">Termoformado</option>
-          <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
-        </select>
-    </div>
-    <div class="row text-start" style="margin-left:1em !important; margin-top:0.9em;">
-      <label for="item_solicitacao">Prioridade </label>
-      <select style="margin-left:-0em !important;font-size:14px;width:80%" class="form-control" id="prioridade">
-        <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
-        <option style="font-size:14px;" value="Alta">Alta</option>
-        <option style="font-size:14px;" value="Baixa">Baixa</option>
-        <option style="font-size:14px;" value="Crítico">Crítico</option>
-        <option style="font-size:14px;" value="Baixa">Baixa</option>
-      </select>
+        <div class="fundinSol" style="width:90% !important; ">
+          <div class="row text-start" style="margin-top:0.9em;">
+            <label for="motivo_solicitacao" style="margin-left:1.25em !important;">Justificativa</label>
+            <input type="text" id="motivo_solicitacao" name="motivo_solicitacao" class="swal2-input" placeholder="Justificativa da Solicitação"></input>
+          </div>
+          <div class="row text-start" style="margin-top:0.9em;">
+            <label for="areaUso" style="margin-left:1.25em !important;margin-bottom:-0.3em">Área de Uso</label>
+            <select class="selectClass1" id="areaUso">
+              <option style="font-size:14px;" value="" disabled selected>Área de Uso</option>
+              <option style="font-size:14px;" value="Administração">Administração</option>
+              <option style="font-size:14px;" value="Ajustagem">Ajustagem</option>
+              <option style="font-size:14px;" value="AutoClave">AutoClave</option>
+              <option style="font-size:14px;" value="Colmeia">Colmeia</option>
+              <option style="font-size:14px;" value="Engenharia">Engenharia</option>
+              <option style="font-size:14px;" value="Ferramental">Ferramental</option>
+              <option style="font-size:14px;" value="Manutenção">Manutenção</option>
+              <option style="font-size:14px;" value="MC Ajustagem">MC Ajustagem</option>
+              <option style="font-size:14px;" value="MC Laminação">MC Laminação</option>
+              <option style="font-size:14px;" value="Pintura">Pintura</option>
+              <option style="font-size:14px;" value="Polimento Acrílico">Polimento Acrílico</option>
+              <option style="font-size:14px;" value="Polimento Metálico">Polimento Metálico</option>
+              <option style="font-size:14px;" value="Produto Próprio">Produto Próprio</option>
+              <option style="font-size:14px;" value="Qualidade">Qualidade</option>
+              <option style="font-size:14px;" value="Sala Branca">Sala Branca</option>
+              <option style="font-size:14px;" value="Termoformado">Termoformado</option>
+              <option style="font-size:14px;" value="Outro">Outro... (complementar na descrição)</option>
+            </select>
+        </div>
+        <div class="row text-start" style="margin-top:0.9em;">
+          <label for="prioridade" style="margin-left:1.25em !important;margin-bottom:-0.3em">Prioridade </label>
+          <select class="selectClass1" id="prioridade">
+            <option style="font-size:14px;" value="" disabled selected>Prioridade</option>
+            <option style="font-size:14px;" value="Alta">Alta</option>
+            <option style="font-size:14px;" value="Média">Média</option>
+            <option style="font-size:14px;" value="Crítico">Crítico</option>
+            <option style="font-size:14px;" value="Baixa">Baixa</option>
+          </select>
+        </div>
     </div>
   </div>
-  <p class="text-end" style="padding-right:3em;padding-top:2em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-end" style="padding-right:3em;padding-top:0.5em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-center" style="font-size:14px;"><strong> Em caso de mais de um item, clicar em 'Add Item' antes de Enviar a Solicitação</strong></p>
   
   `
       Swal.fire({
@@ -305,8 +314,7 @@ function solicitacaoCompra(){
               itens.push(classificacao);
               itens.push(quantidade);
               itens.push(unidade);
-              const dict_values = {dataAtual, itens, motivo, setor, prioridade, qnt_itens};
-              console.log("Dados1: ",dict_values);
+              const dict_values ={dataAtual, itens, motivo, setor, prioridade, qnt_itens};
               const s = JSON.stringify(dict_values);
               $.ajax({
                 url:"/comprasInserir",
@@ -326,7 +334,6 @@ function solicitacaoCompra(){
               })
             }else{
               const dict_values = {dataAtual, itens, motivo, setor, prioridade, qnt_itens};
-              console.log("Dados2: ",dict_values);
               const s = JSON.stringify(dict_values);
               $.ajax({
                 url:"/comprasInserir",
@@ -375,6 +382,7 @@ function solicitacaoCompra(){
       Swal.getPopup().querySelector("#quantidade_solicitacao").value = "";
       Swal.getPopup().querySelector("#unidade_solicitacao").value = "";
       if (itens.length==1){
+        document.getElementById("itens").style.background = "rgba(192, 192, 192, 0.75)";
         htmlNovo = `
         <div class="row">
           <div class="col h4 itensNovos" id="titleItens">Itens Adicionados:</div>    
@@ -392,13 +400,6 @@ function solicitacaoCompra(){
     }
     });
   }
-  });
-};
-
-function swalUpdate(arg){
-  location.reload();
-  Swal.update({
-    html:arg,
   });
 };
        
@@ -422,9 +423,10 @@ function paginaAprovador(){
       <tr>
         <th scope="col">Data da Solicitação</th>
         <th scope="col">Usuário</th>
-        <th scope="col">Item</th>
-        <th scope="col">Descrição</th>
-        <th scope="col">Motivo</th>
+        <th scope="col">Itens</th>
+        <th scope="col">Qnt. Itens</th>
+        <th scope="col">Justificativa</th>
+        <th scope="col">Setor</th>
       </tr>
     </thead>    
   </table>
@@ -440,6 +442,7 @@ function paginaAprovador(){
   $(document).ready(function () {
     var tableAprovador = $('#dataTable4').DataTable({
       select: true,
+      selectionMode:"single",
       "processing" : true,
       "serverSide" : false,
       "serverMethod" : "post",
@@ -455,18 +458,27 @@ function paginaAprovador(){
       'columns': [
       { data : 'data', "width": "15%"},
       { data : 'solicitante', "width": "15%"}, 
-      { data : 'nomeItem', "width": "15%"}, 
-      { data : 'descricao', "width": "30%"},
+      { data : 'itens', "width": "15%"}, 
+      { data : 'qnt_itens', "width": "15%"}, 
       { data : 'motivo', "width": "25%"},
+      { data : 'setor', "width": "15%"},
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
+      {targets: 2, render: function ( data, type, row ) {
+        return data.length > 25 ?
+            data.substr( 0, 25 ) +'…' :
+            data;
+    }},
+    {targets:1, render:function(data){
+      return data.charAt(0).toUpperCase() + data.slice(1)
+    }}
       ],
       "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
-  })
-  $('#button-aprovar').click(function () {
+  });
+  $('#button-aprovar').click(function() {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 1 ao status
     dadosSolicitacao = dadosSolicitacao[0];
     if (!dadosSolicitacao){
@@ -495,11 +507,9 @@ function paginaAprovador(){
         };
     });
   });
-
-  $('#button-info').click(function () {
+  $('#button-rejeitar').click(function () {
     var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
     dadosSolicitacao = dadosSolicitacao[0];
-    console.log(dadosSolicitacao);
     if (!dadosSolicitacao){
       Swal.fire({
         titleText: "Selecione algum item para Rejeitar",
@@ -508,59 +518,168 @@ function paginaAprovador(){
         confirmButtonText: "Ok",
         confirmButtonColor:'hwb(216 31% 1%)',
       })}else{
-    Swal.fire({
-      title: "Informações da Solicitações",
-      width:'50em',
-      allowOutsideClick: false,
-      showCloseButton: true,
-      padding: 0 ,
-      showConfirmButton: false,
-      confirmButtonColor:'hwb(216 31% 1%)', 
-      html:`
-              <div class="container-fluid" style="margin-left:2em; margin-right:2em; width:40em;">
-                <div class="row pageMaisInfo">
-                  <div class="col text-start"> 
-                    <b>Solicitante (usuário):</b> <font color="#560101">${dadosSolicitacao.solicitante}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Data da Solicitação:</b> <font color="#560101">${dadosSolicitacao.data}</font>
-                  </div>
-                  
-                </div>
-                <div class="row pageMaisInfo"">
-                  <div class="col text-start"> 
-                  <b>Item Solicitado:</b> <font color="#560101">${dadosSolicitacao.nomeItem}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Descrição do Item:</b> <font color="#560101">${dadosSolicitacao.descricao}</font>
-                  </div>
-                </div>
-
-                <div class="row pageMaisInfo">
-                  <div class="col text-start" > 
-                  <b>Quantidade Solicitada:</b> <font color="#560101">${dadosSolicitacao.quantidade}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Unidade:</b> <font color="#560101">${dadosSolicitacao.unidade}</font>
-                  </div>
-                </div>
-
-                <div class="row pageMaisInfo">
-                  <div class="col text-start"> 
-                  <b>Justificativa da Compra:</b> <font color="#560101">${dadosSolicitacao.motivo}</font>
-                  </div>
-                  <div class="col text-start"> 
-                  <b>Setor/Departamento:</b> <font color="#560101">${dadosSolicitacao.setor}</font>
-                  </div>
-                </div>
-              </div>
-              <div class="row" style="margin-bottom:1.5em;">
-                <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
-                <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
-              </div>
-              `
+        Swal.fire({
+          titleText: "Deseja Rejeitar a Solicitação?",
+          showCancelButton: true,
+          icon: "question",
+          focusConfirmButton: false,
+          allowOutsideClick: false,
+          confirmButtonText: "Sim",
+          confirmButtonColor:'hwb(216 31% 1%)',
+          cancelButtonText: "Não",
+        }).then((result) => {
+          if (result.value==true){
+            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
+            $.ajax({
+              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
+              type: "POST",
+              contentType: "application/json",
+              data: JSON.stringify(id_reprovar)
+            }).done((response) => {
+              if(response.value==true){
+                Swal.fire({
+                  titleText: "Solicitação de Compra Rejeitada",
+                  icon: "info",
+                  showConfirmButton: true,
+                  confirmButtonColor:'hwb(216 31% 1%)', 
+                });
+              };
             });
-          };
+          }else{
+            Swal.fire({
+              titleText: "Solicitação Não Rejeitada",
+              icon: "warning",
+              showConfirmButton: true,
+              confirmButtonColor:'hwb(216 31% 1%)', 
+              confirmButtonText:"Ok",
+            });
+          }
+        });
+      }
+    });
+
+  $('#button-info').click(function () {
+    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
+    dadosSolicitacao = dadosSolicitacao[0];
+    if (!dadosSolicitacao){
+      Swal.fire({
+        titleText: "Para mais informações, selecione um item",
+        icon: "warning",
+        showConfirmButton: true,
+        confirmButtonText: "Ok",
+        confirmButtonColor:'hwb(216 31% 1%)',
+      })}else{
+      const s = JSON.stringify(dadosSolicitacao);
+        $.ajax({
+          url:"/itensMaisInfo",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(s)
+        }).done((jade) => {
+          var html1 = `
+                    <div class="pageInfoContainer" style="margin-top:0 !important;">
+                      <div class="row">
+                        <div class="col-4 fundinSol text-start"> 
+                          <div class="row pageInfo-linhas">
+                            <b>Solicitante: <font color="#560101">${dadosSolicitacao.solicitante.charAt(0).toUpperCase() + dadosSolicitacao.solicitante.slice(1)}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Data da Solicitação: <font color="#560101">${dadosSolicitacao.data}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Justificativa: <font color="#560101">${dadosSolicitacao.motivo}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Setor: <font color="#560101">${dadosSolicitacao.setor}</font></b>
+                          </div>
+                        </div>
+                        <div class="col-8"> 
+                        <label for="carouselExample" style="margin-left:1px" id="info-qntItens">Quantidade de Itens Solicitados: ${jade.length}</label>
+                        <div id="carouselExample" class="carousel slide fundinItens">
+                          <div class="carousel-inner text-center">
+                            <div class="carousel-item active">
+                              <div class="row pageInfo-linhas">
+                                  <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Descricao: <font color="#560101">${jade[0][3]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Categoria: <font color="#560101">${jade[0][4]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Classificação: <font color="#560101">${jade[0][5]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                <b>Quantidade: <font color="#560101">${jade[0][6]}</font></b>
+                              </div>
+                              <div class="row pageInfo-linhas">
+                                  <b>Unidade: <font color="#560101">${jade[0][7]}</font></b>
+                              </div>
+                            </div>
+                            `
+          var html2 = `
+                          <button class="carousel-control-prev" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" id="btn-slide" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+
+                    `
+          var html3 = `
+                    </div>
+                      </div>
+                    </div>
+                    <div class="row" style="margin-bottom:1.5em;">
+                      <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar2">Aprovar</button></div>
+                      <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar2">Rejeitar</button></div>
+                    </div>
+            `
+          if (jade.length == 1){
+            var html = html1 + `</div>` + html3
+          } else{
+            var html = html1
+            for (i in jade){
+              if (i==0){
+              }else{
+              html += `<div class="carousel-item">
+                          <div class="row pageInfo-linhas">
+                            <b>Item: <font color="#560101">${jade[i][2]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Descricao: <font color="#560101">${jade[i][3]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Categoria: <font color="#560101">${jade[i][4]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Classificação: <font color="#560101">${jade[i][5]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Quantidade: <font color="#560101">${jade[i][6]}</font></b>
+                          </div>
+                          <div class="row pageInfo-linhas">
+                            <b>Unidade: <font color="#560101">${jade[i][7]}</font></b>
+                          </div>
+                        </div>`
+            }
+          }
+            html += html2 + html3
+          }
+          Swal.fire({
+            title: "Informações da Solicitações",
+            width:'65em',
+            allowOutsideClick: false,
+            showCloseButton: true,
+            padding: 0 ,
+            showConfirmButton: false,
+            confirmButtonColor:'hwb(216 31% 1%)', 
+            html:html,
+          });
+
           $('#button-aprovar2').click(function () {
             const s = JSON.stringify(dadosSolicitacao);
             $.ajax({
@@ -615,68 +734,18 @@ function paginaAprovador(){
                   showConfirmButton: true,
                   confirmButtonColor:'hwb(216 31% 1%)', 
                   confirmButtonText:"Ok",
-                  
-                });
+                
+              });
               }
             });
           });
-  });
-  
+      });
+    }
 
-  $('#button-rejeitar').click(function () {
-    var dadosSolicitacao = tableAprovador.rows('.selected').data(); // Adicionar 2 ao status
-    dadosSolicitacao = dadosSolicitacao[0];
-    if (!dadosSolicitacao){
-      Swal.fire({
-        titleText: "Selecione algum item para Rejeitar",
-        icon: "warning",
-        showConfirmButton: true,
-        confirmButtonText: "Ok",
-        confirmButtonColor:'hwb(216 31% 1%)',
-      })}else{
-        Swal.fire({
-          titleText: "Deseja Rejeitar a Solicitação?",
-          showCancelButton: true,
-          icon: "question",
-          focusConfirmButton: false,
-          allowOutsideClick: false,
-          confirmButtonText: "Sim",
-          confirmButtonColor:'hwb(216 31% 1%)',
-          cancelButtonText: "Não",
-        }).then((result) => {
-          if (result.value==true){
-            const id_reprovar = JSON.stringify(dadosSolicitacao['id_solicitacao']);
-            $.ajax({
-              url:"/rejeitarCompras", // Envia status = 2 na tabela solicitacao
-              type: "POST",
-              contentType: "application/json",
-              data: JSON.stringify(id_reprovar)
-            }).done((response) => {
-              if(response.value==true){
-                Swal.fire({
-                  titleText: "Solicitação de Compra Rejeitada",
-                  icon: "info",
-                  showConfirmButton: true,
-                  confirmButtonColor:'hwb(216 31% 1%)', 
-                });
-              };
-            });
-          }else{
-            Swal.fire({
-              titleText: "Solicitação Não Rejeitada",
-              icon: "warning",
-              showConfirmButton: true,
-              confirmButtonColor:'hwb(216 31% 1%)', 
-              confirmButtonText:"Ok",
-              
-            });
-          }
-        });
-      }
-      
-    });
+  
   });
-};
+}
+)};
 
 function confereComprasPendentes(){
   $.ajax({
@@ -717,8 +786,6 @@ function loginComprador(){
         <tr>
           <th scope="col">Data da Solicitação</th>
           <th scope="col">Usuário</th>
-          <th scope="col">Item</th>
-          <th scope="col">Descrição</th>
           <th scope="col">Justificativa</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
@@ -749,8 +816,6 @@ function loginComprador(){
         'columns': [
         { data : 'data', "width": "10%"},
         { data : 'solicitante', "width": "12.5%"}, 
-        { data : 'nomeItem', "width": "9.375%"},
-        { data : 'descricao', "width": "23%"},
         { data : 'motivo', "width": "15.625%"},
         { data : 'setor', "width": "12.5%"},
         { data : 'qnt_cotacao', "width": "8%"},
@@ -768,8 +833,9 @@ function loginComprador(){
         data_Solicitacao = data_Solicitacao[0]
         if (!data_Solicitacao){
           Swal.fire({icon:"error", titleText:"Selecione Alguma Compra", confirmButtonColor:'hwb(216 31% 1%)',})
+        }else{
+          novaCotacao(data_Solicitacao); 
         }
-        novaCotacao(data_Solicitacao); 
     });
 
     $('#button-cotacao').click(function () {
@@ -793,20 +859,20 @@ function loginComprador(){
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((response) => {
-          console.log(response);
           if (response.length){
+            console.log(2222, response)
             var html = ``
             for (var i in response){
               var width = '70em';
               var html_ = `
-              <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
+              <div class="card text-start border-card" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
                 <div class="card-body">
+                  <p class="card-text"><b>Item Cotado:</b> <u>${response[i].item}</u></p>
                   <h5 class="card-title"><b>Fornecedor:</b> ${response[i].fornecedor}</h5>
                   <p class="card-text"><b>Contato:</b> ${response[i].contato_fornecedor}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
-                  <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response[i].qnt_solicitada}</li>
                   <li class="list-group-item"><b>Unidade:</b> ${response[i].unidade}</li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
@@ -818,19 +884,19 @@ function loginComprador(){
                 </div>
               </div>`;
             html = html + html_;
-            var numero_cotacao = response[response.length-1].id_cotacao
+            // var numero_cotacao = response[response.length-1].id_cotacao
             }
           } else{
             var width = '30em';
             var html = `
               <div class="card text-start" style="width: 19rem; margin-left:auto; margin-right:auto; font-size:15px;">
               <div class="card-body">
-                <h5 class="card-title"><b>Fornecedor:</b> ${response.fornecedor}</h5>
+                  <h4 class="card-header-pills"><b>Item Cotado: ${response.item}</b> 
+                  <h5 class="card-title"><b>Fornecedor:</b> ${response.fornecedor}</h5>
                 <p class="card-text"><b>Contato:</b> ${response.contato_fornecedor}<p>
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
-                <li class="list-group-item"><b>Quantidade Solicitada:</b> ${response.qnt_solicitada}</li>
                 <li class="list-group-item"><b>Unidade:</b> ${response.unidade}</li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>
@@ -865,142 +931,163 @@ function loginComprador(){
         });
       
       $('#button-novaCotacao2').click(function () {
-        Swal.fire({
-          // titleText: text,
-          title: `${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
-          width: '70em',
-          confirmButtonText: 'Enviar Cotação',
-          allowOutsideClick: false,
-          showCloseButton: true,
-          confirmButtonColor: '#007bff',
-          padding: '1em 1em 1.25em',
-          html: `
-          <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
-      <div class="h2" style="margin-left:1em">
-        <div class="row" style="line-height: 1.5em;">
-          <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
-          <div class=" h5 col-sm text-center"><b>Informações da Cotação</b></div>
+        id_solicitacao2 = data.id_solicitacao
+        $.ajax({
+          url:"/itensMaisInfo",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(String(id_solicitacao2)),
+        }).done((response) => {
+          opcoes = []
+          for (item in response){
+            console.log(response[item][2])
+            opcao = `<option value="${response[item][1]}">${response[item][2]}</option>`
+            opcoes.push(opcao)
+            }
+          Swal.fire({
+            // titleText: text,
+            title: `${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
+            width: '70em',
+            confirmButtonText: 'Enviar Cotação',
+            allowOutsideClick: false,
+            showCloseButton: true,
+            confirmButtonColor: '#007bff',
+            padding: '1em 1em 1.25em',
+            html: `
+            <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
+        <div class="h2" style="margin-left:1em">
+          <div class="row" style="line-height: 1.5em;">
+            <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
+            <div class="h5 col-sm text-center cabe-selecioneItem">
+              <b>Informações da Cotação</b>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
-          <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
-          <b>Data da Solicitação:</b> <font color="#560101">${data.data}</font><br />
-          <b>Item Solicitado:</b> <font color="#560101">${data.nomeItem}</font><br />
-          <b>Descrição:</b> <font color="#560101">${data.descricao}</font><br />
-          <b>Quantidade Solicitada:</b> <font color="#560101">${data.quantidade}</font><br />
-          <b>Unidade:</b> <font color="#560101">${data.unidade}</font><br />
-          <b>Setor:</b> <font color="#560101">${data.setor}</font><br />
-          <b>Justificativa:</b> <font color="#560101">${data.motivo}</font><br />
-      </div>
-      <div class="col">
-          <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
-              <div class="col" style="width:110%">
-                <div class="input-group mb-3">
-                    <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
-                    <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
-                    <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
-                    <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                      <option style="font-size:14px;" value="" disabled selected>UN</option>
-                      <option style="font-size:14px;">Bloco</option>
-                      <option style="font-size:14px;">Bobina</option>
-                      <option style="font-size:14px;">Caixa</option>
-                      <option style="font-size:14px;">Chapa</option>
-                      <option style="font-size:14px;">Conjunto</option>
-                      <option style="font-size:14px;">Folha</option>
-                      <option style="font-size:14px;">Frasco</option>
-                      <option style="font-size:14px;">Galão</option>
-                      <option style="font-size:14px;">Kilograma (Kg)</option>
-                      <option style="font-size:14px;">Lata</option>
-                      <option style="font-size:14px;">Litro (l)</option>
-                      <option style="font-size:14px;">Metro (m)</option>
-                      <option style="font-size:14px;">Metro² (m²)</option>
-                      <option style="font-size:14px;">Pacote</option>
-                      <option style="font-size:14px;">Par</option>
-                      <option style="font-size:14px;">Peça</option>
-                      <option style="font-size:14px;">Pote</option>
-                      <option style="font-size:14px;">Rolo</option>
-                      <option style="font-size:14px;">Saco</option>
-                      <option style="font-size:14px;">Unidade</option>
-                      <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+        <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
+            <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
+            <b>Data da Solicitação:</b> <font color="#560101">${data.data}</font><br />
+            <b>Item(ns) Solicitado(s):</b> <font color="#560101">${data.itens}</font><br />
+            <b>Setor:</b> <font color="#560101">${data.setor}</font><br />
+            <b>Justificativa:</b> <font color="#560101">${data.motivo}</font><br />
+        </div>
+        <div class="col">
+            <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+                <div class="col" style="width:110%">
+                  <div class="selecItem">
+                    <label id="selecItemLabel" for="item-select">Selecione um item:</label>
+                    <select class="form-select selecItemForm" id="item-select">
+                      ${opcoes}
                     </select>
-                </div>
-                <div class="input-group mb-3">
-                    <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
-                    <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
-                    <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
-                </div>
-            </div>
-            <div class="col" style="margin-left:3em;">
-                <div class="input-group mb-3">
-                    <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
-                    <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
-                </div>
-                <div class="input-group mb-3">
-                    <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
-                    <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
-                </div>
-            </div>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                      <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                      <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                      <select class="form-select" style="font-size:14px" aria-label="UN" id="unidade">
+                        <option style="font-size:14px;" value="" disabled selected>UN</option>
+                        <option style="font-size:14px;">Bloco</option>
+                        <option style="font-size:14px;">Bobina</option>
+                        <option style="font-size:14px;">Caixa</option>
+                        <option style="font-size:14px;">Chapa</option>
+                        <option style="font-size:14px;">Conjunto</option>
+                        <option style="font-size:14px;">Folha</option>
+                        <option style="font-size:14px;">Frasco</option>
+                        <option style="font-size:14px;">Galão</option>
+                        <option style="font-size:14px;">Kilograma (Kg)</option>
+                        <option style="font-size:14px;">Lata</option>
+                        <option style="font-size:14px;">Litro (l)</option>
+                        <option style="font-size:14px;">Metro (m)</option>
+                        <option style="font-size:14px;">Metro² (m²)</option>
+                        <option style="font-size:14px;">Pacote</option>
+                        <option style="font-size:14px;">Par</option>
+                        <option style="font-size:14px;">Peça</option>
+                        <option style="font-size:14px;">Pote</option>
+                        <option style="font-size:14px;">Rolo</option>
+                        <option style="font-size:14px;">Saco</option>
+                        <option style="font-size:14px;">Unidade</option>
+                        <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+                      </select>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                      <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                  </div>
+              </div>
+              <div class="col" style="margin-left:3em;">
+                  <div class="input-group mb-3">
+                      <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                      <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                      <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                      <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                  </div>
+              </div>
+          </div>
         </div>
-      </div>
-  </div>
-          `,
-          showCancelButton: true,
-          cancelButtonText: 'Cancelar',
-          focusConfirm: false,
-          preConfirm: () => {
-          const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
-          const unidade = Swal.getPopup().querySelector('#unidade').value
-          const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
-          if (!fornecedor || !unidade || !valor_unitario) {
-              Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
-          }
-          return { 
-            id_solicitacao: data.id_solicitacao,
-            solicitante: data.solicitante, 
-            qnt_solicitada: data.quantidade,
-            unidade: unidade,
-            solicitante: data.solicitante,
-            fornecedor: fornecedor,
-            valor_unitario: valor_unitario.replace(',','.'),
-            frete: Swal.getPopup().querySelector('#frete').value,
-            inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
-            validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
-          }
-      }
-        }).then((result) => {
-          console.log(result)
-          if (!result.value){
-            Swal.fire({
-              title:"Cotação Cancelada.",
-              icon:"error",
-              showConfirmButton: true,
-              timer: 2000,
-              confirmButtonText: 'OK',
-              confirmButtonColor:'hwb(216 31% 1%)',
-            })
-        }else{
-            const dict_values = result.value;
-            const s = JSON.stringify(dict_values);
-            $.ajax({
-                url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(s)
-            }).done((response) => {
-              if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!",confirmButtonColor:'hwb(216 31% 1%)',})} 
-                else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+    </div>
+            `,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            focusConfirm: false,
+            preConfirm: () => {
+            const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+            const unidade = Swal.getPopup().querySelector('#unidade').value
+            const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
+            if (!fornecedor || !unidade || !valor_unitario) {
+                Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
+            }
+            return { 
+              id_solicitacao: data.id_solicitacao,
+              solicitante: data.solicitante, 
+              qnt_solicitada: data.quantidade,
+              item: Swal.getPopup().querySelector('#item-select').selectedOptions[0].textContent,
+              id_item: Swal.getPopup().querySelector('#item-select').value,
+              unidade: unidade,
+              solicitante: data.solicitante,
+              fornecedor: fornecedor,
+              valor_unitario: valor_unitario,
+              contato_fornecedor: Swal.getPopup().querySelector("#contato_fornecedor").value,
+              frete: Swal.getPopup().querySelector('#frete').value,
+              inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+              validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
+            }
+        }
+          }).then((result) => {
+            if (!result.value){
+              Swal.fire({
+                title:"Cotação Cancelada.",
+                icon:"error",
+                showConfirmButton: true,
+                timer: 2000,
+                confirmButtonText: 'OK',
+                confirmButtonColor:'hwb(216 31% 1%)',
               })
-              }
-        });
+          }else{
+              const dict_values = result.value;
+              const s = JSON.stringify(dict_values);
+              $.ajax({
+                  url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
+                  type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(s)
+              }).done((response) => {
+                if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!",confirmButtonColor:'hwb(216 31% 1%)',})} 
+                  else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+                })
+                }
+          });
+      });
     });
   })}
     })});
@@ -1058,7 +1145,6 @@ function editarCotacao(id){
         contentType: "application/json",
         data: JSON.stringify(s)
       }).done((dadosCotacao)=> {
-        console.log(dadosCotacao);
         Swal.fire({
           title: `Modificação da Cotação`,
           width: '70em',
@@ -1185,136 +1271,201 @@ function editarCotacao(id){
 };
 
 function novaCotacao(data_Solicitacao){
-  Swal.fire({
-    title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
-    width: '70em',
-    confirmButtonText: 'Enviar Cotação',
-    confirmButtonColor: '#007bff',
-    padding: '1em 1em 1.25em',
-    html: `
-    <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
-      <div class="h2" style="margin-left:1em">
-        <div class="row" style="line-height: 1.5em;">
-          <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
-          <div class=" h5 col-sm text-center"><b>Informações da Cotação</b></div>
+  const s = JSON.stringify(data_Solicitacao);
+  $.ajax({
+    url:"/itensMaisInfo", /// ARRUMAR A PARTIR DAQUI!!
+    type: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(s)
+  }).done((resposta) => {
+    var itens = ""
+    opcoes = []
+    for (var i in resposta){
+      console.log(resposta[i][2])
+      opcao = `<option value="${resposta[i][1]}">${resposta[i][2]}</option>`
+      opcoes.push(opcao)
+      itens += String(resposta[i][2])
+      itens += ", "
+    }
+    itens = itens.substring(0, itens.length-2);
+    Swal.fire({
+      title: `${JSON.stringify(data_Solicitacao.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
+      width: '70em',
+      confirmButtonText: 'Enviar Cotação',
+      confirmButtonColor: '#007bff',
+      padding: '1em 1em 1.25em',
+      html: `
+      <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
+        <div class="h2" style="margin-left:0.3  em">
+          <div class="row" style="line-height: 1.5em;">
+            <div class=" h5 col-sm-4 text-center"><b>Resumo da Solicitação</b></div>
+            <div class=" h5 col-sm text-center"><b>Informações da Cotação</b></div>
+          </div>
         </div>
-      </div>
-      <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
-          <b>Solicitante:</b> <font color="#560101">${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</font> <br />
-          <b>Data da Solicitação:</b> <font color="#560101">${data_Solicitacao.data}</font><br />
-          <b>Item Solicitado:</b> <font color="#560101">${data_Solicitacao.nomeItem}</font><br />
-          <b>Descrição:</b> <font color="#560101">${data_Solicitacao.descricao}</font><br />
-          <b>Quantidade Solicitada:</b> <font color="#560101">${data_Solicitacao.quantidade}</font><br />
-          <b>Unidade:</b> <font color="#560101">${data_Solicitacao.unidade}</font><br />
-          <b>Setor:</b> <font color="#560101">${data_Solicitacao.setor}</font><br />
-          <b>Justificativa:</b> <font color="#560101">${data_Solicitacao.motivo}</font><br />
-      </div>
-      <div class="col">
-          <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
-              <div class="col" style="width:110%">
-                <div class="input-group mb-3">
-                    <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
-                    <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
-                    <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
-                    <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                    <option style="font-size:14px;" value="" disabled selected>UN</option>
-                    <option style="font-size:14px;">Bloco</option>
-                    <option style="font-size:14px;">Bobina</option>
-                    <option style="font-size:14px;">Caixa</option>
-                    <option style="font-size:14px;">Chapa</option>
-                    <option style="font-size:14px;">Conjunto</option>
-                    <option style="font-size:14px;">Folha</option>
-                    <option style="font-size:14px;">Frasco</option>
-                    <option style="font-size:14px;">Galão</option>
-                    <option style="font-size:14px;">Kilograma (Kg)</option>
-                    <option style="font-size:14px;">Lata</option>
-                    <option style="font-size:14px;">Litro (l)</option>
-                    <option style="font-size:14px;">Metro (m)</option>
-                    <option style="font-size:14px;">Metro² (m²)</option>
-                    <option style="font-size:14px;">Pacote</option>
-                    <option style="font-size:14px;">Par</option>
-                    <option style="font-size:14px;">Peça</option>
-                    <option style="font-size:14px;">Pote</option>
-                    <option style="font-size:14px;">Rolo</option>
-                    <option style="font-size:14px;">Saco</option>
-                    <option style="font-size:14px;">Unidade</option>
-                    <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+        <div class="col-4 text-start" style="width:35em !important">
+          <div class="row container-fluid2" style="line-height: 3em;font-size: 14px;height:25em !important;">
+            <dl>
+              <dd><b>Solicitante:</b> <font color="#560101">${JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').charAt(0).toUpperCase() + JSON.stringify(data_Solicitacao.solicitante).replace('"', '').replace('"', '').slice(1)}</font></dd>
+              <dd><b>Data da Solicitação:</b> <font color="#560101">${data_Solicitacao.data}</font></dd>
+              <dd><b>Itens:</b> <font color="#560101">${itens}</font></dd>
+              <dd><b>Setor:</b> <font color="#560101">${data_Solicitacao.setor}</font></dd>
+              <dd><b>Justificativa:</b> <font color="#560101">${data_Solicitacao.motivo}</font></dd>
+            </dl>
+          </div>
+        </div>
+        <div class="col">
+            <div class="row text-center" style="margin-left:2em;font-size:15px; margin-top:2em;">
+                <div class="col" style="width:110%">
+                  <div class="selecItem">
+                    <label id="selecItemLabel" for="item-select">Selecione um item:</label>
+                    <select class="form-select selecItemForm" id="item-select">
+                      ${opcoes}
                     </select>
-                </div>
-                <div class="input-group mb-3">
-                    <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
-                    <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
-                </div>
-                <div class="input-group mb-3">
-                    <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
-                    <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
-                </div>
-            </div>
-            <div class="col" style="margin-left:3em;">
-                <div class="input-group mb-3">
-                    <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
-                    <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
-                </div>
-                <div class="input-group mb-3">
-                    <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
-                    <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
-                </div>
-            </div>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
+                      <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
+                      <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
+                      <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
+                      <option style="font-size:14px;" value="" disabled selected>UN</option>
+                      <option style="font-size:14px;">Bloco</option>
+                      <option style="font-size:14px;">Bobina</option>
+                      <option style="font-size:14px;">Caixa</option>
+                      <option style="font-size:14px;">Chapa</option>
+                      <option style="font-size:14px;">Conjunto</option>
+                      <option style="font-size:14px;">Folha</option>
+                      <option style="font-size:14px;">Frasco</option>
+                      <option style="font-size:14px;">Galão</option>
+                      <option style="font-size:14px;">Kilograma (Kg)</option>
+                      <option style="font-size:14px;">Lata</option>
+                      <option style="font-size:14px;">Litro (l)</option>
+                      <option style="font-size:14px;">Metro (m)</option>
+                      <option style="font-size:14px;">Metro² (m²)</option>
+                      <option style="font-size:14px;">Pacote</option>
+                      <option style="font-size:14px;">Par</option>
+                      <option style="font-size:14px;">Peça</option>
+                      <option style="font-size:14px;">Pote</option>
+                      <option style="font-size:14px;">Rolo</option>
+                      <option style="font-size:14px;">Saco</option>
+                      <option style="font-size:14px;">Unidade</option>
+                      <option style="font-size:14px;">Outro... (complementar na descrição)</option>
+                      </select>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
+                      <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                  </div>
+                  
+              </div>
+              <div class="col" style="margin-left:3em;">
+                  <div class="input-group mb-3">
+                      <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
+                      <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
+                      <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                  </div>
+                  <div class="input-group mb-3">
+                      <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
+                      <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                  </div>
+                  <div class="row">
+                    <p class="text-end" style="padding-top:0.5em; font-size:14px">Adicionar Cotação:  <a style="margin-top:3em !important;" id="addCotacao" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+                  </div>
+                  <div class="tableCotacoes">
+                    <table class="table" id="tableCotacoes">
+                    </table>
+                  </div>
+              </div>
+          </div>
         </div>
-      </div>
-  </div>
-    `,
-    showCancelButton: true,
-    cancelButtonText: 'Cancelar',
-    focusConfirm: false,
-    preConfirm: () => {
-    const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
-    const unidade = Swal.getPopup().querySelector('#unidade').value
-    const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
-    if (!fornecedor || !unidade || !valor_unitario) {
-        Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
-    }
-    return { 
-      id_solicitacao: data_Solicitacao.id_solicitacao,
-      solicitante: data_Solicitacao.solicitante, 
-      qnt_solicitada: data_Solicitacao.quantidade,
-      unidade: unidade,
-      solicitante: data_Solicitacao.solicitante,
-      fornecedor: fornecedor,
-      valor_unitario: valor_unitario,
-      frete: Swal.getPopup().querySelector('#frete').value,
-      inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
-      validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
-    }
-}
-  }).then((result) => {
-    if (!result.value){
-      Swal.fire({
-        title:"Cotação Cancelada.",
-        icon:"error",
-        showConfirmButton: true,
-        timer: 2000,
-        confirmButtonText: 'OK',
-        confirmButtonColor:'hwb(216 31% 1%)',
-      })
-  }else{
-      const dict_values = result.value;
-      const s = JSON.stringify(dict_values);
-      $.ajax({
-          url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
-          type: "POST",
-          contentType: "application/json",
-          data: JSON.stringify(s)
-      }).done((response) => {
-        if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
-          else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
-        })
+    </div>
+      `,
+      showCancelButton: true,
+      cancelButtonText: 'Cancelar',
+      focusConfirm: false,
+      preConfirm: () => {
+      const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+      const unidade = Swal.getPopup().querySelector('#unidade').value
+      const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
+      if (!fornecedor || !unidade || !valor_unitario) {
+          Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
       }
+      return { 
+        id_solicitacao: data_Solicitacao.id_solicitacao,
+        solicitante: data_Solicitacao.solicitante, 
+        qnt_solicitada: data_Solicitacao.quantidade,
+        item: Swal.getPopup().querySelector('#item-select').selectedOptions[0].textContent,
+        id_item: Swal.getPopup().querySelector('#item-select').value,
+        unidade: unidade,
+        solicitante: data_Solicitacao.solicitante,
+        fornecedor: fornecedor,
+        valor_unitario: valor_unitario,
+        contato_fornecedor: Swal.getPopup().querySelector("#contato_fornecedor").value,
+        frete: Swal.getPopup().querySelector('#frete').value,
+        inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+        validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
+      }
+  }
+    }).then((result) => {
+      if (!result.value){
+        Swal.fire({
+          title:"Cotação Cancelada.",
+          icon:"error",
+          showConfirmButton: true,
+          timer: 2000,
+          confirmButtonText: 'OK',
+          confirmButtonColor:'hwb(216 31% 1%)',
+        })
+    }else{
+        const dict_values = result.value;
+        const s = JSON.stringify(dict_values);
+        $.ajax({
+            url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(s)
+        }).done((response) => {
+          if (response.value == true){Swal.fire({icon: 'success', title:"Cotação Enviada com Sucesso!"})} 
+            else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
+          })
+        }
+      });
+      $('#addCotacao').click(function(){ //
+        var table = document.getElementById("tableCotacoes");
+        if (table.rows.length == 0){
+          var htmlCotacoes1 = `
+          <thead>
+            <tr>
+              <th scope="col">nº</th>
+              <th scope="col">Item</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Levy</td>
+            </tr>
+          `
+          document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
+        }else{
+          var htmlCotacoes2 = ``
+          htmlCotacoes2 += `
+            <tr>
+              <th scope="row">2</th>
+              <td>Levy</td>
+            </tr>
+          </tbody>
+        `
+        document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes2);      
+        }
+      })
     });
-};
+  };
