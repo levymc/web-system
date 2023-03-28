@@ -1160,6 +1160,7 @@ function editarCotacao(id){
               </div>
             </div>
             <div class="col-4 container-fluid2 text-start" style="width:35em !important;line-height: 3em;font-size: 14px;">
+                <b>Item Cotado:</b> <font color="#560101">${dadosCotacao.item.charAt(0).toUpperCase() + dadosCotacao.item.slice(1)}</font> <br />
                 <b>Fornecedor:</b> <font color="#560101">${dadosCotacao.fornecedor.charAt(0).toUpperCase() + dadosCotacao.fornecedor.slice(1)}</font> <br />
                 <b>Contato:</b> <font color="#560101">${dadosCotacao.contato_fornecedor}</font><br />
                 <b>Unidade Comercializada:</b> <font color="#560101">${dadosCotacao.unidade}</font><br />
@@ -1173,16 +1174,16 @@ function editarCotacao(id){
                     <div class="col" style="width:110%">
                       <div class="input-group mb-3">
                           <label for="fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Fornecedor: </label>
-                          <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="Fornecedor">
+                          <input type="text" id="fornecedor" name="fornecedor" class="form-control" placeholder="${dadosCotacao.fornecedor.charAt(0).toUpperCase() + dadosCotacao.fornecedor.slice(1)}">
                       </div>
                       <div class="input-group mb-3">
                           <label for="contato_fornecedor" style="padding: 0.75em 0;margin-right: 0.5em;">Contato: </label>
-                          <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="Contato">
+                          <input type="text" id="contato_fornecedor" name="contato_fornecedor" class="form-control" placeholder="${dadosCotacao.contato_fornecedor}">
                       </div>
                       <div class="input-group mb-3">
                           <label for="unidade" style="padding: 0.75em 0;margin-right: 0.5em;">Unidade Comercializada: </label>
-                          <select class="form-select" style="font-size:15px" aria-label="UN" id="unidade">
-                            <option style="font-size:14px;" value="" disabled selected>UN</option>
+                          <select class="form-select" style="font-size:15px" aria-label="${dadosCotacao.unidade}" id="unidade">
+                            <option style="font-size:14px;" value="" disabled selected>${dadosCotacao.unidade}</option>
                             <option style="font-size:14px;">Bloco</option>
                             <option style="font-size:14px;">Bobina</option>
                             <option style="font-size:14px;">Caixa</option>
@@ -1208,21 +1209,21 @@ function editarCotacao(id){
                       </div>
                       <div class="input-group mb-3">
                           <label for="valor_unitario" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Unitário: </label>
-                          <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$/UN">
+                          <input type="number" id="valor_unitario" name="valor_unitario" class="form-control" placeholder="R$${dadosCotacao.valor_unitario}">
                       </div>
                       <div class="input-group mb-3">
                           <label for="frete" style="padding: 0.75em 0;margin-right: 0.5em;">Valor Frete: </label>
-                          <input type="number" id="frete" name="frete" class="form-control" placeholder="Frete">
+                          <input type="number" id="frete" name="frete" class="form-control" placeholder="R$${dadosCotacao.frete}">
                       </div>
                   </div>
                   <div class="col" style="margin-left:3em;">
                       <div class="input-group mb-3">
                           <label for="inf_extra" style="padding: 0.75em 0;margin-right: 0.5em;">Informações Extra: </label>
-                          <textarea class="form-control" id="inf_extra" rows="3" placeholder="Informações Extra"></textarea>
+                          <textarea class="form-control" id="inf_extra" rows="3" placeholder="${dadosCotacao.inf_extra}"></textarea>
                       </div>
                       <div class="input-group mb-3">
                           <label for="validade_cotacao" style="padding: 0.75em 0;margin-right: 0.5em;">Validade Cotação: </label>
-                          <input type="date" id="validade_cotacao" class="form-control" placeholder="Validade Cotação">
+                          <input type="date" id="validade_cotacao" class="form-control" placeholder="${dadosCotacao.validade_cotacao}">
                       </div>
                   </div>
               </div>
@@ -1244,6 +1245,8 @@ function editarCotacao(id){
               id_solicitacao: dadosCotacao.id_solicitacao,
               solicitante: dadosCotacao.solicitante, 
               qnt_solicitada: dadosCotacao.quantidade,
+              id_item: dadosCotacao.id_item,
+              item: dadosCotacao.item,
               unidade: unidade,
               fornecedor: fornecedor,
               valor_unitario: valor_unitario,
