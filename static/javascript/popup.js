@@ -1134,6 +1134,8 @@ function editarCotacao(id){
     icon:"question",
     confirmButtonText: "Sim",
     showCancelButton: true,
+    allowOutsideClick: false,
+    showCloseButton: true,
     cancelButtonText: "Cancelar",
   }).then(response => {
     if (response.value == true){
@@ -1150,6 +1152,8 @@ function editarCotacao(id){
           width: '70em',
           confirmButtonText: 'Enviar Cotação',
           confirmButtonColor: '#007bff',
+          allowOutsideClick: false,
+          showCloseButton: true,
           padding: '1em 1em 1.25em',
           html: `
           <div class="row" style="margin: 0 !important; padding-top:1.25em !important;">
