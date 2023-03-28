@@ -197,4 +197,68 @@ class Solicitacao(Base):
         ultima_linha = session.query(cls).order_by(cls.id_solicitacao.desc()).first().as_dict
         return ultima_linha
     
-    
+    @classmethod
+    def insert(cls, solicitante, data, motivo, qnt_itens, setor, prioridade, qnt_cotacao, status):
+        session = Session()
+        try:
+            solicitacao = cls(solicitante=solicitante, data=data, motivo=motivo, qnt_itens=qnt_itens,
+                              setor=setor, prioridade=prioridade, qnt_cotacao=qnt_cotacao, status=status)
+            session.add(solicitacao)
+            session.commit()
+            print(f"Solicitação {solicitacao.id_solicitacao} inserida com sucesso.")
+        except IntegrityError:
+            session.rollback()
+            print(f"Erro de integridade ao inserir a solicitação.")
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao inserir a solicitação: {str(e)}")
+        finally:
+            session.close()
+
+    @classmethod
+    def delete(cls, id_solicitacao):
+        session = Session()
+        try:
+            solicitacao = session.query(cls).filter(cls.id_solicitacao == id_solicitacao).one()
+            session.delete(solicitacao)
+            session.commit()
+            print(f"Solicitação {id_solicitacao} deletada com sucesso.")
+        except NoResultFound:
+            print(f"Não existe solicitação com o id_solicitacao {id_solicitacao}")
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao deletar solicitação com o id_solicitacao {id_solicitacao}: {str(e)}")
+        finally:
+            session.close()
+
+    @classmethod
+    def update(cls, id_solicitacao, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
+               prioridade=None, qnt_cotacao=None, status=None):
+        session = Session()
+        try:
+            solicitacao = session.query(cls).filter(cls.id_solicitacao == id_solicitacao).one()
+            if solicitante:
+                solicitacao.solicitante = solicitante
+            if data:
+                solicitacao.data = data
+            if motivo:
+                solicitacao.motivo = motivo
+            if qnt_itens:
+                solicitacao.qnt_itens = qnt_itens
+            if setor:
+                solicitacao.setor = setor
+            if prioridade:
+                solicitacao.prioridade = prioridade
+            if qnt_cotacao:
+                solicitacao.qnt_cotacao = qnt_cotacao
+            if status:
+                solicitacao.status = status
+            session.commit()
+            print(f"Solicitação {id_solicitacao} atualizada com sucesso.")
+        except NoResultFound:
+            print(f"Não existe solicitação com o id_solicitacao {id_solicitacao}")
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao atualizar solicitação com o id_solicitacao {id_solicitacao}: {str(e)}")
+        finally:
+            session.close()
