@@ -308,12 +308,12 @@ function solicitacaoCompra(){
             var qnt_itens = itens.length
             if (itens.length == 0){
               qnt_itens = qnt_itens + 1
-              itens.push(nomeItem);
-              itens.push(descricao);
-              itens.push(categoria);
-              itens.push(classificacao);
-              itens.push(quantidade);
-              itens.push(unidade);
+              itens.push({'nomeItem' : nomeItem,
+                      'descricao' : descricao,
+                      'categoria' : categoria,
+                      'classificacao' : classificacao,
+                      'quantidade' : quantidade,
+                      'unidade' : unidade});
               const dict_values ={dataAtual, itens, motivo, setor, prioridade, qnt_itens};
               const s = JSON.stringify(dict_values);
               $.ajax({
