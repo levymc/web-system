@@ -4,12 +4,12 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
-from app import mode
+# from app import mode
 
-if mode == "dev":
-    engine = create_engine(r'sqlite:///compras.db', echo=False)
-elif mode == "prod":
-    engine = create_engine(r'sqlite://///NasTecplas/Pintura/DB/compras.db', echo=False)
+# if mode == "dev":
+engine = create_engine(r'sqlite:///static/db/compras.db', echo=False)
+# elif mode == "prod":
+#     engine = create_engine(r'sqlite://///NasTecplas/Pintura/DB/compras.db', echo=False)
     
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -155,18 +155,18 @@ class Itens(Base):
         return ultima_linha
     
     @classmethod
-    def insert(cls, id_solicitacao, id_item, nomeItem, descricao, categoria, classificacao, quantidade, unidade):
+    def insert(cls, id_solicitacao, nomeItem=None, descricao=None, categoria=None, classificacao=None, quantidade=None, unidade=None):
         session = Session()
         try:
-            item = cls(id_solicitacao=id_solicitacao, id_item=id_item, nomeItem=nomeItem, descricao=descricao, categoria=categoria, classificacao=classificacao, quantidade=quantidade, unidade=unidade)
+            item = cls(id_solicitacao=id_solicitacao, nomeItem=nomeItem, descricao=descricao, categoria=categoria, classificacao=classificacao, quantidade=quantidade, unidade=unidade)
             session.add(item)
             session.commit()
         except IntegrityError as e:
             session.rollback()
-            print(f"Erro ao inserir item {id_item}: {str(e)}")
+            print(f"Erro ao inserir item: {str(e)}")
         except Exception as e:
             session.rollback()
-            print(f"Erro ao inserir item {id_item}: {str(e)}")
+            print(f"Erro ao inserir item: {str(e)}")
         finally:
             session.close()
     
@@ -253,7 +253,13 @@ class Solicitacao(Base):
         return ultima_linha
     
     @classmethod
-    def insert(cls, solicitante, data, motivo, qnt_itens, setor, prioridade, qnt_cotacao, status):
+    def obter_ultima_linha(cls):
+        ultima_linha = session.query(cls).order_by(cls.id_solicitacao.desc()).first().as_dict
+        return ultima_linha
+    
+    @classmethod
+    def insert(cls, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
+               prioridade=None, qnt_cotacao=None, status=0):
         session = Session()
         try:
             solicitacao = cls(solicitante=solicitante, data=data, motivo=motivo, qnt_itens=qnt_itens,
@@ -319,3 +325,4 @@ class Solicitacao(Base):
             session.close()
 
 
+print(Solicitacao.obter_ultima_linha()['id_solicitacao'])
