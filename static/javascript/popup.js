@@ -941,7 +941,7 @@ function loginComprador(){
         }).done((response) => {
           opcoes = []
           for (item in response){
-            opcao = `<option value="${response[item][1]}">${response[item][2]}</option>`
+            opcao = `<option value="${response[item].id_item}">${response[item].nomeItem}</option>`
             opcoes.push(opcao)
             }
           Swal.fire({
