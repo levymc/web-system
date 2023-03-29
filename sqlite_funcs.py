@@ -16,20 +16,18 @@ class Solicitacao_Compras():
     
     @staticmethod
     def solicitacaoComprasInserir(result):  ### OKOK
-        resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
-        Solicitacao.insert(resultado)
+        Solicitacao.insert(result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade'])
         id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
         itens = result['itens']
         for i in itens:
             print(i)
             Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
-        return True
+        return {'value': True}
 
     @staticmethod
     def comprasPendentes(status):   ### OKOK
         try:
             compras = []
-            print('aqio1')
             dados = Solicitacao.consultaEspecifica('status', status)
             if dados == []:
                 return {'value': False}
@@ -57,7 +55,7 @@ class Solicitacao_Compras():
                         'setor':i['setor'],
                         'qnt_cotacao': qnt_cotacao,
                     })
-                    return {'aaData': compras}
+                return {'aaData': compras}
         except Exception as e:
             print("Error comprasPendentes: ", e)
             return {'value': False}

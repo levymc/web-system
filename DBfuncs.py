@@ -262,7 +262,7 @@ class Solicitacao(Base):
     
     @classmethod
     def insert(cls, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
-               prioridade=None, qnt_cotacao=None, status=0):
+               prioridade=None, qnt_cotacao=0, status=0):
         session = Session()
         try:
             solicitacao = cls(solicitante=solicitante, data=data, motivo=motivo, qnt_itens=qnt_itens,

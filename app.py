@@ -75,8 +75,8 @@ def comprasInserir():
     output = request.get_json()
     result_ = json.loads(output)
     result_['usuario'] = result['usuario']
-    salvarDB = sqlite_funcs.Solicitacao_Compras.solicitacaoComprasInserir(result_)
-    return {'value': True}
+    print(111111111111, result_)
+    return sqlite_funcs.Solicitacao_Compras.solicitacaoComprasInserir(result_)
 
 @app.route("/itensMaisInfo", methods=["POST", "GET"])
 def itensMaisInfo():
