@@ -419,17 +419,17 @@ function paginaAprovador(){
         <div class="col-1"></div>
     </div>
     <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
-    <thead>
-      <tr>
-        <th scope="col">Data da Solicitação</th>
-        <th scope="col">Usuário</th>
-        <th scope="col">Itens</th>
-        <th scope="col">Qnt. Itens</th>
-        <th scope="col">Justificativa</th>
-        <th scope="col">Setor</th>
-      </tr>
-    </thead>    
-  </table>
+      <thead>
+        <tr>
+          <th scope="col">Data da Solicitação</th>
+          <th scope="col">Usuário</th>
+          <th scope="col">Itens</th>
+          <th scope="col">Qnt. Itens</th>
+          <th scope="col">Justificativa</th>
+          <th scope="col">Setor</th>
+        </tr>
+      </thead>    
+    </table>
   <div class="row">
     <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-aprovar">Aprovar</button></div>
     <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-rejeitar">Rejeitar</button></div>
