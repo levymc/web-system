@@ -82,53 +82,14 @@ def confereUsuario(usuario, senha):
             return False
 
 def solicitacaoComprasInserir(result):
-    
     resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
     Solicitacao.insert(resultado)
     id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
     itens = result['itens']
-    # try:
     for i in itens:
         print(i)
-        # Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
-    # except TypeError:
-    #         Itens.insert(id_solicitacao, itens['nomeItem'], itens['descricao'], itens['categoria'], itens['classificacao'], itens['quantidade'], itens['unidade'])
+        Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
     return True
-    
-    # try:
-    #     conn = sqlite3.connect('static/db/compras.db')
-    #     cursor = conn.cursor()
-    #     cursor.execute(f"""
-    #         INSERT INTO solicitacao 
-    #         (solicitante, data, motivo, qnt_itens, setor, prioridade ) 
-    #         VALUES (?, ?, ?, ?, ?, ?)""", 
-    #         (resultado))
-    #     conn.commit()
-    #     id_solicitacao = cursor.execute(f"""SELECT id_solicitacao 
-    #                                     FROM solicitacao 
-    #                                     WHERE solicitante = '{result['usuario']}'
-    #                                     AND motivo = '{result['motivo']}'
-    #                                     AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
-    #     try:
-    #         for i in itens: #### FAZER DIFERENCA PARA QUNDO TEM MAIS DE 1 ITEM OU apenas 1
-    #             cursor.execute(f"""
-    #                            INSERT INTO itens
-    #                            (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
-    #                            VALUES (?, ?, ?, ?, ?, ?, ?)""",
-    #                            (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
-    #     except TypeError:
-    #         cursor.execute(f"""
-    #                         INSERT INTO itens
-    #                         (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
-    #                         VALUES (?, ?, ?, ?, ?, ?, ?)""",
-    #                         (id_solicitacao, itens[0], itens[1], itens[2], itens[3], itens[4],itens[5]))
-                
-    #     conn.commit()
-    #     conn.close()
-    #     return True
-    # except Exception as e: 
-    #     print(type(e),e)
-    #     return False
 
 def comprasPendentes(status):
     try:
