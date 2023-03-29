@@ -177,7 +177,7 @@ def rejeitarCompra(id):
         return e
 
 def cotacaoInserirDB(resultado):
-    print(resultado)
+    print(33333333, resultado)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()

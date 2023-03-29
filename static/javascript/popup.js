@@ -946,7 +946,7 @@ function loginComprador(){
             // titleText: text,
             title: `${JSON.stringify(data.qnt_cotacao+1).replace('"', '').replace('"', '')}ª Cotação Válida`,
             width: '70em',
-            confirmButtonText: 'Enviar Cotação',
+            confirmButtonText: 'Finalizar Cotação',
             allowOutsideClick: false,
             showCloseButton: true,
             confirmButtonColor: '#007bff',
@@ -1443,7 +1443,13 @@ function novaCotacao(data_Solicitacao){
         }
       }); 
       $('#addCotacao').click(function(){ //
-        var table = document.getElementById("tableCotacoes");
+        const fornecedor = Swal.getPopup().querySelector('#fornecedor').value
+        const unidade = Swal.getPopup().querySelector('#unidade').value
+        const valor_unitario = Swal.getPopup().querySelector('#valor_unitario').value
+        if (!fornecedor || !unidade || !valor_unitario) {
+            Swal.showValidationMessage(`Preencha ao menos os campos: Fornecedor, Unidade Padrão e Valor Unitário`)
+        }else{
+          var table = document.getElementById("tableCotacoes");
         var divPai = table.parentNode;
         divPai.classList.add('tableCotacoesBorda');
         dadosCotacao = { 
@@ -1463,8 +1469,26 @@ function novaCotacao(data_Solicitacao){
 
 
         // Zerar todos os inputs AQUII antes de seguir
+        Swal.getPopup().querySelector('#item-select').value = 0;
+        Swal.getPopup().querySelector("#fornecedor").value = '';
+        Swal.getPopup().querySelector("#contato_fornecedor").value ='';
+        Swal.getPopup().querySelector("#unidade").value = 0;
+        Swal.getPopup().querySelector("#valor_unitario").value = '';
+        Swal.getPopup().querySelector('#frete').value = '';
+        Swal.getPopup().querySelector('#frete').value = '';
+        Swal.getPopup().querySelector('#validade_cotacao').value = '';
 
-        // AQUII  -  INSERIR A LÓGICA AJAX PARA ENVIAR O dadosCotacao AO BANCO
+        var s = JSON.stringify(dadosCotacao)
+        $.ajax({
+          url:"/cotacaoInserir", /// ARRUMAR A PARTIR DAQUI!!
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(s)
+          }).done((response) => {
+            if (response.value == true){alert("Cotação Enviada com Sucesso!")} 
+              else{alert("Ocorreu algum erro!")}
+            })
+        
 
         if (table.rows.length == 0){
           var htmlCotacoes1 = `
@@ -1494,6 +1518,7 @@ function novaCotacao(data_Solicitacao){
           </tbody>
         `
         document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes2);      
+        }
         }
       })
     });
