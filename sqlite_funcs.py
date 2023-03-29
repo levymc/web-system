@@ -81,7 +81,7 @@ def confereUsuario(usuario, senha):
             print(e)
             return False
 
-def solicitacaoComprasInserir(result):
+def solicitacaoComprasInserir(result):  ### OKOK
     resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
     Solicitacao.insert(resultado)
     id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
@@ -91,39 +91,31 @@ def solicitacaoComprasInserir(result):
         Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
     return True
 
-def comprasPendentes(status):
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        compras = []
-        dados = cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall()
-        for i in dados:
-            itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {i[0]}").fetchall()
-            itensDataTable = ''
-            if not itens == []:
-                for j in range(len(itens)):
-                    itensDataTable += itens[j][2] + ', '
-            itensDataTable = itensDataTable[:-1]
-            itensDataTable = itensDataTable[:-1]
-            qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
-            qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
-            if qnt_cotacao_rejeitada != 0:
-                qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
-            compras.append({
-                'id_solicitacao':i[0],
-                'solicitante': i[1],
-                'itens': itensDataTable,
-                'qnt_itens': i[4],
-                'data': i[2],
-                'motivo': i[3],
-                'setor':i[5],
-                'qnt_cotacao': qnt_cotacao,
-            })
-        conn.close()
+def comprasPendentes(status):   ### OKOK
+    compras = []
+    dados = Solicitacao.consultaEspecifica('status', status)
+    for i in dados:
+        itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
+        itensDataTable = ''
+        if not itens == []:
+            for j in itens:
+                itensDataTable += j['nomeItem'] + ', '
+        itensDataTable = itensDataTable[:-2]
+        qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
+        qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
+        if qnt_cotacao_rejeitada != 0:
+            qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
+        compras.append({
+            'id_solicitacao':i['id_solicitacao'],
+            'solicitante': i['solicitante'],
+            'itens': itensDataTable,
+            'qnt_itens': i['qnt_itens'],
+            'data': i['data'],
+            'motivo': i['motivo'],
+            'setor':i['setor'],
+            'qnt_cotacao': qnt_cotacao,
+        })
         return {'aaData': compras}
-    except Exception as e:
-        print(e)
-        return {'value': False}
 
 def itensMaisInfo(id_solicitacao):
     try:
