@@ -14,6 +14,7 @@ class Solicitacao_Compras():
                     Cotações: {self.cotacoes}   _____________   \n
                     """
     
+    @staticmethod
     def solicitacaoComprasInserir(result):  ### OKOK
         resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
         Solicitacao.insert(resultado)
@@ -24,6 +25,7 @@ class Solicitacao_Compras():
             Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
         return True
 
+    @staticmethod
     def comprasPendentes(status):   ### OKOK
         compras = []
         dados = Solicitacao.consultaEspecifica('status', status)
