@@ -2,6 +2,75 @@ import sqlite3, hashlib
 from datetime import datetime
 from DBfuncs import *
 
+class Solicitacao_Compras():
+    def __init__(self, id_solicitacao):
+        self.solicitacao = Solicitacao.consultaEspecifica('id_solicitacao', id_solicitacao)
+        self.itens = Itens.consultaEspecifica('id_solicitacao', id_solicitacao)
+        self.cotacoes = Cotacao.consultaEspecifica('id_solicitacao', id_solicitacao)
+        
+    def __repr__(self):
+        return f"""Solicitação de Compra  -  Detalhes da Solicitação: {self.solicitacao}   _____________   \n
+                    Itens: {self.itens}   _____________   \n
+                    Cotações: {self.cotacoes}   _____________   \n
+                    """
+    
+    @staticmethod
+    def solicitacaoComprasInserir(result):  ### OKOK
+        Solicitacao.insert(result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade'])
+        id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
+        itens = result['itens']
+        for i in itens:
+            print(i)
+            Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
+        return {'value': True}
+
+    @staticmethod
+    def comprasPendentes(status):   ### OKOK
+        try:
+            compras = []
+            dados = Solicitacao.consultaEspecifica('status', status)
+            if dados == []:
+                return {'value': False}
+            else:
+                for i in dados:
+                    print(i)
+                    itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
+                    print('aqio2')
+                    itensDataTable = ''
+                    if not itens == []:
+                        for j in itens:
+                            itensDataTable += j['nomeItem'] + ', '
+                    itensDataTable = itensDataTable[:-2]
+                    qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
+                    qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
+                    if qnt_cotacao_rejeitada != 0:
+                        qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
+                    compras.append({
+                        'id_solicitacao':i['id_solicitacao'],
+                        'solicitante': i['solicitante'],
+                        'itens': itensDataTable,
+                        'qnt_itens': i['qnt_itens'],
+                        'data': i['data'],
+                        'motivo': i['motivo'],
+                        'setor':i['setor'],
+                        'qnt_cotacao': qnt_cotacao,
+                    })
+                return {'aaData': compras}
+        except Exception as e:
+            print("Error comprasPendentes: ", e)
+            return {'value': False}
+
+    @staticmethod
+    def itensMaisInfo(id_solicitacao):
+        try:
+            return Itens.consultaEspecifica('id_solicitacao', id_solicitacao)
+        except Exception as e:
+            print("Erro: ", e)
+            return False
+    
+# print(Solicitacao_Compras(1))
+
+print(Solicitacao_Compras.comprasPendentes(0))
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
@@ -81,99 +150,6 @@ def confereUsuario(usuario, senha):
             print(e)
             return False
 
-def solicitacaoComprasInserir(result):
-    
-    resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
-    Solicitacao.insert(resultado)
-    id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
-    itens = result['itens']
-    # try:
-    for i in itens:
-        print(i)
-        # Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
-    # except TypeError:
-    #         Itens.insert(id_solicitacao, itens['nomeItem'], itens['descricao'], itens['categoria'], itens['classificacao'], itens['quantidade'], itens['unidade'])
-    return True
-    
-    # try:
-    #     conn = sqlite3.connect('static/db/compras.db')
-    #     cursor = conn.cursor()
-    #     cursor.execute(f"""
-    #         INSERT INTO solicitacao 
-    #         (solicitante, data, motivo, qnt_itens, setor, prioridade ) 
-    #         VALUES (?, ?, ?, ?, ?, ?)""", 
-    #         (resultado))
-    #     conn.commit()
-    #     id_solicitacao = cursor.execute(f"""SELECT id_solicitacao 
-    #                                     FROM solicitacao 
-    #                                     WHERE solicitante = '{result['usuario']}'
-    #                                     AND motivo = '{result['motivo']}'
-    #                                     AND qnt_itens = {result['qnt_itens']}""").fetchall()[0][0]
-    #     try:
-    #         for i in itens: #### FAZER DIFERENCA PARA QUNDO TEM MAIS DE 1 ITEM OU apenas 1
-    #             cursor.execute(f"""
-    #                            INSERT INTO itens
-    #                            (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
-    #                            VALUES (?, ?, ?, ?, ?, ?, ?)""",
-    #                            (id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade']))
-    #     except TypeError:
-    #         cursor.execute(f"""
-    #                         INSERT INTO itens
-    #                         (id_solicitacao, nomeItem, descricao, categoria, classificacao, quantidade, unidade)
-    #                         VALUES (?, ?, ?, ?, ?, ?, ?)""",
-    #                         (id_solicitacao, itens[0], itens[1], itens[2], itens[3], itens[4],itens[5]))
-                
-    #     conn.commit()
-    #     conn.close()
-    #     return True
-    # except Exception as e: 
-    #     print(type(e),e)
-    #     return False
-
-def comprasPendentes(status):
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        compras = []
-        dados = cursor.execute(f"SELECT * FROM solicitacao WHERE status = {status}").fetchall()
-        for i in dados:
-            itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {i[0]}").fetchall()
-            itensDataTable = ''
-            if not itens == []:
-                for j in range(len(itens)):
-                    itensDataTable += itens[j][2] + ', '
-            itensDataTable = itensDataTable[:-1]
-            itensDataTable = itensDataTable[:-1]
-            qnt_cotacao = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 0").fetchall())
-            qnt_cotacao_rejeitada = len(cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao = {i[0]} AND status_cotacao = 2").fetchall())
-            if qnt_cotacao_rejeitada != 0:
-                qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
-            compras.append({
-                'id_solicitacao':i[0],
-                'solicitante': i[1],
-                'itens': itensDataTable,
-                'qnt_itens': i[4],
-                'data': i[2],
-                'motivo': i[3],
-                'setor':i[5],
-                'qnt_cotacao': qnt_cotacao,
-            })
-        conn.close()
-        return {'aaData': compras}
-    except Exception as e:
-        print(e)
-        return {'value': False}
-
-def itensMaisInfo(id_solicitacao):
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {1}").fetchall()
-        print(itens)
-        return itens
-    except Exception as e:
-        print(e)
-        return False
 
 def compras_updateSolicitacao(comprasPara_aprovar):
     try:

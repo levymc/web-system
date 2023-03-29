@@ -56,6 +56,11 @@ class Cotacao(Base):
         return ultima_linha
     
     @classmethod
+    def contar_linhas(cls, status, id_solicitacao):
+        quantidade_linhas = session.query(cls).filter(and_(cls.status_cotacao == status, cls.id_solicitacao == id_solicitacao)).count()
+        return quantidade_linhas
+    
+    @classmethod
     def insert(cls, id_solicitacao, id_item, item, usuario, fornecedor, contato_fornecedor, unidade, valor_un, frete, inf_extra, validade_cotacao, status_cotacao):
         try:
             cotacao = cls(
@@ -229,9 +234,12 @@ class Solicitacao(Base):
     qnt_cotacao = Column(Integer)
     status = Column(Integer)
     
-    
     def __repr__(self):
-        return f"""id: {self.id_solicitacao}"""
+        return f"""id: {self.id_solicitacao} - Solicitante: {self.solicitante} - 
+                Data: {self.data} - Motivo: {self.motivo} - Qnt Itens: {self.qnt_itens} - 
+                Setor: {self.setor} - Pioridade: {self.prioridade} - Qnt Cotação: {self.qnt_cotacao} - 
+                Status: {self.status}
+                """
     
     @hybrid_property
     def as_dict(self):
@@ -253,13 +261,8 @@ class Solicitacao(Base):
         return ultima_linha
     
     @classmethod
-    def obter_ultima_linha(cls):
-        ultima_linha = session.query(cls).order_by(cls.id_solicitacao.desc()).first().as_dict
-        return ultima_linha
-    
-    @classmethod
     def insert(cls, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
-               prioridade=None, qnt_cotacao=None, status=0):
+               prioridade=None, qnt_cotacao=0, status=0):
         session = Session()
         try:
             solicitacao = cls(solicitante=solicitante, data=data, motivo=motivo, qnt_itens=qnt_itens,
@@ -325,4 +328,4 @@ class Solicitacao(Base):
             session.close()
 
 
-print(Solicitacao.obter_ultima_linha()['id_solicitacao'])
+# print(Solicitacao.obter_ultima_linha()['id_solicitacao'])

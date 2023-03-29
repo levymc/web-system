@@ -433,6 +433,11 @@ body.swal2-height-auto {
 .swal2-html-container textarea::placeholder {
     font-size: 14px;
 }
+.tableCotacoesBorda{
+    border: 1px solid black !important;
+    border-radius: 10px !important;
+    box-sizing: border-box;
+}
 
 /* CONFIGURAÇÕES SIDEBAR */
 .side-bar{
