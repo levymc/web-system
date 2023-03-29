@@ -232,7 +232,7 @@ def cotacaoInformacoesDB(id_solicitacao):
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
-        informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={id_solicitacao} AND status_cotacao=0").fetchall()
+        informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={id_solicitacao} AND status_cotacao=1").fetchall()
         dict_lista_informacoes = []
         for i in informacoes:
             dict_lista_informacoes.append({
