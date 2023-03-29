@@ -1441,7 +1441,7 @@ function novaCotacao(data_Solicitacao){
             else{Swal.fire({icon:"error", titleText:"Ocorreu algum erro!"})}
           })
         }
-      });
+      }); 
       $('#addCotacao').click(function(){ //
         var table = document.getElementById("tableCotacoes");
         var divPai = table.parentNode;
