@@ -753,7 +753,6 @@ function confereComprasPendentes(){
     type: "POST",
     contentType: "application/json",
   }).done((response) => {
-    console.log(response)
     if (response.value==false){
       Swal.fire({
         titleText:"Nenhuma Solicitação de Compra foi aprovada para Cotação",
@@ -861,7 +860,6 @@ function loginComprador(){
           data: JSON.stringify(s)
         }).done((response) => {
           if (response.length){
-            console.log(2222, response)
             var html = ``
             for (var i in response){
               var width = '70em';
@@ -941,7 +939,6 @@ function loginComprador(){
         }).done((response) => {
           opcoes = []
           for (item in response){
-            console.log(response[item][2])
             opcao = `<option value="${response[item][1]}">${response[item][2]}</option>`
             opcoes.push(opcao)
             }
@@ -1289,7 +1286,6 @@ function novaCotacao(data_Solicitacao){
     var itens = ""
     opcoes = []
     for (var i in resposta){
-      console.log(resposta[i][2])
       opcao = `<option value="${resposta[i][1]}">${resposta[i][2]}</option>`
       opcoes.push(opcao)
       itens += String(resposta[i][2])
