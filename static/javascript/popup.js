@@ -1276,7 +1276,7 @@ function editarCotacao(id){
 };
 
 function novaCotacao(data_Solicitacao){
-  const s = JSON.stringify(data_Solicitacao);
+  const s = JSON.stringify(data_Solicitacao.id_solicitacao);
   $.ajax({
     url:"/itensMaisInfo", /// ARRUMAR A PARTIR DAQUI!!
     type: "POST",
@@ -1286,9 +1286,9 @@ function novaCotacao(data_Solicitacao){
     var itens = ""
     opcoes = []
     for (var i in resposta){
-      opcao = `<option value="${resposta[i][1]}">${resposta[i][2]}</option>`
+      opcao = `<option value="${resposta[i].id_item}">${resposta[i].nomeItem}</option>`
       opcoes.push(opcao)
-      itens += String(resposta[i][2])
+      itens += String(resposta[i].nomeItem)
       itens += ", "
     }
     itens = itens.substring(0, itens.length-2);
