@@ -853,12 +853,14 @@ function loginComprador(){
           var title = `${JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', '')} Cotações Válidas`
         }
         const s = JSON.stringify(data);
+        console.log(s)
         $.ajax({
           url:"/cotacaoInformacoes",
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((response) => {
+          console.log(111111111111111111, response.length)
           if (response.length){
             var html = ``
             for (var i in response){
@@ -871,7 +873,7 @@ function loginComprador(){
                   <p class="card-text"><b>Contato:</b> ${response[i].contato_fornecedor}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                  <li class="list-group-item"><b>Valor Unitário:</b> ${response[i].valor_un.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Unidade:</b> ${response[i].unidade}</li>
                   <li class="list-group-item"><b>Frete:</b> ${response[i].frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                   <li class="list-group-item"><b>Informações Extras:</b> ${response[i].inf_extra}</li>
@@ -895,7 +897,7 @@ function loginComprador(){
                 <p class="card-text"><b>Contato:</b> ${response.contato_fornecedor}<p>
               </div>
               <ul class="list-group list-group-flush">
-                <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_unitario.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
+                <li class="list-group-item"><b>Valor Unitário:</b> ${response.valor_un.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Unidade:</b> ${response.unidade}</li>
                 <li class="list-group-item"><b>Frete:</b> ${response.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</li>
                 <li class="list-group-item"><b>Informações Extras:</b> ${response.inf_extra}</li>

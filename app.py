@@ -75,7 +75,6 @@ def comprasInserir():
     output = request.get_json()
     result_ = json.loads(output)
     result_['usuario'] = result['usuario']
-    print(111111111111, result_)
     return sqlite_funcs.Solicitacao_Compras.solicitacaoComprasInserir(result_)
 
 @app.route("/itensMaisInfo", methods=["POST", "GET"])
@@ -105,7 +104,6 @@ def rejeitarCompras():
 
 @app.route("/comprasPendentes", methods=["POST", "GET"])
 def comprasPendentes():
-    print(sqlite_funcs.Solicitacao_Compras.comprasPendentes(1))
     return sqlite_funcs.Solicitacao_Compras.comprasPendentes(1)
 
 @app.route("/cotacaoInserir", methods=["POST", "GET"])
@@ -133,7 +131,8 @@ def cotacaoApagar():
 def cotacaoInformacoes():
     output = request.get_json()
     resultado = json.loads(output)
-    informacoes = sqlite_funcs.cotacaoInformacoesDB(resultado['id_solicitacao'])
+    print(resultado)
+    informacoes = sqlite_funcs.Solicitacao_Compras.cotacaoInformacoesDB(resultado['id_solicitacao'])
     return informacoes ## Devolve as cotações refentes ao id_solicitacao
 
 @app.route("/dadosCotacao", methods=["POST", "GET"])

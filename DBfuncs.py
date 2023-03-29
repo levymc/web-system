@@ -51,6 +51,11 @@ class Cotacao(Base):
         return conteudo
     
     @classmethod
+    def consultaEspecificaDupla(cls, status, id_solicitacao):
+        conteudo = [i.as_dict for i in session.query(cls).filter(and_(cls.status_cotacao == status, cls.id_solicitacao == id_solicitacao)).all()]
+        return conteudo
+    
+    @classmethod
     def obter_ultima_linha(cls):
         ultima_linha = session.query(cls).order_by(cls.id_cotacao.desc()).first().as_dict
         return ultima_linha

@@ -41,7 +41,7 @@ class Solicitacao_Compras():
                         for j in itens:
                             itensDataTable += j['nomeItem'] + ', '
                     itensDataTable = itensDataTable[:-2]
-                    qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
+                    qnt_cotacao = Cotacao.contar_linhas('0', i['id_solicitacao'])
                     qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
                     if qnt_cotacao_rejeitada != 0:
                         qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
@@ -68,9 +68,21 @@ class Solicitacao_Compras():
             print("Erro: ", e)
             return False
     
+    @staticmethod
+    def cotacaoInformacoesDB(id_solicitacao):
+        try:
+            informacoes = Cotacao.consultaEspecificaDupla(0, id_solicitacao)
+            dict_lista_informacoes = []
+            for i in informacoes:
+                dict_lista_informacoes.append(i)
+            return dict_lista_informacoes
+        except Exception as e:
+            print(e)
+            return False
+    
 # print(Solicitacao_Compras(1))
 
-print(Solicitacao_Compras.comprasPendentes(0))
+print(Solicitacao_Compras.cotacaoInformacoesDB(1))
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
@@ -228,34 +240,7 @@ def cotacaoApagar(id_cotacao):
         print(e)
         return False
 
-def cotacaoInformacoesDB(id_solicitacao):
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        informacoes = cursor.execute(f"SELECT * FROM cotacao WHERE id_solicitacao={id_solicitacao} AND status_cotacao=1").fetchall()
-        dict_lista_informacoes = []
-        for i in informacoes:
-            dict_lista_informacoes.append({
-                'id_cotacao':i[0],
-                'id_solicitacao':i[1],
-                'id_item':i[2],
-                'item':i[3],
-                'solicitante':i[4],
-                'fornecedor':i[5],
-                'contato_fornecedor':i[6],
-                'unidade':i[7],
-                'valor_unitario':i[8],
-                'frete':i[9],
-                'inf_extra':i[10],
-                'validade_cotacao':i[11],
-                'status_cotacao':i[12],
-            })
-        conn.close()
-        return dict_lista_informacoes
-        
-    except Exception as e:
-        print(e)
-        return False
+
 
 def dadosCotacao(id_cotacao):
     try:
