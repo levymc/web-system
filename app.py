@@ -86,6 +86,7 @@ def itensMaisInfo():
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
 def comprasPendentesAprovacao():
+    print(sqlite_funcs.Solicitacao_Compras.comprasPendentes(0), 'AAAAAAAAAAAAAAAAAAAAAAAAAA')
     return sqlite_funcs.Solicitacao_Compras.comprasPendentes(0)
 
 @app.route("/comprasAprovar", methods=["POST", "GET"])

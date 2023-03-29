@@ -30,12 +30,10 @@ class Solicitacao_Compras():
             compras = []
             dados = Solicitacao.consultaEspecifica('status', status)
             if dados == []:
-                return {'value': False}
+                return {'aaData': dados}
             else:
                 for i in dados:
-                    print(i)
                     itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
-                    print('aqio2')
                     itensDataTable = ''
                     if not itens == []:
                         for j in itens:
@@ -58,7 +56,7 @@ class Solicitacao_Compras():
                 return {'aaData': compras}
         except Exception as e:
             print("Error comprasPendentes: ", e)
-            return {'value': False}
+            return {'aaData': []}
 
     @staticmethod
     def itensMaisInfo(id_solicitacao):
@@ -80,9 +78,6 @@ class Solicitacao_Compras():
             print(e)
             return False
     
-# print(Solicitacao_Compras(1))
-
-print(Solicitacao_Compras.cotacaoInformacoesDB(1))
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
