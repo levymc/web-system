@@ -1446,18 +1446,40 @@ function novaCotacao(data_Solicitacao){
         var table = document.getElementById("tableCotacoes");
         var divPai = table.parentNode;
         divPai.classList.add('tableCotacoesBorda');
+        dadosCotacao = { 
+          id_solicitacao: data_Solicitacao.id_solicitacao,
+          solicitante: data_Solicitacao.solicitante, 
+          item: Swal.getPopup().querySelector('#item-select').selectedOptions[0].textContent,
+          id_item: Swal.getPopup().querySelector('#item-select').value,
+          unidade: Swal.getPopup().querySelector("#unidade").value,
+          solicitante: data_Solicitacao.solicitante,
+          fornecedor: Swal.getPopup().querySelector("#fornecedor").value,
+          valor_unitario: Swal.getPopup().querySelector("#valor_unitario").value,
+          contato_fornecedor: Swal.getPopup().querySelector("#contato_fornecedor").value,
+          frete: Swal.getPopup().querySelector('#frete').value,
+          inf_extra: Swal.getPopup().querySelector('#inf_extra').value,
+          validade_cotacao: Swal.getPopup().querySelector('#validade_cotacao').value,
+        }
+
+
+        // Zerar todos os inputs AQUII antes de seguir
+
+        // AQUII  -  INSERIR A LÓGICA AJAX PARA ENVIAR O dadosCotacao AO BANCO
+
         if (table.rows.length == 0){
           var htmlCotacoes1 = `
           <thead>
             <tr>
               <th scope="col">nº</th>
               <th scope="col">Item</th>
+              <th scope="col">Fornecedor</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <th scope="row">1</th>
-              <td>Levy</td>
+              <th scope="row">${table.rows.length+1}</th>
+              <td>${dadosCotacao.item}</td>
+              <td>${dadosCotacao.fornecedor}</td>
             </tr>
           `
           document.getElementById("tableCotacoes").insertAdjacentHTML("beforeend", htmlCotacoes1);
@@ -1465,8 +1487,9 @@ function novaCotacao(data_Solicitacao){
           var htmlCotacoes2 = ``
           htmlCotacoes2 += `
             <tr>
-              <th scope="row">2</th>
-              <td>Levy</td>
+              <th scope="row">${table.rows.length}</th>
+              <td>${dadosCotacao.item}</td>
+              <td>${dadosCotacao.fornecedor}</td>
             </tr>
           </tbody>
         `
