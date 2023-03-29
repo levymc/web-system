@@ -82,14 +82,12 @@ def comprasInserir():
 def itensMaisInfo():
     output = request.get_json()
     result_ = json.loads(output)
-    print("result__", result_)
-    itens = sqlite_funcs.itensMaisInfo(result_)
-    print("itens:",itens)
+    itens = sqlite_funcs.Solicitacao_Compras.itensMaisInfo(result_)
     return itens
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
 def comprasPendentesAprovacao():
-    return jsonify(sqlite_funcs.Solicitacao_Compras.comprasPendentes('0'))
+    return sqlite_funcs.Solicitacao_Compras.comprasPendentes(0)
 
 @app.route("/comprasAprovar", methods=["POST", "GET"])
 def comprasAprovar():
@@ -107,7 +105,8 @@ def rejeitarCompras():
 
 @app.route("/comprasPendentes", methods=["POST", "GET"])
 def comprasPendentes():
-    return jsonify(sqlite_funcs.comprasPendentes(1))
+    print(sqlite_funcs.Solicitacao_Compras.comprasPendentes(1))
+    return sqlite_funcs.Solicitacao_Compras.comprasPendentes(1)
 
 @app.route("/cotacaoInserir", methods=["POST", "GET"])
 def cotacaoInserir():

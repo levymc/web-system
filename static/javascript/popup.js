@@ -569,7 +569,7 @@ function paginaAprovador(){
         confirmButtonText: "Ok",
         confirmButtonColor:'hwb(216 31% 1%)',
       })}else{
-      const s = JSON.stringify(dadosSolicitacao);
+      const s = JSON.stringify(dadosSolicitacao['id_solicitacao']);
         $.ajax({
           url:"/itensMaisInfo",
           type: "POST",
@@ -599,22 +599,22 @@ function paginaAprovador(){
                           <div class="carousel-inner text-center">
                             <div class="carousel-item active">
                               <div class="row pageInfo-linhas">
-                                  <b>Item: <font color="#560101">${jade[0][2]}</font></b>
+                                  <b>Item: <font color="#560101">${jade[0].nomeItem}</font></b>
                               </div>
                               <div class="row pageInfo-linhas">
-                                  <b>Descricao: <font color="#560101">${jade[0][3]}</font></b>
+                                  <b>Descricao: <font color="#560101">${jade[0].descricao}</font></b>
                               </div>
                               <div class="row pageInfo-linhas">
-                                  <b>Categoria: <font color="#560101">${jade[0][4]}</font></b>
+                                  <b>Categoria: <font color="#560101">${jade[0].categoria}</font></b>
                               </div>
                               <div class="row pageInfo-linhas">
-                                  <b>Classificação: <font color="#560101">${jade[0][5]}</font></b>
+                                  <b>Classificação: <font color="#560101">${jade[0].classificacao}</font></b>
                               </div>
                               <div class="row pageInfo-linhas">
-                                <b>Quantidade: <font color="#560101">${jade[0][6]}</font></b>
+                                <b>Quantidade: <font color="#560101">${jade[0].quantidade}</font></b>
                               </div>
                               <div class="row pageInfo-linhas">
-                                  <b>Unidade: <font color="#560101">${jade[0][7]}</font></b>
+                                  <b>Unidade: <font color="#560101">${jade[0].unidade}</font></b>
                               </div>
                             </div>
                             `
@@ -647,22 +647,22 @@ function paginaAprovador(){
               }else{
               html += `<div class="carousel-item">
                           <div class="row pageInfo-linhas">
-                            <b>Item: <font color="#560101">${jade[i][2]}</font></b>
+                            <b>Item: <font color="#560101">${jade[i].nomeItem}</font></b>
                           </div>
                           <div class="row pageInfo-linhas">
-                            <b>Descricao: <font color="#560101">${jade[i][3]}</font></b>
+                            <b>Descricao: <font color="#560101">${jade[i].descricao}</font></b>
                           </div>
                           <div class="row pageInfo-linhas">
-                            <b>Categoria: <font color="#560101">${jade[i][4]}</font></b>
+                            <b>Categoria: <font color="#560101">${jade[i].categoria}</font></b>
                           </div>
                           <div class="row pageInfo-linhas">
-                            <b>Classificação: <font color="#560101">${jade[i][5]}</font></b>
+                            <b>Classificação: <font color="#560101">${jade[i].classificacao}</font></b>
                           </div>
                           <div class="row pageInfo-linhas">
-                            <b>Quantidade: <font color="#560101">${jade[i][6]}</font></b>
+                            <b>Quantidade: <font color="#560101">${jade[i].quantidade}</font></b>
                           </div>
                           <div class="row pageInfo-linhas">
-                            <b>Unidade: <font color="#560101">${jade[i][7]}</font></b>
+                            <b>Unidade: <font color="#560101">${jade[i].unidade}</font></b>
                           </div>
                         </div>`
             }
@@ -753,6 +753,7 @@ function confereComprasPendentes(){
     type: "POST",
     contentType: "application/json",
   }).done((response) => {
+    console.log(response)
     if (response.value==false){
       Swal.fire({
         titleText:"Nenhuma Solicitação de Compra foi aprovada para Cotação",

@@ -27,32 +27,52 @@ class Solicitacao_Compras():
 
     @staticmethod
     def comprasPendentes(status):   ### OKOK
-        compras = []
-        dados = Solicitacao.consultaEspecifica('status', status)
-        for i in dados:
-            itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
-            itensDataTable = ''
-            if not itens == []:
-                for j in itens:
-                    itensDataTable += j['nomeItem'] + ', '
-            itensDataTable = itensDataTable[:-2]
-            qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
-            qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
-            if qnt_cotacao_rejeitada != 0:
-                qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
-            compras.append({
-                'id_solicitacao':i['id_solicitacao'],
-                'solicitante': i['solicitante'],
-                'itens': itensDataTable,
-                'qnt_itens': i['qnt_itens'],
-                'data': i['data'],
-                'motivo': i['motivo'],
-                'setor':i['setor'],
-                'qnt_cotacao': qnt_cotacao,
-            })
-            return {'aaData': compras}
+        try:
+            compras = []
+            print('aqio1')
+            dados = Solicitacao.consultaEspecifica('status', status)
+            if dados == []:
+                return {'value': False}
+            else:
+                for i in dados:
+                    print(i)
+                    itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
+                    print('aqio2')
+                    itensDataTable = ''
+                    if not itens == []:
+                        for j in itens:
+                            itensDataTable += j['nomeItem'] + ', '
+                    itensDataTable = itensDataTable[:-2]
+                    qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
+                    qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
+                    if qnt_cotacao_rejeitada != 0:
+                        qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
+                    compras.append({
+                        'id_solicitacao':i['id_solicitacao'],
+                        'solicitante': i['solicitante'],
+                        'itens': itensDataTable,
+                        'qnt_itens': i['qnt_itens'],
+                        'data': i['data'],
+                        'motivo': i['motivo'],
+                        'setor':i['setor'],
+                        'qnt_cotacao': qnt_cotacao,
+                    })
+                    return {'aaData': compras}
+        except Exception as e:
+            print("Error comprasPendentes: ", e)
+            return {'value': False}
 
-print(Solicitacao_Compras(1))
+    @staticmethod
+    def itensMaisInfo(id_solicitacao):
+        try:
+            return Itens.consultaEspecifica('id_solicitacao', id_solicitacao)
+        except Exception as e:
+            print("Erro: ", e)
+            return False
+    
+# print(Solicitacao_Compras(1))
+
+print(Solicitacao_Compras.comprasPendentes(0))
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
@@ -132,16 +152,6 @@ def confereUsuario(usuario, senha):
             print(e)
             return False
 
-def itensMaisInfo(id_solicitacao):
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        itens = cursor.execute(f"SELECT * FROM itens WHERE id_solicitacao = {1}").fetchall()
-        print(itens)
-        return itens
-    except Exception as e:
-        print(e)
-        return False
 
 def compras_updateSolicitacao(comprasPara_aprovar):
     try:
