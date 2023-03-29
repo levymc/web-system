@@ -2,6 +2,55 @@ import sqlite3, hashlib
 from datetime import datetime
 from DBfuncs import *
 
+class Solicitacao_Compras():
+    def __init__(self, id_solicitacao):
+        self.solicitacao = Solicitacao.consultaEspecifica('id_solicitacao', id_solicitacao)
+        self.itens = Itens.consultaEspecifica('id_solicitacao', id_solicitacao)
+        self.cotacoes = Cotacao.consultaEspecifica('id_solicitacao', id_solicitacao)
+        
+    def __repr__(self):
+        return f"""Solicitação de Compra  -  Detalhes da Solicitação: {self.solicitacao}   _____________   \n
+                    Itens: {self.itens}   _____________   \n
+                    Cotações: {self.cotacoes}   _____________   \n
+                    """
+    
+    def solicitacaoComprasInserir(result):  ### OKOK
+        resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
+        Solicitacao.insert(resultado)
+        id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
+        itens = result['itens']
+        for i in itens:
+            print(i)
+            Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
+        return True
+
+    def comprasPendentes(status):   ### OKOK
+        compras = []
+        dados = Solicitacao.consultaEspecifica('status', status)
+        for i in dados:
+            itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
+            itensDataTable = ''
+            if not itens == []:
+                for j in itens:
+                    itensDataTable += j['nomeItem'] + ', '
+            itensDataTable = itensDataTable[:-2]
+            qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
+            qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
+            if qnt_cotacao_rejeitada != 0:
+                qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
+            compras.append({
+                'id_solicitacao':i['id_solicitacao'],
+                'solicitante': i['solicitante'],
+                'itens': itensDataTable,
+                'qnt_itens': i['qnt_itens'],
+                'data': i['data'],
+                'motivo': i['motivo'],
+                'setor':i['setor'],
+                'qnt_cotacao': qnt_cotacao,
+            })
+            return {'aaData': compras}
+
+print(Solicitacao_Compras(1))
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
@@ -80,42 +129,6 @@ def confereUsuario(usuario, senha):
             print("Usuário ou senha inválidos")
             print(e)
             return False
-
-def solicitacaoComprasInserir(result):  ### OKOK
-    resultado = result['usuario'], result['dataAtual'], result['motivo'], result['qnt_itens'], result['setor'], result['prioridade']
-    Solicitacao.insert(resultado)
-    id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
-    itens = result['itens']
-    for i in itens:
-        print(i)
-        Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
-    return True
-
-def comprasPendentes(status):   ### OKOK
-    compras = []
-    dados = Solicitacao.consultaEspecifica('status', status)
-    for i in dados:
-        itens = Itens.consultaEspecifica('id_solicitacao', i['id_solicitacao'])
-        itensDataTable = ''
-        if not itens == []:
-            for j in itens:
-                itensDataTable += j['nomeItem'] + ', '
-        itensDataTable = itensDataTable[:-2]
-        qnt_cotacao = Cotacao.contar_linhas(status, i['id_solicitacao'])
-        qnt_cotacao_rejeitada = Cotacao.contar_linhas(2, i['id_solicitacao'])
-        if qnt_cotacao_rejeitada != 0:
-            qnt_cotacao = 1 + qnt_cotacao - qnt_cotacao_rejeitada
-        compras.append({
-            'id_solicitacao':i['id_solicitacao'],
-            'solicitante': i['solicitante'],
-            'itens': itensDataTable,
-            'qnt_itens': i['qnt_itens'],
-            'data': i['data'],
-            'motivo': i['motivo'],
-            'setor':i['setor'],
-            'qnt_cotacao': qnt_cotacao,
-        })
-        return {'aaData': compras}
 
 def itensMaisInfo(id_solicitacao):
     try:
