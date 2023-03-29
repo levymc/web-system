@@ -1444,6 +1444,8 @@ function novaCotacao(data_Solicitacao){
       });
       $('#addCotacao').click(function(){ //
         var table = document.getElementById("tableCotacoes");
+        var divPai = table.parentNode;
+        divPai.classList.add('tableCotacoesBorda');
         if (table.rows.length == 0){
           var htmlCotacoes1 = `
           <thead>
