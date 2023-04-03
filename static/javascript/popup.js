@@ -1500,8 +1500,7 @@ function comprasFinalizadas(){
     </thead>    
   </table>
   <div class="row">
-    <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Nova Cotação</button></div>
-    <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-cotacao">Cotações</button></div>
+    <div class="col-sm text-center"><button class="btn btn-outline-secondary" type="submit" id="btn-maisInfoFinalizadas">Mais Informações</button></div>
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
@@ -1522,7 +1521,7 @@ function comprasFinalizadas(){
       sort: true,
       'columns': [
         { data : 'data', "width": "10%"},
-        { data : 'id_solicitacao', "width": "10%"},
+        { data : 'id_solicitacao', "width": "4%"},
         { data : 'solicitante', "width": "12.5%"}, 
         { data : 'motivo', "width": "15.625%"},
         { data : 'qnt_itens', "width": "8%"},
