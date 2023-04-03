@@ -306,7 +306,6 @@ class Solicitacao(Base):
     @classmethod
     def update(cls, id_solicitacao, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
                prioridade=None, qnt_cotacao=None, status=None):
-        session = Session()
         try:
             solicitacao = session.query(cls).filter(cls.id_solicitacao == id_solicitacao).one()
             if solicitante:

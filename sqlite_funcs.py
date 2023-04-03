@@ -78,6 +78,11 @@ class Solicitacao_Compras():
             return False
     
     @staticmethod
+    def solicitacaoUpdateVencedora(id_solicitacao):
+        print("vencedora aqui!")
+        return Solicitacao.update(id_solicitacao = id_solicitacao, status = 3)
+        
+    @staticmethod
     def cotacaoVencedoraDB(id_cotacao):
         return Cotacao.update(id_cotacao = id_cotacao, status_cotacao = 1)
     

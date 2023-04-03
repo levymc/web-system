@@ -131,8 +131,9 @@ def cotacaoApagar():
 def cotacaoVencedora():
     output = request.get_json()
     resultado = json.loads(output)
-    print(resultado)
-    return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id'])
+    print(555555555, resultado)
+    sqlite_funcs.Solicitacao_Compras.solicitacaoUpdateVencedora(resultado['id_solicitacao'])
+    return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id_cotacao'])
 
 @app.route("/cotacoesCotadas", methods=["POST", "GET"])
 def cotacoesCotadas():
