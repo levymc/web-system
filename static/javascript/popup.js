@@ -1418,6 +1418,7 @@ function comprasCotadas(){
     <thead>
       <tr>
         <th scope="col">Id</th>
+        <th scope="col">Solicitante</th>
         <th scope="col">Item</th>
         <th scope="col">Fornecedor</th>
         <th scope="col">Unidade</th>
@@ -1448,6 +1449,7 @@ function comprasCotadas(){
       sort: true,
       'columns': [
         { data : 'id_cotacao', "width": "10%"},
+        { data : 'usuario', "width": "10%"},
         { data : 'item', "width": "12.5%"}, 
         { data : 'fornecedor', "width": "15.625%"},
         { data : 'unidade', "width": "12.5%"},
