@@ -134,6 +134,11 @@ def cotacaoVencedora():
     print(resultado)
     return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id'])
 
+@app.route("/cotacoesCotadas", methods=["POST", "GET"])
+def cotacoesCotadas():
+    return sqlite_funcs.Solicitacao_Compras.cotacoesCotadas()[0]
+    
+
 @app.route("/cotacaoInformacoes", methods=["POST", "GET"])
 def cotacaoInformacoes():
     output = request.get_json()

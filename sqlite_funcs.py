@@ -79,10 +79,14 @@ class Solicitacao_Compras():
     
     @staticmethod
     def cotacaoVencedoraDB(id_cotacao):
-        print(id_cotacao)
         return Cotacao.update(id_cotacao = id_cotacao, status_cotacao = 1)
     
+    @staticmethod
+    def cotacoesCotadas():
+        return Cotacao.consultaEspecifica('status_cotacao', 1)
     
+
+print(Solicitacao_Compras.cotacoesCotadas()) 
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
