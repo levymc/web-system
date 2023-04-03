@@ -132,12 +132,11 @@ def cotacaoVencedora():
     output = request.get_json()
     resultado = json.loads(output)
     print(555555555, resultado)
-    sqlite_funcs.Solicitacao_Compras.solicitacaoUpdateVencedora(resultado['id_solicitacao'])
+    # sqlite_funcs.Solicitacao_Compras.solicitacaoUpdateVencedora(resultado['id_solicitacao']) Só deve acontecer após finalizar a Solicitação
     return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id_cotacao'])
 
 @app.route("/cotacoesCotadas", methods=["POST", "GET"])
 def cotacoesCotadas():
-    print(sqlite_funcs.Solicitacao_Compras.cotacoesCotadas())
     return sqlite_funcs.Solicitacao_Compras.cotacoesCotadas()
     
 

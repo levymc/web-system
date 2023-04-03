@@ -79,8 +79,11 @@ class Solicitacao_Compras():
     
     @staticmethod
     def solicitacaoUpdateVencedora(id_solicitacao):
-        print("vencedora aqui!")
         return Solicitacao.update(id_solicitacao = id_solicitacao, status = 3)
+    
+    @staticmethod
+    def itemVencedor(id_solicitacao, nomeItem):
+        return Itens.update(id_solicitacao = id_solicitacao, nomeItem = nomeItem, vencedor = 1)
         
     @staticmethod
     def cotacaoVencedoraDB(id_cotacao):
