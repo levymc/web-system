@@ -1414,7 +1414,7 @@ function comprasCotadas(){
       <div class="col" id="subTitle-comprasPendente">Abaixo estão listadas as solicitações de compra que já estão cotadas</div>
       <div class="col-1"></div>
     </div>
-    <table class="table table-striped display" id="dataTable4" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
+    <table class="table table-striped display" id="dataTable-comprasCotadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
         <th scope="col">Data da Solicitação</th>
