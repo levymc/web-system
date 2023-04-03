@@ -946,7 +946,6 @@ function cotacaoVencedora(id){
     if (response.value == true){
       const dict_values = {'id': id};
       const s = JSON.stringify(dict_values);
-      console.log(s)
       $.ajax({
         url:"/cotacaoVencedora",
         type: "POST",
