@@ -452,7 +452,9 @@ body.swal2-height-auto {
 .fa-trophy:hover{
     color: #027a16;
 }
-
+.dataTables_info .select-info {
+    display: none;
+  }
 /* CONFIGURAÇÕES SIDEBAR */
 .side-bar{
     position: fixed;

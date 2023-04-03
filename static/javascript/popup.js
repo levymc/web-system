@@ -1514,7 +1514,7 @@ function comprasFinalizadas(){
         'url' : '/comprasFinalizadas'
       },
       "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
-      "pageLength": 5,
+      "pageLength": 10,
       "paging": true,
       "responsive" : true,
       searching : true,
