@@ -441,6 +441,17 @@ body.swal2-height-auto {
     border-radius: 10px !important;
     box-sizing: border-box;
 }
+.card-link{
+    cursor: pointer;
+}
+.fa-trophy{
+    color:#02d224;
+    transition: 0.2ms;
+    font-size: 120%;
+}
+.fa-trophy:hover{
+    color: #027a16;
+}
 
 /* CONFIGURAÇÕES SIDEBAR */
 .side-bar{

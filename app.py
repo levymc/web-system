@@ -6,7 +6,7 @@ from datetime import timedelta
 from waitress import serve
 import logging
 
-mode = "dev" #prod ou dev
+mode = "prod" #prod ou dev
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -86,7 +86,6 @@ def itensMaisInfo():
 
 @app.route("/comprasPendentesAprovacao", methods=["POST", "GET"])
 def comprasPendentesAprovacao():
-    print(sqlite_funcs.Solicitacao_Compras.comprasPendentes(0), 'AAAAAAAAAAAAAAAAAAAAAAAAAA')
     return sqlite_funcs.Solicitacao_Compras.comprasPendentes(0)
 
 @app.route("/comprasAprovar", methods=["POST", "GET"])
@@ -128,11 +127,17 @@ def cotacaoApagar():
     apagou = sqlite_funcs.cotacaoApagar(resultado)
     return {'value': apagou}
 
+@app.route("/cotacaoVencedora", methods=["POST", "GET"])
+def cotacaoVencedora():
+    output = request.get_json()
+    resultado = json.loads(output)
+    print(resultado)
+    return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id'])
+
 @app.route("/cotacaoInformacoes", methods=["POST", "GET"])
 def cotacaoInformacoes():
     output = request.get_json()
     resultado = json.loads(output)
-    print(resultado)
     informacoes = sqlite_funcs.Solicitacao_Compras.cotacaoInformacoesDB(resultado['id_solicitacao'])
     return informacoes ## Devolve as cotações refentes ao id_solicitacao
 
@@ -189,7 +194,7 @@ def pendConsulta():
         pendencias = sqlite_funcs.pendConsulta()
         return jsonify(pendencias)
     except Exception as e:
-        print("e")
+        print(e)
         return e
 
 @app.route("/requisicao/confere", methods = ["POST", "GET"])

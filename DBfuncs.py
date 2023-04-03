@@ -117,18 +117,21 @@ class Cotacao(Base):
             for key, value in kwargs.items():
                 setattr(cotacao, key, value)
             session.commit()
+            return {'value': True}
         except NoResultFound:
             print(f"Não existe cotação com o id_cotacao {id_cotacao}")
+            return {'value': False}
         except IntegrityError as e:
             session.rollback()
             print(f"Erro de integridade ao atualizar a cotação com o id_cotacao {id_cotacao}: {str(e)}")
+            return {'value': False}
         except Exception as e:
             session.rollback()
             print(f"Erro ao atualizar a cotação com o id_cotacao {id_cotacao}: {str(e)}")
+            return {'value': False}
         finally:
             session.close()
 
-    
     
 class Itens(Base):
     __tablename__ = "itens"

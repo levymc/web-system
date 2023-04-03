@@ -880,6 +880,7 @@ function loginComprador(){
                   <li class="list-group-item"><b>Validade Cotação:</b> ${response[i].validade_cotacao}</li>
                 </ul>
                 <div class="card-body text-end">
+                  <a onClick="cotacaoVencedora(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-trophy"></i></a>
                   <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a onClick="apagarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </div>
@@ -904,6 +905,7 @@ function loginComprador(){
                 <li class="list-group-item"><b>Validade Cotação:</b> ${response.validade_cotacao}</li>
               </ul>
               <div class="card-body text-end">
+                <a onClick="cotacaoVencedora(${response.id_cotacao})" class="card-link"><i class="fa-solid fa-trophy"></i></a>
                 <a onClick="editarCotacao(${response.id_cotacao})" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a onClick="apagarCotacao(${response.id_cotacao})" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
               </div>
@@ -930,7 +932,39 @@ function loginComprador(){
     })});
 };
 
-
+function cotacaoVencedora(id){
+  Swal.fire({
+    title:"Eleger Cotação como Vencedora?",
+    showConfirmButton: true,
+    confirmButtonColor: '#007bff',
+    icon:"question",
+    allowOutsideClick: false,
+    confirmButtonText: "Sim",
+    showCancelButton: true,
+    cancelButtonText: "Cancelar",
+  }).then(response => {
+    if (response.value == true){
+      const dict_values = {'id': id};
+      const s = JSON.stringify(dict_values);
+      console.log(s)
+      $.ajax({
+        url:"/cotacaoVencedora",
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(s)
+      }).done((vencedor) => {
+        if (vencedor.value == true){
+          Swal.fire({
+            title: "Cotação eleita como vencedora!",
+            icon: "success",
+            confirmButtonText: "Ok",
+            confirmButtonColor: '#007bff',
+          })
+        }
+      })
+    }
+  })
+}
 
 
 function apagarCotacao(id){

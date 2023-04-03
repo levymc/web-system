@@ -20,7 +20,6 @@ class Solicitacao_Compras():
         id_solicitacao = Solicitacao.obter_ultima_linha()['id_solicitacao']
         itens = result['itens']
         for i in itens:
-            print(i)
             Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
         return {'value': True}
 
@@ -77,6 +76,12 @@ class Solicitacao_Compras():
         except Exception as e:
             print(e)
             return False
+    
+    @staticmethod
+    def cotacaoVencedoraDB(id_cotacao):
+        print(id_cotacao)
+        return Cotacao.update(id_cotacao = id_cotacao, status_cotacao = 1)
+    
     
 
 def inserir(result):
@@ -184,7 +189,6 @@ def rejeitarCompra(id):
         return e
 
 def cotacaoInserirDB(resultado):
-    print(33333333, resultado)
     try:
         conn = sqlite3.connect('static/db/compras.db')
         cursor = conn.cursor()
@@ -257,7 +261,6 @@ def dadosCotacao(id_cotacao):
         dict_informacoes['inf_extra']=informacoes[10]
         dict_informacoes['validade_cotacao']=informacoes[11]
         dict_informacoes['status_cotacao']=informacoes[12]
-        print(dict_informacoes)
         return dict_informacoes
     except Exception as e:
         print(e)
