@@ -83,7 +83,7 @@ class Solicitacao_Compras():
     
     @staticmethod
     def cotacoesCotadas():
-        return Cotacao.consultaEspecifica('status_cotacao', 1)
+        return {'aaData' : Cotacao.consultaEspecifica('status_cotacao', 1)}
     
 
 print(Solicitacao_Compras.cotacoesCotadas()) 

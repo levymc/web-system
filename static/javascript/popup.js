@@ -1447,11 +1447,11 @@ function comprasCotadas(){
       searching : true,
       sort: true,
       'columns': [
-      { data : 'data', "width": "10%"},
-      { data : 'solicitante', "width": "12.5%"}, 
-      { data : 'motivo', "width": "15.625%"},
-      { data : 'setor', "width": "12.5%"},
-      { data : 'qnt_cotacao', "width": "8%"},
+      { data : 'id_cotacao', "width": "10%"},
+      { data : 'id_solicitacao', "width": "12.5%"}, 
+      { data : 'id_item', "width": "15.625%"},
+      { data : 'item', "width": "12.5%"},
+      { data : 'fornecedor', "width": "8%"},
       ],
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
