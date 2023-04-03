@@ -144,6 +144,7 @@ class Itens(Base):
     classificacao = Column(String)
     quantidade = Column(Integer)
     unidade = Column(String)
+    vencedor = Column(Integer)
     
     def __repr__(self):
         return f"""id: {self.id_item}"""
@@ -199,8 +200,7 @@ class Itens(Base):
             session.close()
     
     @classmethod
-    def update(cls, id_item, nomeItem=None, descricao=None, categoria=None, classificacao=None, quantidade=None, unidade=None):
-        session = Session()
+    def update(cls, id_item, nomeItem=None, descricao=None, categoria=None, classificacao=None, quantidade=None, unidade=None, vencedor=None):
         try:
             item = session.query(cls).filter(cls.id_item == id_item).one()
             if nomeItem:
@@ -215,6 +215,8 @@ class Itens(Base):
                 item.quantidade = quantidade
             if unidade:
                 item.unidade = unidade
+            if vencedor:
+                item.vencedor = vencedor
             session.commit()
         except NoResultFound:
             print(f"Não existe item com o id_item {id_item}")
@@ -227,7 +229,7 @@ class Itens(Base):
         finally:
             session.close()
 
-    
+# Itens.update(id_item = 2, vencedor = 1)  
     
 class Solicitacao(Base):
     __tablename__="solicitacao"
