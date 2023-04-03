@@ -1417,11 +1417,11 @@ function comprasCotadas(){
     <table class="table table-striped display" id="dataTable-comprasCotadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
-        <th scope="col">Data da Solicitação</th>
-        <th scope="col">Usuário</th>
-        <th scope="col">Justificativa</th>
-        <th scope="col">Setor</th>
-        <th scope="col">Cotações</th>
+        <th scope="col">Id</th>
+        <th scope="col">Item</th>
+        <th scope="col">Fornecedor</th>
+        <th scope="col">Unidade</th>
+        <th scope="col">Valor Unitário</th>
       </tr>
     </thead>    
   </table>
@@ -1447,12 +1447,18 @@ function comprasCotadas(){
       searching : true,
       sort: true,
       'columns': [
-      { data : 'id_cotacao', "width": "10%"},
-      { data : 'id_solicitacao', "width": "12.5%"}, 
-      { data : 'id_item', "width": "15.625%"},
-      { data : 'item', "width": "12.5%"},
-      { data : 'fornecedor', "width": "8%"},
-      ],
+        { data : 'id_cotacao', "width": "10%"},
+        { data : 'item', "width": "12.5%"}, 
+        { data : 'fornecedor', "width": "15.625%"},
+        { data : 'unidade', "width": "12.5%"},
+        {
+          data : 'valor_un', 
+          render: function (data, type, row) {
+            return 'R$ ' + parseFloat(data).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          },
+          "width": "8%"
+        },
+      ],      
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
       ],
