@@ -82,8 +82,8 @@ class Solicitacao_Compras():
         return Solicitacao.update(id_solicitacao = id_solicitacao, status = 3)
     
     @staticmethod
-    def itemVencedor(id_solicitacao, nomeItem):
-        return Itens.update(id_solicitacao = id_solicitacao, nomeItem = nomeItem, vencedor = 1)
+    def itemVencedor(id_item):
+        return Itens.update(id_item = id_item, vencedor = 1)
         
     @staticmethod
     def cotacaoVencedoraDB(id_cotacao):
@@ -93,8 +93,6 @@ class Solicitacao_Compras():
     def cotacoesCotadas():
         return {'aaData' : Cotacao.consultaEspecifica('status_cotacao', 1)}
     
-
-print(Solicitacao_Compras.cotacoesCotadas()) 
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
@@ -174,7 +172,6 @@ def confereUsuario(usuario, senha):
             print(e)
             return False
 
-
 def compras_updateSolicitacao(comprasPara_aprovar):
     try:
         conn = sqlite3.connect('static/db/compras.db')
@@ -250,8 +247,6 @@ def cotacaoApagar(id_cotacao):
     except Exception as e:
         print(e)
         return False
-
-
 
 def dadosCotacao(id_cotacao):
     try:

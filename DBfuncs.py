@@ -229,7 +229,7 @@ class Itens(Base):
         finally:
             session.close()
 
-    
+# Itens.update(id_item = 2, vencedor = 1)  
     
 class Solicitacao(Base):
     __tablename__="solicitacao"
