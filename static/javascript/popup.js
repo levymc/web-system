@@ -1471,3 +1471,69 @@ function comprasCotadas(){
     })
   })
 }
+
+function comprasFinalizadas(){
+  Swal.fire({
+    width: '85%',
+    showConfirmButton: false,
+    title: 'Histórico de Compras',
+    titleText: 'Histórico de Compras Realizadas', 
+    padding: '2em 1em 1.25em',
+    allowOutsideClick: false,
+    showCloseButton: true,
+    html: `
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col" id="subTitle-comprasPendente">Abaixo estão todas as compras realizadas, ordenadas por período.</div>
+      <div class="col-1"></div>
+    </div>
+    <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
+    <thead>
+      <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Id</th>
+        <th scope="col">Solicitante</th>
+        <th scope="col">Motivo</th>
+        <th scope="col">Quantidade Itens</th>
+        <th scope="col">Setor</th>
+      </tr>
+    </thead>    
+  </table>
+  <div class="row">
+    <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Nova Cotação</button></div>
+    <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-cotacao">Cotações</button></div>
+  </div>
+  <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
+  });
+  $(document).ready(function () {
+    var table = $('#dataTable-comprasFinalizadas').DataTable({
+      select: true,
+      "processing" : true,
+      "serverSide" : false,
+      "serverMethod" : "post",
+      "ajax" :{
+        'url' : '/comprasFinalizadas'
+      },
+      "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+      "pageLength": 5,
+      "paging": true,
+      "responsive" : true,
+      searching : true,
+      sort: true,
+      'columns': [
+        { data : 'data', "width": "10%"},
+        { data : 'id_solicitacao', "width": "10%"},
+        { data : 'solicitante', "width": "12.5%"}, 
+        { data : 'motivo', "width": "15.625%"},
+        { data : 'qnt_itens', "width": "8%"},
+        { data : 'setor', "width": "12.5%"},
+      ],      
+      columnDefs: [
+      { className: 'dt-center', targets: '_all' },
+      ],
+      "language": {
+      "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+      },
+    })
+  })
+}

@@ -140,6 +140,9 @@ def cotacaoVencedora():
 def cotacoesCotadas():
     return sqlite_funcs.Solicitacao_Compras.cotacoesCotadas()
     
+@app.route("/comprasFinalizadas", methods=["POST", "GET"])
+def comprasFinalizadas():
+    return sqlite_funcs.Solicitacao_Compras.comprasFinalizadas()
 
 @app.route("/cotacaoInformacoes", methods=["POST", "GET"])
 def cotacaoInformacoes():

@@ -93,6 +93,9 @@ class Solicitacao_Compras():
     def cotacoesCotadas():
         return {'aaData' : Cotacao.consultaEspecifica('status_cotacao', 1)}
     
+    @staticmethod
+    def comprasFinalizadas():
+        return {'aaData': Solicitacao.consultaEspecifica('status', 3)}
 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
