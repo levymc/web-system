@@ -1430,8 +1430,7 @@ function comprasCotadas(){
     </thead>    
   </table>
   <div class="row">
-    <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Nova Cotação</button></div>
-    <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-cotacao">Cotações</button></div>
+    <div class="col-sm text-center"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Finalizar</button></div>
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
@@ -1451,7 +1450,7 @@ function comprasCotadas(){
       searching : true,
       sort: true,
       'columns': [
-        { data : 'id_cotacao', "width": "10%"},
+        { data : 'id_cotacao', "width": "4%"},
         { data : 'usuario', "width": "10%"},
         { data : 'item', "width": "12.5%"}, 
         { data : 'fornecedor', "width": "15.625%"},
@@ -1461,7 +1460,8 @@ function comprasCotadas(){
           render: function (data, type, row) {
             return 'R$ ' + parseFloat(data).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
           },
-          "width": "8%"
+          "width": "15%",
+          className: 'font-weight-bold',
         },
       ],      
       columnDefs: [

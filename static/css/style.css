@@ -186,23 +186,13 @@ body.swal2-height-auto {
     color: rgb(255, 255, 255);
     background-color: rgb(27, 131, 220)
 }
-#button-novaCotacao{
+#button-novaCotacao, #button-novaCotacao2{
     color: black;
     background-color: #ffffff;
     width: 9em;
     height: 3em;
 }
-#button-novaCotacao:hover{
-    color: rgb(255, 255, 255);
-    background-color: rgb(27, 131, 220)
-}
-#button-novaCotacao2{
-    color: black;
-    background-color: #ffffff;
-    width: 9em;
-    height: 3em;
-}
-#button-novaCotacao2:hover{
+#button-novaCotacao:hover, #button-novaCotacao2:hover{
     color: rgb(255, 255, 255);
     background-color: rgb(27, 131, 220)
 }
