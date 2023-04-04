@@ -92,7 +92,8 @@ def comprasPendentesAprovacao():
 def comprasAprovar():
     output = request.get_json()
     comprasPara_aprovar = json.loads(output)
-    valor = sqlite_funcs.compras_updateSolicitacao(comprasPara_aprovar)
+    usuario = result['usuario']
+    valor = sqlite_funcs.Solicitacao_Compras.compras_updateSolicitacao(comprasPara_aprovar, usuario)
     return {'value': valor}
 
 @app.route("/rejeitarCompras", methods=["POST", "GET"])
