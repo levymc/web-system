@@ -132,6 +132,25 @@ class Cotacao(Base):
         finally:
             session.close()
 
+    @classmethod
+    def update_status(cls, nomeItem, id_solicitacao, status_cotacao=2):
+        session = Session()
+        try:
+            session.query(cls).filter(and_(cls.id_solicitacao == id_solicitacao, cls.item == nomeItem)).update({cls.status_cotacao: status_cotacao})
+            session.commit()
+            return {'value': True}
+        except IntegrityError as e:
+            session.rollback()
+            print(f"Erro de integridade ao atualizar o status da cotação com o id_solicitacao {id_solicitacao}: {str(e)}")
+            return {'value': False}
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao atualizar o status da cotação com o id_solicitacao {id_solicitacao}: {str(e)}")
+            return {'value': False}
+        finally:
+            session.close()
+
+    
     
 class Itens(Base):
     __tablename__ = "itens"

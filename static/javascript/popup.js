@@ -880,7 +880,7 @@ function loginComprador(){
                   <li class="list-group-item"><b>Validade Cotação:</b> ${response[i].validade_cotacao}</li>
                 </ul>
                 <div class="card-body text-end">
-                  <a onClick="cotacaoVencedora(${response[i].id_cotacao}, ${response[i].id_item})" class="card-link"><i class="fa-solid fa-trophy"></i></a>
+                  <a onClick="cotacaoVencedora(${response[i].id_cotacao}, ${response[i].id_item}, ${response[i].id_solicitacao}, '${response[i].item}')" class="card-link"><i class="fa-solid fa-trophy"></i></a>
                   <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a onClick="apagarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </div>
@@ -905,7 +905,7 @@ function loginComprador(){
                 <li class="list-group-item"><b>Validade Cotação:</b> ${response.validade_cotacao}</li>
               </ul>
               <div class="card-body text-end">
-                <a onClick="cotacaoVencedora(${response.id_cotacao}, ${response.id_item})" class="card-link"><i class="fa-solid fa-trophy"></i></a>
+                <a onClick="cotacaoVencedora(${response.id_cotacao}, ${response.id_item}, ${response.id_solicitacao}, '${response.item}')" class="card-link"><i class="fa-solid fa-trophy"></i></a>
                 <a onClick="editarCotacao(${response.id_cotacao})" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a onClick="apagarCotacao(${response.id_cotacao})" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
               </div>
@@ -932,7 +932,7 @@ function loginComprador(){
     })});
 };
 
-function cotacaoVencedora(id_cotacao, id_item){
+function cotacaoVencedora(id_cotacao, id_item, id_solicitacao, nomeItem){
   Swal.fire({
     title:"Eleger Cotação como Vencedora?",
     showConfirmButton: true,
@@ -945,7 +945,9 @@ function cotacaoVencedora(id_cotacao, id_item){
   }).then(response => {
     if (response.value == true){
       const dict_values = {'id_cotacao': id_cotacao,
-                          'id_item': id_item};
+                          'id_item': id_item,
+                          'id_solicitacao': id_solicitacao,
+                          'nomeItem': nomeItem};
       const s = JSON.stringify(dict_values);
       $.ajax({
         url:"/cotacaoVencedora",

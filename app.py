@@ -133,6 +133,7 @@ def cotacaoVencedora():
     resultado = json.loads(output)
     print(555555555, resultado)
     sqlite_funcs.Solicitacao_Compras.itemVencedor(resultado['id_item'])
+    sqlite_funcs.Solicitacao_Compras.itemInvalido(resultado['id_solicitacao'], resultado['nomeItem'])
     # sqlite_funcs.Solicitacao_Compras.solicitacaoUpdateVencedora(resultado['id_solicitacao']) Só deve acontecer após finalizar a Solicitação
     return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id_cotacao'])
 

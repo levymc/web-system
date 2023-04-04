@@ -86,6 +86,10 @@ class Solicitacao_Compras():
         return Itens.update(id_item = id_item, vencedor = 1)
         
     @staticmethod
+    def itemInvalido(id_solicitacao, nomeItem):
+        return Cotacao.update_status(nomeItem=nomeItem, id_solicitacao=id_solicitacao )
+    
+    @staticmethod
     def cotacaoVencedoraDB(id_cotacao):
         return Cotacao.update(id_cotacao = id_cotacao, status_cotacao = 1)
     
