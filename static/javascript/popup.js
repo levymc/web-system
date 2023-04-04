@@ -1490,6 +1490,15 @@ function comprasFinalizadas(){
       <div class="col" id="subTitle-comprasPendente">Abaixo estão todas as compras realizadas, ordenadas por período.</div>
       <div class="col-1"></div>
     </div>
+    <div class='col-sm text-start'>
+      <label for="ano">Filtrar por ano:</label>
+      <select id="ano">
+        <option value="">Todos</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+      </select>
+    </div>
     <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
@@ -1537,5 +1546,10 @@ function comprasFinalizadas(){
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
     })
+    $(document).on('change', '#ano', function() {
+      var filtroAno = $('#ano').val();
+      table.column(0).search(filtroAno).draw();
+    });  
   })
+  
 }
