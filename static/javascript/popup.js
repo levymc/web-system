@@ -789,6 +789,7 @@ function loginComprador(){
           <th scope="col">Justificativa</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
+          <th scope="col">Aprovador</th>
         </tr>
       </thead>    
     </table>
@@ -819,6 +820,7 @@ function loginComprador(){
         { data : 'motivo', "width": "15.625%"},
         { data : 'setor', "width": "12.5%"},
         { data : 'qnt_cotacao', "width": "8%"},
+        { data : 'aprovador', "width": "8%"},
         ],
         columnDefs: [
         { className: 'dt-center', targets: '_all' },

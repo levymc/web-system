@@ -51,6 +51,7 @@ class Solicitacao_Compras():
                         'motivo': i['motivo'],
                         'setor':i['setor'],
                         'qnt_cotacao': qnt_cotacao,
+                        'aprovador':i['aprovador']
                     })
                 return {'aaData': compras}
         except Exception as e:
