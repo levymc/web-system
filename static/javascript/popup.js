@@ -968,7 +968,6 @@ function cotacaoVencedora(id_cotacao, id_item, id_solicitacao, nomeItem){
   })
 }
 
-
 function apagarCotacao(id){
   Swal.fire({
     title:"Deseja mesmo apagar?",
