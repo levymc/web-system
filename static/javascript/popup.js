@@ -240,7 +240,7 @@ function solicitacaoCompra(){
         </div>
     </div>
   </div>
-  <p class="text-end" style="padding-right:3em;padding-top:0.5em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-end" style="padding-right:3em;padding-top:0.5em; font-size:16px"><a style="margin-top:2em !important;" id="addItem" class="text-end">Add Itens :  <i class="fa-solid fa-plus"></i></a></p>
   <p class="text-center" style="font-size:14px;"><strong> Em caso de mais de um item, clicar em 'Add Item' antes de Enviar a Solicitação</strong></p>
   
   `
