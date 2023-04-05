@@ -1473,14 +1473,40 @@ function comprasCotadas(){
       },
     })
     $('.btn-azul').click(function(){
-      let dadosLinha = table.rows('.selected').data()[0];
-      console.log(dadosLinha);
-      dadosLinha = JSON.stringify(dadosLinha)
-      $.ajax({
-        url:"/finalizarCompra", // Envia status = 2 na tabela solicitacao
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(dadosLinha)
+      Swal.fire({
+        title:"Finalizar Cotação?",
+        showConfirmButton: true,
+        confirmButtonColor: '#007bff',
+        icon:"question",
+        confirmButtonText: "Sim",
+        showCancelButton: true,
+        allowOutsideClick: false,
+        showCloseButton: true,
+        cancelButtonText: "Cancelar",
+      }).then(response => {
+        if (response.value){
+          let dadosLinha = table.rows('.selected').data()[0];
+          dadosLinha = JSON.stringify(dadosLinha)
+          $.ajax({
+            url:"/finalizarCompra", // Envia status = 2 na tabela solicitacao
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(dadosLinha)
+          }).done((response) => {
+            if (response.value){
+              Swal.fire({
+                title:"Cotação Finalizada",
+                showConfirmButton: true,
+                confirmButtonText: "Ok",
+                confirmButtonColor: '#007bff',
+                icon:"success",
+                showCancelButton: false,
+                allowOutsideClick: true,
+                showCloseButton: true,
+              })
+            }
+          })
+        }
       })
     })
   })
