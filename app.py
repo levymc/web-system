@@ -228,6 +228,11 @@ def confere():
         print("Algum erro ocorreu no sistema: \n"+type(e)+":"+str(e))
         return render_template('requisicao.html', e=e)
 
+@app.route("/finalizarCompra", methods=["POST", "GET"])
+def finalizarCompra():
+    output = request.get_json()
+    resultado = json.loads(output)
+    return sqlite_funcs.Solicitacao_Compras.finalizarCotacaoDB(resultado['id_cotacao'])
 
 
 if __name__ == '__main__':

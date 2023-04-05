@@ -1431,7 +1431,7 @@ function comprasCotadas(){
     </thead>    
   </table>
   <div class="row">
-    <div class="col-sm text-center"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Finalizar</button></div>
+    <div class="col-sm text-center"><button class="btn btn-outline-secondary btn-azul" type="submit">Finalizar</button></div>
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
@@ -1472,7 +1472,19 @@ function comprasCotadas(){
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
     })
+    $('.btn-azul').click(function(){
+      let dadosLinha = table.rows('.selected').data()[0];
+      console.log(dadosLinha);
+      dadosLinha = JSON.stringify(dadosLinha)
+      $.ajax({
+        url:"/finalizarCompra", // Envia status = 2 na tabela solicitacao
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(dadosLinha)
+      })
+    })
   })
+  
 }
 
 function comprasFinalizadas(){

@@ -106,20 +106,10 @@ class Solicitacao_Compras():
     def compras_updateSolicitacao(comprasPara_aprovar, aprovador):
         return Solicitacao.update(id_solicitacao = comprasPara_aprovar['id_solicitacao'], aprovador = aprovador, status = 1)
     
+    @staticmethod
+    def finalizarCotacaoDB(id_cotacao):
+        return Cotacao.update(id_cotacao, status_cotacao = 3)
     
-    # def compras_updateSolicitacao(comprasPara_aprovar):
-    # try:
-    #     conn = sqlite3.connect('static/db/compras.db')
-    #     cursor = conn.cursor()
-    #     cursor.execute(f"UPDATE solicitacao SET status=1 WHERE id_solicitacao='{comprasPara_aprovar['id_solicitacao']}'")
-    #     print("Aprovou!")
-    #     conn.commit()
-    #     conn.close()
-    #     return True
-    # except Exception as e:
-    #     print("Nao Aprovou: ",e)
-    #     return e
-
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
     cursor = conn.cursor()
