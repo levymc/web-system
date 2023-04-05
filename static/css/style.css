@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 div, h1 {
     user-select: none;
@@ -297,7 +297,21 @@ body.swal2-height-auto {
     border: 1px solid #d9d9d9;
     border-radius: 10px;
 }
-
+.container-filtros{
+    position: absolute;
+    top: 0;
+    left: 2em;
+    width: 10%;
+}
+.filtros{
+    display: flex;
+    flex-direction: column;
+    /* width: 20%; */
+    gap: 0.2em;
+}
+.filtros label{
+    margin-top: 0.75em;
+}
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
