@@ -1537,24 +1537,17 @@ function comprasFinalizadas(){
           <option value="2022">2022</option>
           <option value="2021">2021</option>
         </select>
-        <label for="ano">Filtrar por ano:</label>
-        <select id="ano">
-          <option value="">Todos</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
+        <label for="ano">Filtrar por tipo:</label>
+        <select id="tipoBusca">
+          <option value="solicitacao">Solicitação</option>
+          <option value="cotacao">Cotação</option>
         </select>
       </div>
     </div>
     <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
-        <th scope="col">Data</th>
-        <th scope="col">Id</th>
-        <th scope="col">Solicitante</th>
-        <th scope="col">Motivo</th>
-        <th scope="col">Quantidade Itens</th>
-        <th scope="col">Setor</th>
+        
       </tr>
     </thead>    
   </table>
@@ -1563,6 +1556,31 @@ function comprasFinalizadas(){
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
+  $(document).on('change', '#tipoBusca', function() {
+    var filtroTipo = $('#tipoBusca').val();
+    if (filtroTipo == "solicitacao"){
+      if ($.fn.DataTable.isDataTable('#dataTable-comprasFinalizadas')) {
+        $('#dataTable-comprasFinalizadas').DataTable().destroy();
+        const ths = document.querySelectorAll('th');
+        ths.forEach(th => {
+          th.remove();
+        });
+      }
+      let htmlNovo = "<th scope='col'>Data</th> <th scope='col'>Id</th> <th scope='col'>Solicitante</th> <th scope='col'>Motivo</th> <th scope='col'>Quantidade Itens</th> <th scope='col'>Setor</th>"
+      document.querySelector("thead tr").insertAdjacentHTML("beforeend", htmlNovo);
+      tableSolicitacaoHistorico();
+      console.log(filtroTipo);
+    }else{
+      // Código do html + Datatable das Cotações
+    }
+  });    
+  $(document).on('change', '#ano', function() {
+    var filtroAno = $('#ano').val();
+    table.column(0).search(filtroAno).draw();
+  });
+}
+
+function tableSolicitacaoHistorico(){
   $(document).ready(function () {
     var table = $('#dataTable-comprasFinalizadas').DataTable({
       select: true,
@@ -1593,10 +1611,5 @@ function comprasFinalizadas(){
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
     })
-    $(document).on('change', '#ano', function() {
-      var filtroAno = $('#ano').val();
-      table.column(0).search(filtroAno).draw();
-    });  
   })
-  
 }
