@@ -1537,13 +1537,6 @@ function comprasFinalizadas(){
           <option value="2022">2022</option>
           <option value="2021">2021</option>
         </select>
-        <label for="ano">Filtrar por ano:</label>
-        <select id="ano">
-          <option value="">Todos</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-        </select>
       </div>
     </div>
     <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
