@@ -100,7 +100,7 @@ class Solicitacao_Compras():
     
     @staticmethod
     def comprasFinalizadas():
-        return {'aaData': Solicitacao.consultaEspecifica('status', 3)}
+        return {'aaData': Itens.consultaEspecifica('vencedor', 1)} # aqui eu tenho que buscar os itens vencedores
     
     @staticmethod
     def compras_updateSolicitacao(comprasPara_aprovar, aprovador):
