@@ -1556,6 +1556,31 @@ function comprasFinalizadas(){
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
+  $(document).on('change', '#tipoBusca', function() {
+    var filtroTipo = $('#tipoBusca').val();
+    if (filtroTipo == "solicitacao"){
+      if ($.fn.DataTable.isDataTable('#dataTable-comprasFinalizadas')) {
+        $('#dataTable-comprasFinalizadas').DataTable().destroy();
+        const ths = document.querySelectorAll('th');
+        ths.forEach(th => {
+          th.remove();
+        });
+      }
+      let htmlNovo = "<th scope='col'>Data</th> <th scope='col'>Id</th> <th scope='col'>Solicitante</th> <th scope='col'>Motivo</th> <th scope='col'>Quantidade Itens</th> <th scope='col'>Setor</th>"
+      document.querySelector("thead tr").insertAdjacentHTML("beforeend", htmlNovo);
+      tableSolicitacaoHistorico();
+      console.log(filtroTipo);
+    }else{
+      // Código do html + Datatable das Cotações
+    }
+  });    
+  $(document).on('change', '#ano', function() {
+    var filtroAno = $('#ano').val();
+    table.column(0).search(filtroAno).draw();
+  });
+}
+
+function tableSolicitacaoHistorico(){
   $(document).ready(function () {
     var table = $('#dataTable-comprasFinalizadas').DataTable({
       select: true,
@@ -1591,5 +1616,4 @@ function comprasFinalizadas(){
       table.column(2).search(filtroAno).draw();
     });  
   })
-  
 }
