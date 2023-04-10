@@ -132,6 +132,25 @@ class Cotacao(Base):
         finally:
             session.close()
 
+    @classmethod
+    def update_status(cls, nomeItem, id_solicitacao, status_cotacao=2):
+        session = Session()
+        try:
+            session.query(cls).filter(and_(cls.id_solicitacao == id_solicitacao, cls.item == nomeItem)).update({cls.status_cotacao: status_cotacao})
+            session.commit()
+            return {'value': True}
+        except IntegrityError as e:
+            session.rollback()
+            print(f"Erro de integridade ao atualizar o status da cotação com o id_solicitacao {id_solicitacao}: {str(e)}")
+            return {'value': False}
+        except Exception as e:
+            session.rollback()
+            print(f"Erro ao atualizar o status da cotação com o id_solicitacao {id_solicitacao}: {str(e)}")
+            return {'value': False}
+        finally:
+            session.close()
+
+    
     
 class Itens(Base):
     __tablename__ = "itens"
@@ -229,7 +248,7 @@ class Itens(Base):
         finally:
             session.close()
 
-# Itens.update(id_item = 2, vencedor = 1)  
+    
     
 class Solicitacao(Base):
     __tablename__="solicitacao"
@@ -243,6 +262,7 @@ class Solicitacao(Base):
     prioridade = Column(String)
     qnt_cotacao = Column(Integer)
     status = Column(Integer)
+    aprovador = Column(String)
     
     def __repr__(self):
         return f"""id: {self.id_solicitacao} - Solicitante: {self.solicitante} - 
@@ -272,11 +292,11 @@ class Solicitacao(Base):
     
     @classmethod
     def insert(cls, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
-               prioridade=None, qnt_cotacao=0, status=0):
+               prioridade=None, qnt_cotacao=0, status=0, aprovador=None):
         session = Session()
         try:
             solicitacao = cls(solicitante=solicitante, data=data, motivo=motivo, qnt_itens=qnt_itens,
-                              setor=setor, prioridade=prioridade, qnt_cotacao=qnt_cotacao, status=status)
+                              setor=setor, prioridade=prioridade, qnt_cotacao=qnt_cotacao, status=status, aprovador=aprovador)
             session.add(solicitacao)
             session.commit()
             print(f"Solicitação {solicitacao.id_solicitacao} inserida com sucesso.")
@@ -307,7 +327,7 @@ class Solicitacao(Base):
 
     @classmethod
     def update(cls, id_solicitacao, solicitante=None, data=None, motivo=None, qnt_itens=None, setor=None,
-               prioridade=None, qnt_cotacao=None, status=None):
+               prioridade=None, qnt_cotacao=None, status=None, aprovador=None):
         try:
             solicitacao = session.query(cls).filter(cls.id_solicitacao == id_solicitacao).one()
             if solicitante:
@@ -326,8 +346,11 @@ class Solicitacao(Base):
                 solicitacao.qnt_cotacao = qnt_cotacao
             if status:
                 solicitacao.status = status
+            if aprovador:
+                solicitacao.aprovador = aprovador
             session.commit()
             print(f"Solicitação {id_solicitacao} atualizada com sucesso.")
+            return True
         except NoResultFound:
             print(f"Não existe solicitação com o id_solicitacao {id_solicitacao}")
         except Exception as e:

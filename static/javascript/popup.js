@@ -240,7 +240,7 @@ function solicitacaoCompra(){
         </div>
     </div>
   </div>
-  <p class="text-end" style="padding-right:3em;padding-top:0.5em; font-size:16px">Add Itens :  <a style="margin-top:2em !important;" id="addItem" class="text-end"><i class="fa-solid fa-plus"></i></a></p>
+  <p class="text-end" style="padding-right:3em;padding-top:0.5em; font-size:16px"><a style="margin-top:2em !important;" id="addItem" class="text-end">Add Itens :  <i class="fa-solid fa-plus"></i></a></p>
   <p class="text-center" style="font-size:14px;"><strong> Em caso de mais de um item, clicar em 'Add Item' antes de Enviar a Solicitação</strong></p>
   
   `
@@ -789,6 +789,7 @@ function loginComprador(){
           <th scope="col">Justificativa</th>
           <th scope="col">Setor</th>
           <th scope="col">Cotações</th>
+          <th scope="col">Aprovador</th>
         </tr>
       </thead>    
     </table>
@@ -819,6 +820,7 @@ function loginComprador(){
         { data : 'motivo', "width": "15.625%"},
         { data : 'setor', "width": "12.5%"},
         { data : 'qnt_cotacao', "width": "8%"},
+        { data : 'aprovador', "width": "8%"},
         ],
         columnDefs: [
         { className: 'dt-center', targets: '_all' },
@@ -880,7 +882,7 @@ function loginComprador(){
                   <li class="list-group-item"><b>Validade Cotação:</b> ${response[i].validade_cotacao}</li>
                 </ul>
                 <div class="card-body text-end">
-                  <a onClick="cotacaoVencedora(${response[i].id_cotacao}, ${response[i].id_item})" class="card-link"><i class="fa-solid fa-trophy"></i></a>
+                  <a onClick="cotacaoVencedora(${response[i].id_cotacao}, ${response[i].id_item}, ${response[i].id_solicitacao}, '${response[i].item}')" class="card-link"><i class="fa-solid fa-trophy"></i></a>
                   <a onClick="editarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a onClick="apagarCotacao(${response[i].id_cotacao})" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </div>
@@ -905,7 +907,7 @@ function loginComprador(){
                 <li class="list-group-item"><b>Validade Cotação:</b> ${response.validade_cotacao}</li>
               </ul>
               <div class="card-body text-end">
-                <a onClick="cotacaoVencedora(${response.id_cotacao}, ${response.id_item})" class="card-link"><i class="fa-solid fa-trophy"></i></a>
+                <a onClick="cotacaoVencedora(${response.id_cotacao}, ${response.id_item}, ${response.id_solicitacao}, '${response.item}')" class="card-link"><i class="fa-solid fa-trophy"></i></a>
                 <a onClick="editarCotacao(${response.id_cotacao})" id="editarCotacao" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                 <a onClick="apagarCotacao(${response.id_cotacao})" id="apagarCotacao" class="card-link"><i class="fa-sharp fa-solid fa-trash"></i></a>
               </div>
@@ -932,7 +934,7 @@ function loginComprador(){
     })});
 };
 
-function cotacaoVencedora(id_cotacao, id_item){
+function cotacaoVencedora(id_cotacao, id_item, id_solicitacao, nomeItem){
   Swal.fire({
     title:"Eleger Cotação como Vencedora?",
     showConfirmButton: true,
@@ -945,7 +947,9 @@ function cotacaoVencedora(id_cotacao, id_item){
   }).then(response => {
     if (response.value == true){
       const dict_values = {'id_cotacao': id_cotacao,
-                          'id_item': id_item};
+                          'id_item': id_item,
+                          'id_solicitacao': id_solicitacao,
+                          'nomeItem': nomeItem};
       const s = JSON.stringify(dict_values);
       $.ajax({
         url:"/cotacaoVencedora",
@@ -965,7 +969,6 @@ function cotacaoVencedora(id_cotacao, id_item){
     }
   })
 }
-
 
 function apagarCotacao(id){
   Swal.fire({
@@ -1428,8 +1431,7 @@ function comprasCotadas(){
     </thead>    
   </table>
   <div class="row">
-    <div class="col-sm text-end"><button class="btn btn-outline-secondary" type="submit" id="button-novaCotacao">Nova Cotação</button></div>
-    <div class="col-sm text-start"><button class="btn btn-outline-secondary" type="submit" id="button-cotacao">Cotações</button></div>
+    <div class="col-sm text-center"><button class="btn btn-outline-secondary btn-azul" type="submit">Finalizar</button></div>
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
@@ -1449,7 +1451,7 @@ function comprasCotadas(){
       searching : true,
       sort: true,
       'columns': [
-        { data : 'id_cotacao', "width": "10%"},
+        { data : 'id_cotacao', "width": "4%"},
         { data : 'usuario', "width": "10%"},
         { data : 'item', "width": "12.5%"}, 
         { data : 'fornecedor', "width": "15.625%"},
@@ -1459,7 +1461,8 @@ function comprasCotadas(){
           render: function (data, type, row) {
             return 'R$ ' + parseFloat(data).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
           },
-          "width": "8%"
+          "width": "15%",
+          className: 'font-weight-bold',
         },
       ],      
       columnDefs: [
@@ -1469,7 +1472,45 @@ function comprasCotadas(){
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
     })
+    $('.btn-azul').click(function(){
+      Swal.fire({
+        title:"Finalizar Cotação?",
+        showConfirmButton: true,
+        confirmButtonColor: '#007bff',
+        icon:"question",
+        confirmButtonText: "Sim",
+        showCancelButton: true,
+        allowOutsideClick: false,
+        showCloseButton: true,
+        cancelButtonText: "Cancelar",
+      }).then(response => {
+        if (response.value){
+          let dadosLinha = table.rows('.selected').data()[0];
+          dadosLinha = JSON.stringify(dadosLinha)
+          $.ajax({
+            url:"/finalizarCompra", // Envia status = 2 na tabela solicitacao
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(dadosLinha)
+          }).done((response) => {
+            if (response.value){
+              Swal.fire({
+                title:"Cotação Finalizada",
+                showConfirmButton: true,
+                confirmButtonText: "Ok",
+                confirmButtonColor: '#007bff',
+                icon:"success",
+                showCancelButton: false,
+                allowOutsideClick: true,
+                showCloseButton: true,
+              })
+            }
+          })
+        }
+      })
+    })
   })
+  
 }
 
 function comprasFinalizadas(){
@@ -1487,14 +1528,25 @@ function comprasFinalizadas(){
       <div class="col" id="subTitle-comprasPendente">Abaixo estão todas as compras realizadas, ordenadas por período.</div>
       <div class="col-1"></div>
     </div>
+    <div class="container-filtros">
+      <div class='text-start filtros'>
+        <label for="ano">Filtrar por ano:</label>
+        <select id="ano">
+          <option value="">Todos</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+        </select>
+      </div>
+    </div>
     <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
-        <th scope="col">Data</th>
         <th scope="col">Id</th>
         <th scope="col">Solicitante</th>
+        <th scope="col">Data</th>
         <th scope="col">Motivo</th>
-        <th scope="col">Quantidade Itens</th>
+        <th scope="col">Quantidade de Itens</th>
         <th scope="col">Setor</th>
       </tr>
     </thead>    
@@ -1504,6 +1556,31 @@ function comprasFinalizadas(){
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
+  $(document).on('change', '#tipoBusca', function() {
+    var filtroTipo = $('#tipoBusca').val();
+    if (filtroTipo == "solicitacao"){
+      if ($.fn.DataTable.isDataTable('#dataTable-comprasFinalizadas')) {
+        $('#dataTable-comprasFinalizadas').DataTable().destroy();
+        const ths = document.querySelectorAll('th');
+        ths.forEach(th => {
+          th.remove();
+        });
+      }
+      let htmlNovo = "<th scope='col'>Data</th> <th scope='col'>Id</th> <th scope='col'>Solicitante</th> <th scope='col'>Motivo</th> <th scope='col'>Quantidade Itens</th> <th scope='col'>Setor</th>"
+      document.querySelector("thead tr").insertAdjacentHTML("beforeend", htmlNovo);
+      tableSolicitacaoHistorico();
+      console.log(filtroTipo);
+    }else{
+      // Código do html + Datatable das Cotações
+    }
+  });    
+  $(document).on('change', '#ano', function() {
+    var filtroAno = $('#ano').val();
+    table.column(0).search(filtroAno).draw();
+  });
+}
+
+function tableSolicitacaoHistorico(){
   $(document).ready(function () {
     var table = $('#dataTable-comprasFinalizadas').DataTable({
       select: true,
@@ -1520,12 +1597,12 @@ function comprasFinalizadas(){
       searching : true,
       sort: true,
       'columns': [
-        { data : 'data', "width": "10%"},
-        { data : 'id_solicitacao', "width": "4%"},
+        { data : 'id_solicitacao', "width": "6%"},
         { data : 'solicitante', "width": "12.5%"}, 
-        { data : 'motivo', "width": "15.625%"},
-        { data : 'qnt_itens', "width": "8%"},
-        { data : 'setor', "width": "12.5%"},
+        { data : 'data', "width": "10%"},
+        { data : 'motivo', "width": "13%"},
+        { data : 'qnt_itens', "width": "12.5%"},
+        { data : 'setor', "width": "10%"},
       ],      
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
@@ -1534,5 +1611,9 @@ function comprasFinalizadas(){
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
     })
+    $(document).on('change', '#ano', function() {
+      var filtroAno = $('#ano').val();
+      table.column(2).search(filtroAno).draw();
+    });  
   })
 }

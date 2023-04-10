@@ -51,6 +51,7 @@ class Solicitacao_Compras():
                         'motivo': i['motivo'],
                         'setor':i['setor'],
                         'qnt_cotacao': qnt_cotacao,
+                        'aprovador':i['aprovador']
                     })
                 return {'aaData': compras}
         except Exception as e:
@@ -86,6 +87,10 @@ class Solicitacao_Compras():
         return Itens.update(id_item = id_item, vencedor = 1)
         
     @staticmethod
+    def itemInvalido(id_solicitacao, nomeItem):
+        return Cotacao.update_status(nomeItem=nomeItem, id_solicitacao=id_solicitacao )
+    
+    @staticmethod
     def cotacaoVencedoraDB(id_cotacao):
         return Cotacao.update(id_cotacao = id_cotacao, status_cotacao = 1)
     
@@ -95,8 +100,16 @@ class Solicitacao_Compras():
     
     @staticmethod
     def comprasFinalizadas():
-        return {'aaData': Solicitacao.consultaEspecifica('status', 3)}
-
+        return {'aaData': Solicitacao.consultaEspecifica('status', 3)} # aqui eu tenho que buscar os itens vencedores
+    
+    @staticmethod
+    def compras_updateSolicitacao(comprasPara_aprovar, aprovador):
+        return Solicitacao.update(id_solicitacao = comprasPara_aprovar['id_solicitacao'], aprovador = aprovador, status = 1)
+    
+    @staticmethod
+    def finalizarCotacaoDB(id_cotacao):
+        return Cotacao.update(id_cotacao, status_cotacao = 3)
+    
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
     cursor = conn.cursor()
@@ -175,18 +188,6 @@ def confereUsuario(usuario, senha):
             print(e)
             return False
 
-def compras_updateSolicitacao(comprasPara_aprovar):
-    try:
-        conn = sqlite3.connect('static/db/compras.db')
-        cursor = conn.cursor()
-        cursor.execute(f"UPDATE solicitacao SET status=1 WHERE id_solicitacao='{comprasPara_aprovar['id_solicitacao']}'")
-        print("Aprovou!")
-        conn.commit()
-        conn.close()
-        return True
-    except Exception as e:
-        print("Nao Aprovou: ",e)
-        return e
 
 def rejeitarCompra(id):
     try:

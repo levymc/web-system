@@ -6,7 +6,7 @@ from datetime import timedelta
 from waitress import serve
 import logging
 
-mode = "prod" #prod ou dev
+mode = "dev" #prod ou dev
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -92,7 +92,8 @@ def comprasPendentesAprovacao():
 def comprasAprovar():
     output = request.get_json()
     comprasPara_aprovar = json.loads(output)
-    valor = sqlite_funcs.compras_updateSolicitacao(comprasPara_aprovar)
+    usuario = result['usuario']
+    valor = sqlite_funcs.Solicitacao_Compras.compras_updateSolicitacao(comprasPara_aprovar, usuario)
     return {'value': valor}
 
 @app.route("/rejeitarCompras", methods=["POST", "GET"])
@@ -133,6 +134,7 @@ def cotacaoVencedora():
     resultado = json.loads(output)
     print(555555555, resultado)
     sqlite_funcs.Solicitacao_Compras.itemVencedor(resultado['id_item'])
+    sqlite_funcs.Solicitacao_Compras.itemInvalido(resultado['id_solicitacao'], resultado['nomeItem'])
     # sqlite_funcs.Solicitacao_Compras.solicitacaoUpdateVencedora(resultado['id_solicitacao']) Só deve acontecer após finalizar a Solicitação
     return sqlite_funcs.Solicitacao_Compras.cotacaoVencedoraDB(resultado['id_cotacao'])
 
@@ -226,6 +228,11 @@ def confere():
         print("Algum erro ocorreu no sistema: \n"+type(e)+":"+str(e))
         return render_template('requisicao.html', e=e)
 
+@app.route("/finalizarCompra", methods=["POST", "GET"])
+def finalizarCompra():
+    output = request.get_json()
+    resultado = json.loads(output)
+    return sqlite_funcs.Solicitacao_Compras.finalizarCotacaoDB(resultado['id_cotacao'])
 
 
 if __name__ == '__main__':
