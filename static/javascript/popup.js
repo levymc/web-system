@@ -1530,7 +1530,16 @@ function comprasFinalizadas(){
     </div>
     <div class="container-filtros">
       <div class='text-start filtros'>
-        <label for="ano">Filtrar por ano:</label>
+        <label for="statusSolicitacao"><b>Status Solicitação:</b></label>
+        <select id="statusSolicitacao">
+          <option value="">Todos</option>
+          <option value="2023">Concluída</option>
+          <option value="2022">Em andamento</option>
+          <option value="2021">Inválida</option>
+        </select>
+      </div>
+      <div class='text-start filtros'>
+        <label for="ano"><b>Filtrar por ano:</b></label>
         <select id="ano">
           <option value="">Todos</option>
           <option value="2023">2023</option>
