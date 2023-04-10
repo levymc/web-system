@@ -1537,17 +1537,17 @@ function comprasFinalizadas(){
           <option value="2022">2022</option>
           <option value="2021">2021</option>
         </select>
-        <label for="ano">Filtrar por tipo:</label>
-        <select id="tipoBusca">
-          <option value="solicitacao">Solicitação</option>
-          <option value="cotacao">Cotação</option>
-        </select>
       </div>
     </div>
     <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
-        
+        <th scope="col">Data</th>
+        <th scope="col">Id</th>
+        <th scope="col">Solicitante</th>
+        <th scope="col">Motivo</th>
+        <th scope="col">Quantidade Itens</th>
+        <th scope="col">Setor</th>
       </tr>
     </thead>    
   </table>
@@ -1597,12 +1597,12 @@ function tableSolicitacaoHistorico(){
       searching : true,
       sort: true,
       'columns': [
-        { data : 'data', "width": "10%"},
-        { data : 'id_solicitacao', "width": "4%"},
-        { data : 'solicitante', "width": "12.5%"}, 
-        { data : 'motivo', "width": "15.625%"},
-        { data : 'qnt_itens', "width": "8%"},
-        { data : 'setor', "width": "12.5%"},
+        { data : 'id_item', "width": "10%"},
+        { data : 'id_solicitacao', "width": "10%"},
+        { data : 'nomeItem', "width": "12.5%"}, 
+        { data : 'descricao', "width": "15.625%"},
+        { data : 'quantidade', "width": "8%"},
+        { data : 'unidade', "width": "12.5%"},
       ],      
       columnDefs: [
       { className: 'dt-center', targets: '_all' },
