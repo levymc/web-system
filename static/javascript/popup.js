@@ -1532,10 +1532,9 @@ function comprasFinalizadas(){
       <div class='text-start filtros'>
         <label for="statusSolicitacao"><b>Status Solicitação:</b></label>
         <select id="statusSolicitacao">
-          <option value="">Todos</option>
-          <option value="2023">Concluída</option>
-          <option value="2022">Em andamento</option>
-          <option value="2021">Inválida</option>
+          <option value="3">Concluída</option>
+          <option value="1">Em andamento</option>
+          <option value="0">Inválida</option>
         </select>
       </div>
       <div class='text-start filtros'>
