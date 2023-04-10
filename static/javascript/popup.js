@@ -1550,6 +1550,7 @@ function comprasFinalizadas(){
     <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
     <thead>
       <tr>
+        <th scope="col"></th>
         <th scope="col">Id</th>
         <th scope="col">Solicitante</th>
         <th scope="col">Data</th>
@@ -1565,16 +1566,14 @@ function comprasFinalizadas(){
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
-  var table = tableSolicitacaoHistorico();
-  $(document).on('change', '#ano', function() {
-    var filtroAno = $('#ano').val();
-    table.column(0).search(filtroAno).draw();
-  });
+  tableSolicitacaoHistorico();
+  
 }
 
 function tableSolicitacaoHistorico(){
+  let table;
   $(document).ready(function () {
-    var table = $('#dataTable-comprasFinalizadas').DataTable({
+    table = $('#dataTable-comprasFinalizadas').DataTable({
       select: true,
       "processing" : true,
       "serverSide" : false,
@@ -1589,6 +1588,7 @@ function tableSolicitacaoHistorico(){
       searching : true,
       sort: true,
       'columns': [
+        { data : 'status', "width": "1%" },
         { data : 'id_solicitacao', "width": "6%"},
         { data : 'solicitante', "width": "12.5%"}, 
         { data : 'data', "width": "10%"},
@@ -1604,10 +1604,14 @@ function tableSolicitacaoHistorico(){
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
       },
     })
-    $(document).on('change', '#ano', function() {
-      var filtroAno = $('#ano').val();
-      table.column(2).search(filtroAno).draw();
-    });  
   })
+  $(document).on('change', '#ano', function() {
+    var filtroAno = $('#ano').val();
+    table.column(3).search(filtroAno).draw();
+  });
+  $(document).on('change', '#statusSolicitacao', function() {
+    var statusSolicitacao = $('#statusSolicitacao').val();
+    table.column(0).search(statusSolicitacao).draw();
+  });
   return table
 }
