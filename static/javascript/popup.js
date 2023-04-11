@@ -1567,7 +1567,6 @@ function comprasFinalizadas(){
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
   tableSolicitacaoHistorico();
-  
 }
 
 function tableSolicitacaoHistorico(){
@@ -1612,6 +1611,25 @@ function tableSolicitacaoHistorico(){
   $(document).on('change', '#statusSolicitacao', function() {
     var statusSolicitacao = $('#statusSolicitacao').val();
     table.column(0).search(statusSolicitacao).draw();
+  });
+  $(document).on("click", "#btn-maisInfoFinalizadas", function(){
+    // let table = document.querySelector('#dataTable-comprasFinalizadas')
+    let dadosLinha = table.rows('.selected').data()[0];
+    dadosLinha = JSON.stringify(dadosLinha)
+    $.ajax({
+      url:"/itensHistorico", // Envia status = 2 na tabela solicitacao
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(dadosLinha)
+      // success: function(result){
+      //   console.log(result);
+      // },
+      // error: function(error){
+      //   console.log(error);
+      // }
+    }).done((response) => {
+      console.log(response)
+    });
   });
   return table
 }

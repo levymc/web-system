@@ -132,7 +132,6 @@ def cotacaoApagar():
 def cotacaoVencedora():
     output = request.get_json()
     resultado = json.loads(output)
-    print(555555555, resultado)
     sqlite_funcs.Solicitacao_Compras.itemVencedor(resultado['id_item'])
     sqlite_funcs.Solicitacao_Compras.itemInvalido(resultado['id_solicitacao'], resultado['nomeItem'])
     # sqlite_funcs.Solicitacao_Compras.solicitacaoUpdateVencedora(resultado['id_solicitacao']) Só deve acontecer após finalizar a Solicitação
@@ -144,7 +143,6 @@ def cotacoesCotadas():
     
 @app.route("/comprasFinalizadas", methods=["POST", "GET"])
 def comprasFinalizadas():
-    print(sqlite_funcs.Solicitacao_Compras.comprasFinalizadas())
     return sqlite_funcs.Solicitacao_Compras.comprasFinalizadas()
 
 @app.route("/cotacaoInformacoes", methods=["POST", "GET"])
@@ -228,6 +226,13 @@ def confere():
     except Exception as e:
         print("Algum erro ocorreu no sistema: \n"+type(e)+":"+str(e))
         return render_template('requisicao.html', e=e)
+    
+@app.route("/itensHistorico", methods=["POST", "GET"])
+def mais_info():
+    output = request.get_json()
+    result = json.loads(output)
+    print(result)
+    return result
 
 @app.route("/finalizarCompra", methods=["POST", "GET"])
 def finalizarCompra():
