@@ -1636,7 +1636,15 @@ function tableSolicitacaoHistorico(){
         padding: '2em 1em 1.25em',
         allowOutsideClick: false,
         showCloseButton: true,
-        html: "",
+        html: `
+        <div class="container-infoSolicitacaoHistorico">
+          <div class="info-gerais">
+            AAAA
+          </div>
+          <div class="info-itens">
+            BBBB
+          </div>
+        </div>`,
       });
     });
   });
