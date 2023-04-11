@@ -1588,7 +1588,7 @@ function tableSolicitacaoHistorico(){
       searching : true,
       sort: true,
       'columns': [
-        { data : 'status', "width": "1%" },
+        { data : 'status', "width": "0%", visible: false },
         { data : 'id_solicitacao', "width": "6%"},
         { data : 'solicitante', "width": "12.5%"}, 
         { data : 'data', "width": "10%"},
