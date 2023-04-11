@@ -1629,6 +1629,15 @@ function tableSolicitacaoHistorico(){
       // }
     }).done((response) => {
       console.log(response)
+      Swal.fire({
+        width: '85%',
+        showConfirmButton: false,
+        titleText: 'Informações da Solicitação', 
+        padding: '2em 1em 1.25em',
+        allowOutsideClick: false,
+        showCloseButton: true,
+        html: "",
+      });
     });
   });
   return table
