@@ -678,7 +678,7 @@ body.swal2-height-auto {
 .container-infoSolicitacaoHistorico{
     background-color: #02d224;
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -687,11 +687,19 @@ body.swal2-height-auto {
 }
 .info-gerais{
     width: 100%;
-    height: 50%;
+    height: auto;
     background-color: #999;
 }
 .info-itens{
     width: 100%;
-    height: 50%;
+    height: auto;
+    display: flex;
     background-color: #fa6d6d;
+    align-items: center;
+    justify-content: center;
+}
+.info-itens table{
+    width: 100em;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
 }
