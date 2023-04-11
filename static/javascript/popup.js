@@ -1576,7 +1576,7 @@ function tableSolicitacaoHistorico(){
       select: true,
       "processing" : true,
       "serverSide" : false,
-      "serverMethod" : "post",
+      "serverMethod" : "get",
       "ajax" :{
         'url' : '/comprasFinalizadas'
       },
@@ -1617,15 +1617,17 @@ function tableSolicitacaoHistorico(){
     let dadosLinha = table.rows('.selected').data()[0];
     dadosLinha = JSON.stringify(dadosLinha)
     $.ajax({
-      url:"/itensHistorico", // Envia status = 2 na tabela solicitacao
+      url:"/itensHistorico", 
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(dadosLinha),
       success: function(result){
+        console.log("AQUI")
         console.log(result);
-        modal_infoSolicitacao();
+        modal_infoSolicitacao(result);
       },
       error: function(error){
+        console.log("AI")
         console.log(error);
       }
     })
@@ -1633,7 +1635,7 @@ function tableSolicitacaoHistorico(){
   return table
 }
 
-function modal_infoSolicitacao(){
+function modal_infoSolicitacao(data){
   Swal.fire({
     width: '85%',
     showConfirmButton: false,
@@ -1662,53 +1664,42 @@ function modal_infoSolicitacao(){
           <thead>
             <tr>
               <th scope="col">Id</th>
-              <th scope="col">Solicitante</th>
               <th scope="col">Item</th>
-              <th scope="col">Fornecedor</th>
-              <th scope="col">Unidade</th>
-              <th scope="col">Valor Unitário</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Quantidade</th>
             </tr>
           </thead>    
         </table>
       </div>
     </div>`,
-  })
-  $(document).ready(function () {
-    var table = $('#dataTable-infoHistorico').DataTable({
-      select: true,
-      "processing" : true,
-      "serverSide" : false,
-      "serverMethod" : "post",
-      "ajax" :{
-        'url' : '/cotacoesCotadas'
-      },
-      "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
-      "pageLength": 5,
-      "paging": true,
-      "responsive" : true,
-      searching : true,
-      sort: true,
-      'columns': [
-        { data : 'id_cotacao', "width": "4%"},
-        { data : 'usuario', "width": "10%"},
-        { data : 'item', "width": "12.5%"}, 
-        { data : 'fornecedor', "width": "15.625%"},
-        { data : 'unidade', "width": "12.5%"},
-        {
-          data : 'valor_un', 
-          render: function (data, type, row) {
-            return 'R$ ' + parseFloat(data).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-          },
-          "width": "15%",
-          className: 'font-weight-bold',
-        },
-      ],      
-      columnDefs: [
+  });
+  tableItensHitorico(data);
+}
+function tableItensHitorico(data) {
+  console.log(21121, data)
+  let table = $('#dataTable-infoHistorico').DataTable({
+    select: true,
+    "processing": true,
+    "serverSide": false,
+    "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+    "pageLength": 5,
+    "paging": true,
+    "responsive": true,
+    searching: true,
+    sort: true,
+    'columns': [
+      { data: 'id_item', "width": "10%" },
+      { data: 'nomeItem', "width": "20%" },
+      { data: 'descricao', "width": "30%" },
+      { data: 'quantidade', "width": "20%" },
+    ],
+    columnDefs: [
       { className: 'dt-center', targets: '_all' },
-      ],
-      "language": {
+    ],
+    "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-      },
-    })
-  })
+    },
+  });
+  table.clear().rows.add(data.aaData).draw(); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA finalmente porra 11.04
+  return table;
 }

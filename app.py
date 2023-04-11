@@ -228,11 +228,11 @@ def confere():
         return render_template('requisicao.html', e=e)
     
 @app.route("/itensHistorico", methods=["POST", "GET"])
-def mais_info():
+def itensHistorico():
     output = request.get_json()
     result = json.loads(output)
-    print(result)
-    return result
+    data = sqlite_funcs.Solicitacao_Compras.itensHistorico(result['id_solicitacao'])
+    return jsonify(data)
 
 @app.route("/finalizarCompra", methods=["POST", "GET"])
 def finalizarCompra():
