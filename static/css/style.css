@@ -695,7 +695,7 @@ body.swal2-height-auto {
     height: auto;
     display: flex;
     flex-direction: column;
-    background-color: #fa6d6d;
+    /* background-color: #fa6d6d; */
     align-items: center;
     justify-content: center;
     padding-top: 1em; padding-bottom: 1em;
@@ -710,3 +710,16 @@ body.swal2-height-auto {
     border: 1px solid black;
     border-radius: 10px;
 }
+.info-itens .table>:not(caption)>*>* {
+    border-bottom-width: 0;
+}
+.info-itens .table td {
+    border-top: 0;
+}
+.info-itens table.dataTable.hover:hover, .info-itens table.dataTable.display:hover {
+    background-color: #fff;
+}
+.info-itens table.dataTable.hover tbody tr:hover, .info-itens table.dataTable.display tbody tr:hover {
+    background-color: #b2b2b2;
+}
+

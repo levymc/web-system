@@ -104,7 +104,6 @@ class Solicitacao_Compras():
     
     @staticmethod
     def itensHistorico(ids):
-        print("IDIDIDID", ids)
         return {'aaData': Itens.consultaEspecifica('id_solicitacao', ids)}
     
     @staticmethod
