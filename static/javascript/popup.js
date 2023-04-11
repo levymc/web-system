@@ -1620,93 +1620,95 @@ function tableSolicitacaoHistorico(){
       url:"/itensHistorico", // Envia status = 2 na tabela solicitacao
       type: "POST",
       contentType: "application/json",
-      data: JSON.stringify(dadosLinha)
-      // success: function(result){
-      //   console.log(result);
-      // },
-      // error: function(error){
-      //   console.log(error);
-      // }
-    }).done((response) => {
-      console.log(response)
-      Swal.fire({
-        width: '85%',
-        showConfirmButton: false,
-        titleText: 'Informações da Solicitação', 
-        padding: '2em 1em 1.25em',
-        allowOutsideClick: false,
-        showCloseButton: true,
-        html: `
-        <div class="container-infoSolicitacaoHistorico">
-          <div class="info-gerais">
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-            AAAA<br />
-          </div>
-          <div class="info-itens">
-            <table class="table table-striped display" id="dataTable-comprasCotadas">
-              <thead>
-                <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Solicitante</th>
-                  <th scope="col">Item</th>
-                  <th scope="col">Fornecedor</th>
-                  <th scope="col">Unidade</th>
-                  <th scope="col">Valor Unitário</th>
-                </tr>
-              </thead>    
-            </table>
-          </div>
-        </div>`,
-      })
-      $(document).ready(function () {
-        var table = $('#dataTable-comprasCotadas').DataTable({
-          select: true,
-          "processing" : true,
-          "serverSide" : false,
-          "serverMethod" : "post",
-          "ajax" :{
-            'url' : '/cotacoesCotadas'
-          },
-          "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
-          "pageLength": 5,
-          "paging": true,
-          "responsive" : true,
-          searching : true,
-          sort: true,
-          'columns': [
-            { data : 'id_cotacao', "width": "4%"},
-            { data : 'usuario', "width": "10%"},
-            { data : 'item', "width": "12.5%"}, 
-            { data : 'fornecedor', "width": "15.625%"},
-            { data : 'unidade', "width": "12.5%"},
-            {
-              data : 'valor_un', 
-              render: function (data, type, row) {
-                return 'R$ ' + parseFloat(data).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-              },
-              "width": "15%",
-              className: 'font-weight-bold',
-            },
-          ],      
-          columnDefs: [
-          { className: 'dt-center', targets: '_all' },
-          ],
-          "language": {
-          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
-          },
-        })
-      })
-      
-    });
+      data: JSON.stringify(dadosLinha),
+      success: function(result){
+        console.log(result);
+        modal_infoSolicitacao();
+      },
+      error: function(error){
+        console.log(error);
+      }
+    })
   });
   return table
+}
+
+function modal_infoSolicitacao(){
+  Swal.fire({
+    width: '85%',
+    showConfirmButton: false,
+    titleText: 'Informações da Solicitação', 
+    padding: '2em 1em 1.25em',
+    allowOutsideClick: false,
+    showCloseButton: true,
+    html: `
+    <div class="container-infoSolicitacaoHistorico">
+      <div class="info-gerais">
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+      </div>
+      <div class="info-itens">
+        <label class="titulo-infoHistorico" for="dataTable-infoHistorico">Itens Solicitados</label>
+        <table class="table table-striped display" id="dataTable-infoHistorico">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Solicitante</th>
+              <th scope="col">Item</th>
+              <th scope="col">Fornecedor</th>
+              <th scope="col">Unidade</th>
+              <th scope="col">Valor Unitário</th>
+            </tr>
+          </thead>    
+        </table>
+      </div>
+    </div>`,
+  })
+  $(document).ready(function () {
+    var table = $('#dataTable-infoHistorico').DataTable({
+      select: true,
+      "processing" : true,
+      "serverSide" : false,
+      "serverMethod" : "post",
+      "ajax" :{
+        'url' : '/cotacoesCotadas'
+      },
+      "aLengthMenu" : [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+      "pageLength": 5,
+      "paging": true,
+      "responsive" : true,
+      searching : true,
+      sort: true,
+      'columns': [
+        { data : 'id_cotacao', "width": "4%"},
+        { data : 'usuario', "width": "10%"},
+        { data : 'item', "width": "12.5%"}, 
+        { data : 'fornecedor', "width": "15.625%"},
+        { data : 'unidade', "width": "12.5%"},
+        {
+          data : 'valor_un', 
+          render: function (data, type, row) {
+            return 'R$ ' + parseFloat(data).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+          },
+          "width": "15%",
+          className: 'font-weight-bold',
+        },
+      ],      
+      columnDefs: [
+      { className: 'dt-center', targets: '_all' },
+      ],
+      "language": {
+      "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+      },
+    })
+  })
 }
