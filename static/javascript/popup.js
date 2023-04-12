@@ -1692,7 +1692,8 @@ function tableItensHitorico(data) {
      // Percorre o objeto com forEach e adiciona os valores na lista
     Object.entries(response.data).forEach(([chave, valor]) => {
     divEsquerda.innerHTML += `<li class="info">
-                                <div class="msg-text">${chave}: ${valor}</div>
+                                <div class="msg-text">${chave}: </div>
+                                <div class="msg-text">${valor}</div>
                               </li>`;
   });
   })

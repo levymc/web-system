@@ -676,7 +676,11 @@ body.swal2-height-auto {
 }
 
 .container-infoSolicitacaoHistorico{
-    background-color: #02d224;
+    /* background-color: #02d224; */
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    padding: 0.5em;
+    box-sizing: border-box;
+    border-radius: 10px;
     width: 100%;
     height: auto;
     display: flex;
@@ -688,7 +692,8 @@ body.swal2-height-auto {
 .info-gerais{
     width: 100%;
     height: auto;
-    background-color: #999;
+    border-bottom: 1px dashed rgba(128, 128, 128, 0.4);
+    /* background-color: #999; */
 }
 .info-itens{
     width: 100%;
@@ -721,5 +726,10 @@ body.swal2-height-auto {
 }
 .info-itens table.dataTable.hover tbody tr:hover, .info-itens table.dataTable.display tbody tr:hover {
     background-color: #b2b2b2;
+}
+.info{
+    display: flex;
+    gap: 1em;
+    margin-bottom:1em ;
 }
 
