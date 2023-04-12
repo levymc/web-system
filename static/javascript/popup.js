@@ -1622,12 +1622,9 @@ function tableSolicitacaoHistorico(){
       contentType: "application/json",
       data: JSON.stringify(dadosLinha),
       success: function(result){
-        console.log("AQUI")
-        console.log(result);
         modal_infoSolicitacao(result);
       },
       error: function(error){
-        console.log("AI")
         console.log(error);
       }
     })
@@ -1679,27 +1676,11 @@ function modal_infoSolicitacao(data){
       </div>
     </div>`,
   });
+  console.log(22222, data)
   tableItensHitorico(data);
 }
 function tableItensHitorico(data) {
-  dadosSolicitacao = axios.get("/dadosSolicitacao",{
-    params: {
-      id_solicitacao: data.aaData[0].id_solicitacao,
-    }
-  }).then(response => {
-    console.log(response.data);
-    let divEsquerda = document.querySelector('.maisInfo-esquerda .infoSolicitacao')
-     // Percorre o objeto com forEach e adiciona os valores na lista
-    Object.entries(response.data).forEach(([chave, valor]) => {
-    divEsquerda.innerHTML += `<li class="info">
-                                <div class="msg-text">${chave}: </div>
-                                <div class="msg-text">${valor}</div>
-                              </li>`;
-  });
-  })
-  .catch(error => {
-    console.error(error);
-  });
+  requisicao_dadosSolicitacao(data.aaData[0].id_solicitacao);
   let table = $('#dataTable-infoHistorico').DataTable({
     select: true,
     "processing": true,
@@ -1725,4 +1706,25 @@ function tableItensHitorico(data) {
   });
   table.clear().rows.add(data.aaData).draw(); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA finalmente porra 11.04
   return table;
+}
+function requisicao_dadosSolicitacao(id_solicitacao){
+  let dadosSolicitacao = axios.get("/dadosSolicitacao",{
+    params: {
+      id_solicitacao: id_solicitacao,
+    }
+  }).then(response => {
+    console.log(response.data);
+    let divEsquerda = document.querySelector('.maisInfo-esquerda .infoSolicitacao')
+    divEsquerda.innerHTML = ''; // limpa o valor da lista antes de adicionar novos valores
+    // Percorre o objeto com forEach e adiciona os valores na lista
+    Object.entries(response.data).forEach(([chave, valor]) => {
+    divEsquerda.innerHTML += `<li class="info">
+                                <div class="msg-text">${chave}: </div>
+                                <div class="msg-text">${valor}</div>
+                              </li>`;
+    });
+  })
+  .catch(error => {
+    console.error(error);
+  });
 }
