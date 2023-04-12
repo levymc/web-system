@@ -24,6 +24,13 @@ mail = Mail(app)
 def index():
     return render_template('index.html')
 
+
+@app.route("/testeAxios", methods=["POST", 'GET'])
+def testeAxios():
+    resp = {'message' : 'aaa'}
+    print(resp['message'])
+    return resp
+
 @app.route("/requisicao/", methods=["POST", "GET"])
 def requisicao():
     return render_template('requisicao.html')

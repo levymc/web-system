@@ -1615,3 +1615,15 @@ function tableSolicitacaoHistorico(){
   });
   return table
 }
+
+function testeAxios(){
+  axios.post("/testeAxios", {
+    mensagem: "ola", // Texto da mensagem que será enviada
+  })
+  .then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
