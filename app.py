@@ -251,7 +251,18 @@ def finalizarCompra():
 @app.route("/dadosSolicitacao", methods=["POST", "GET"])
 def dadosSolicitacao():
     parametro = request.args.get("id_solicitacao")
-    return sqlite_funcs.Solicitacao_Compras.dadosSolicitacao(parametro)[0]
+    dados = sqlite_funcs.Solicitacao_Compras.dadosSolicitacao(parametro)[0]
+    dados_formatados = {}
+    for chave, valor in dados.items():
+        chave_formatada = chave.title()
+        if isinstance(valor, str):
+            valor_formatado = valor.title()
+        else:
+            valor_formatado = valor
+        dados_formatados[chave_formatada] = valor_formatado
+    print(dados_formatados)
+    return dados_formatados
+
 
 
 if __name__ == '__main__':
