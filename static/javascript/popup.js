@@ -1646,7 +1646,7 @@ function testeAxios(){
 
 function modal_infoSolicitacao(data){
   Swal.fire({
-    width: '85%',
+    width: '60%',
     showConfirmButton: false,
     titleText: 'Informações da Solicitação', 
     padding: '2em 1em 1.25em',
@@ -1674,6 +1674,7 @@ function modal_infoSolicitacao(data){
             </tr>
           </thead>    
         </table>
+        <button class="btn btn-outline-secondary" type="submit" id="btn-maisInfoFinalizadas">Mais Informações</button>
       </div>
     </div>`,
   });
