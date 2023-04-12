@@ -1659,7 +1659,9 @@ function modal_infoSolicitacao(data){
     <div class="container-infoSolicitacaoHistorico">
       <div class="info-gerais">
         <div class="maisInfo-esquerda">
-
+          <ul class="infoSolicitacao">
+            
+          </ul>
         </div>
       </div>
       <div class="info-itens">
@@ -1686,11 +1688,17 @@ function tableItensHitorico(data) {
     }
   }).then(response => {
     console.log(response.data);
+    let divEsquerda = document.querySelector('.maisInfo-esquerda .infoSolicitacao')
+     // Percorre o objeto com forEach e adiciona os valores na lista
+    Object.entries(response.data).forEach(([chave, valor]) => {
+    divEsquerda.innerHTML += `<li class="info">
+                                <div class="msg-text">${chave}: ${valor}</div>
+                              </li>`;
+  });
   })
   .catch(error => {
     console.error(error);
   });
-  console.log(21121, data.aaData[0].id_solicitacao)
   let table = $('#dataTable-infoHistorico').DataTable({
     select: true,
     "processing": true,
