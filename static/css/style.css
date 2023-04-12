@@ -674,3 +674,52 @@ body.swal2-height-auto {
 #dataTable4_filter label{
     text-align: left !important;
 }
+
+.container-infoSolicitacaoHistorico{
+    background-color: #02d224;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+}
+.info-gerais{
+    width: 100%;
+    height: auto;
+    background-color: #999;
+}
+.info-itens{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    /* background-color: #fa6d6d; */
+    align-items: center;
+    justify-content: center;
+    padding-top: 1em; padding-bottom: 1em;
+}
+.titulo-infoHistorico{
+    font-weight: bold;
+    font-size: 22px;
+}
+.info-itens table{
+    width:70vw !important;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.info-itens .table>:not(caption)>*>* {
+    border-bottom-width: 0;
+}
+.info-itens .table td {
+    border-top: 0;
+}
+.info-itens table.dataTable.hover:hover, .info-itens table.dataTable.display:hover {
+    background-color: #fff;
+}
+.info-itens table.dataTable.hover tbody tr:hover, .info-itens table.dataTable.display tbody tr:hover {
+    background-color: #b2b2b2;
+}
+

@@ -1567,7 +1567,6 @@ function comprasFinalizadas(){
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
   });
   tableSolicitacaoHistorico();
-  
 }
 
 function tableSolicitacaoHistorico(){
@@ -1577,7 +1576,7 @@ function tableSolicitacaoHistorico(){
       select: true,
       "processing" : true,
       "serverSide" : false,
-      "serverMethod" : "post",
+      "serverMethod" : "get",
       "ajax" :{
         'url' : '/comprasFinalizadas'
       },
@@ -1588,7 +1587,7 @@ function tableSolicitacaoHistorico(){
       searching : true,
       sort: true,
       'columns': [
-        { data : 'status', "width": "1%" },
+        { data : 'status', "width": "0%", visible: false },
         { data : 'id_solicitacao', "width": "6%"},
         { data : 'solicitante', "width": "12.5%"}, 
         { data : 'data', "width": "10%"},
@@ -1613,6 +1612,26 @@ function tableSolicitacaoHistorico(){
     var statusSolicitacao = $('#statusSolicitacao').val();
     table.column(0).search(statusSolicitacao).draw();
   });
+  $(document).on("click", "#btn-maisInfoFinalizadas", function(){
+    // let table = document.querySelector('#dataTable-comprasFinalizadas')
+    let dadosLinha = table.rows('.selected').data()[0];
+    dadosLinha = JSON.stringify(dadosLinha)
+    $.ajax({
+      url:"/itensHistorico", 
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(dadosLinha),
+      success: function(result){
+        console.log("AQUI")
+        console.log(result);
+        modal_infoSolicitacao(result);
+      },
+      error: function(error){
+        console.log("AI")
+        console.log(error);
+      }
+    })
+  });
   return table
 }
 
@@ -1626,4 +1645,73 @@ function testeAxios(){
   .catch(error => {
     console.error(error);
   });
+}
+
+function modal_infoSolicitacao(data){
+  Swal.fire({
+    width: '85%',
+    showConfirmButton: false,
+    titleText: 'Informações da Solicitação', 
+    padding: '2em 1em 1.25em',
+    allowOutsideClick: false,
+    showCloseButton: true,
+    html: `
+    <div class="container-infoSolicitacaoHistorico">
+      <div class="info-gerais">
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+        AAAA<br />
+      </div>
+      <div class="info-itens">
+        <label class="titulo-infoHistorico" for="dataTable-infoHistorico">Itens Solicitados</label>
+        <table class="table table-striped display" id="dataTable-infoHistorico">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Item</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Quantidade</th>
+            </tr>
+          </thead>    
+        </table>
+      </div>
+    </div>`,
+  });
+  tableItensHitorico(data);
+}
+function tableItensHitorico(data) {
+  console.log(21121, data)
+  let table = $('#dataTable-infoHistorico').DataTable({
+    select: true,
+    "processing": true,
+    "serverSide": false,
+    "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "Todos"]],
+    "pageLength": 5,
+    "paging": true,
+    "responsive": true,
+    searching: true,
+    sort: true,
+    'columns': [
+      { data: 'id_item', "width": "10%" },
+      { data: 'nomeItem', "width": "20%" },
+      { data: 'descricao', "width": "30%" },
+      { data: 'quantidade', "width": "20%" },
+    ],
+    columnDefs: [
+      { className: 'dt-center', targets: '_all' },
+    ],
+    "language": {
+      "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+    },
+  });
+  table.clear().rows.add(data.aaData).draw(); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA finalmente porra 11.04
+  return table;
 }

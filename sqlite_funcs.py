@@ -103,13 +103,19 @@ class Solicitacao_Compras():
         return {'aaData': Solicitacao.consultaEspecifica('status', 3)} # aqui eu tenho que buscar os itens vencedores
     
     @staticmethod
+    def itensHistorico(ids):
+        return {'aaData': Itens.consultaEspecifica('id_solicitacao', ids)}
+    
+    @staticmethod
     def compras_updateSolicitacao(comprasPara_aprovar, aprovador):
         return Solicitacao.update(id_solicitacao = comprasPara_aprovar['id_solicitacao'], aprovador = aprovador, status = 1)
     
     @staticmethod
     def finalizarCotacaoDB(id_cotacao):
         return Cotacao.update(id_cotacao, status_cotacao = 3)
-    
+
+# print(Itens.consultaEspecifica('id_solicitacao', 4))
+ 
 def inserir(result):
     conn = sqlite3.connect('static/db/fpq_status.db')
     cursor = conn.cursor()
