@@ -1658,17 +1658,9 @@ function modal_infoSolicitacao(data){
     html: `
     <div class="container-infoSolicitacaoHistorico">
       <div class="info-gerais">
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
-        AAAA<br />
+        <div class="maisInfo-esquerda">
+
+        </div>
       </div>
       <div class="info-itens">
         <label class="titulo-infoHistorico" for="dataTable-infoHistorico">Itens Solicitados</label>
@@ -1688,7 +1680,17 @@ function modal_infoSolicitacao(data){
   tableItensHitorico(data);
 }
 function tableItensHitorico(data) {
-  console.log(21121, data)
+  dadosSolicitacao = axios.get("/dadosSolicitacao",{
+    params: {
+      id_solicitacao: data.aaData[0].id_solicitacao,
+    }
+  }).then(response => {
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+  console.log(21121, data.aaData[0].id_solicitacao)
   let table = $('#dataTable-infoHistorico').DataTable({
     select: true,
     "processing": true,

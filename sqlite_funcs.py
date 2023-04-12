@@ -24,7 +24,8 @@ class Solicitacao_Compras():
         return {'value': True}
     
     @staticmethod
-    
+    def dadosSolicitacao(id_solicitacao):
+        return Solicitacao.consultaEspecifica('id_solicitacao', id_solicitacao)
 
     @staticmethod
     def comprasPendentes(status):   ### OKOK

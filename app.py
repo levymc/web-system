@@ -28,7 +28,7 @@ def index():
 @app.route("/testeAxios", methods=["POST", 'GET'])
 def testeAxios():
     resp = {'message' : 'aaa'}
-    print(resp['message'])
+    # print(resp['message'])
     return resp
 
 @app.route("/requisicao/", methods=["POST", "GET"])
@@ -239,7 +239,7 @@ def itensHistorico():
     output = request.get_json()
     result = json.loads(output)
     data = sqlite_funcs.Solicitacao_Compras.itensHistorico(result['id_solicitacao'])
-    print(data)
+    # print(data)
     return jsonify(data)
 
 @app.route("/finalizarCompra", methods=["POST", "GET"])
@@ -247,6 +247,11 @@ def finalizarCompra():
     output = request.get_json()
     resultado = json.loads(output)
     return sqlite_funcs.Solicitacao_Compras.finalizarCotacaoDB(resultado['id_cotacao'])
+
+@app.route("/dadosSolicitacao", methods=["POST", "GET"])
+def dadosSolicitacao():
+    parametro = request.args.get("id_solicitacao")
+    return sqlite_funcs.Solicitacao_Compras.dadosSolicitacao(parametro)[0]
 
 
 if __name__ == '__main__':
