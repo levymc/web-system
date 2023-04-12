@@ -1655,6 +1655,7 @@ function modal_infoSolicitacao(data){
     html: `
     <div class="container-infoSolicitacaoHistorico">
       <div class="info-gerais">
+        <h3>Informações Gerais</h3>
         <div class="maisInfo-esquerda">
           <ul class="infoSolicitacao">
             
