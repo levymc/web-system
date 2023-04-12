@@ -1749,7 +1749,25 @@ function requisicao_dadosCotacao(id_item, nomeItem){
         padding: '2em 1em 1.25em',
         allowOutsideClick: false,
         showCloseButton: true,
-        html: ``,
+        html: `
+        <div class="container-itenHistorico">
+
+        </div>
+        `,
+      });
+
+      let containerHistorico = document.querySelector(".container-itenHistorico");
+
+      response.data.forEach((cotacao) => {
+        let divHistorico = `
+          <div class="itensHistorico">
+            <p>Item: ${cotacao.item}</p>
+            <p>Fornecedor: ${cotacao.fornecedor}</p>
+            <p>Valor: ${cotacao.valor_un}</p>
+            <!-- outros dados da cotação aqui -->
+          </div>
+        `;
+        containerHistorico.insertAdjacentHTML("beforeend", divHistorico);
       });
     }
   })

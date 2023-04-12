@@ -754,3 +754,8 @@ body.swal2-height-auto {
 #btn-maisInfoCotacoesItens{
     font-size: 1.2rem !important;
 }
+.container-itenHistorico{
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
