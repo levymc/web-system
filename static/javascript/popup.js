@@ -1679,6 +1679,10 @@ function modal_infoSolicitacao(data){
     </div>`,
   });
   tableItensHitorico(data);
+  $(document).on("click", "#btn-maisInfoCotacoesItens", function(){
+    let dadosLinha = table.rows('.selected').data()[0];
+    console.log(dadosLinha)
+  });
 }
 function tableItensHitorico(data) {
   requisicao_dadosSolicitacao(data.aaData[0].id_solicitacao);
