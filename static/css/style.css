@@ -689,6 +689,13 @@ body.swal2-height-auto {
     justify-content: center;
     align-items: center;
 }
+.infoSolicitacao{
+    margin-top: 2em;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+}
 .info-gerais{
     width: 100%;
     height: auto;
@@ -734,7 +741,14 @@ body.swal2-height-auto {
 }
 .info{
     display: flex;
-    gap: 1em;
+    gap: 0.4em;
     margin-bottom:1em ;
+    border: 1px dashed rgba(128, 128, 128, 0.234);
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: #b2b2b224;
+}
+.msg-chave{
+    white-space: nowrap;
 }
 

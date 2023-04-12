@@ -1657,9 +1657,9 @@ function modal_infoSolicitacao(data){
       <div class="info-gerais">
         <h3>Informações Gerais</h3>
         <div class="maisInfo-esquerda">
-          <ul class="infoSolicitacao">
+          <div class="infoSolicitacao">
             
-          </ul>
+          </div>
         </div>
       </div>
       <div class="info-itens">
@@ -1678,7 +1678,6 @@ function modal_infoSolicitacao(data){
       </div>
     </div>`,
   });
-  console.log(22222, data)
   tableItensHitorico(data);
 }
 function tableItensHitorico(data) {
@@ -1718,12 +1717,11 @@ function requisicao_dadosSolicitacao(id_solicitacao){
     console.log(response.data);
     let divEsquerda = document.querySelector('.maisInfo-esquerda .infoSolicitacao')
     divEsquerda.innerHTML = ''; // limpa o valor da lista antes de adicionar novos valores
-    // Percorre o objeto com forEach e adiciona os valores na lista
     Object.entries(response.data).forEach(([chave, valor]) => {
-    divEsquerda.innerHTML += `<li class="info">
-                                <div class="msg-text">${chave}: </div>
-                                <div class="msg-text">${valor}</div>
-                              </li>`;
+    divEsquerda.innerHTML += `<div class="info">
+                                <div class="msg-chave">${chave}: </div>
+                                <div class="msg-valor">${valor}</div>
+                              </div>`;
     });
   })
   .catch(error => {
