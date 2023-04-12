@@ -1762,6 +1762,9 @@ function requisicao_dadosCotacao(id_item, nomeItem){
         let classe;
         if(cotacao.status_cotacao == 3){
           classe = 'itensHistorico3'
+          const vencedor = `
+          <i class="fa-solid fa-trophy trophyVencedor"></i>
+          `
         } else if (cotacao.status_cotacao == 2){
           classe = 'itensHistorico2'
         }else{
@@ -1777,10 +1780,12 @@ function requisicao_dadosCotacao(id_item, nomeItem){
             <p>Validade da Cotação: <b>${cotacao.validade_cotacao || `-`}</b></p>
             <p>Informações Extras: <b>${cotacao.inf_extra || `-`}</b></p>
             <p>Responsável pela Cotação: <b>${cotacao.usuario}</b></p>
-            <!-- outros dados da cotação aqui -->
           </div>
         `;
         containerHistorico.insertAdjacentHTML("beforeend", divHistorico);
+        if(cotacao.status_cotacao == 3){
+          containerHistorico.insertAdjacentHTML("beforeend", vencedor);
+        }
       });
     }
   })

@@ -267,7 +267,6 @@ def dadosSolicitacao():
 def dadosCotacaoItens():
     parametro = request.args.get("id_item")
     dados = sqlite_funcs.Solicitacao_Compras.dadosCotacaoItens(parametro)
-    print(9898,dados)
     return dados
 
 
