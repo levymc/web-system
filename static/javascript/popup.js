@@ -1682,7 +1682,7 @@ function modal_infoSolicitacao(data){
   $(document).on("click", "#btn-maisInfoCotacoesItens", function(){
     let dadosLinha = table.rows('.selected').data()[0];
     console.log(dadosLinha);
-    requisicao_dadosCotacao(dadosLinha.id_item);
+    requisicao_dadosCotacao(dadosLinha.id_item, dadosLinha.nomeItem);
   });
 }
 function tableItensHitorico(data) {
@@ -1733,13 +1733,25 @@ function requisicao_dadosSolicitacao(id_solicitacao){
     console.error(error);
   });
 }
-function requisicao_dadosCotacao(id_item){
+function requisicao_dadosCotacao(id_item, nomeItem){
   let dadosCotacaoItens = axios.get("/dadosCotacaoItens",{
     params: {
       id_item: id_item,
     }
   }).then(response => {
     console.log(response.data);
+    let abrir = confirm("Deseja abrir para ver mais cotações?")
+    if (abrir == true){
+      Swal.fire({
+        width: '60%',
+        showConfirmButton: false,
+        titleText: `Cotações do item: ${nomeItem}`, 
+        padding: '2em 1em 1.25em',
+        allowOutsideClick: false,
+        showCloseButton: true,
+        html: ``,
+      });
+    }
   })
   .catch(error => {
     console.error(error);
