@@ -1678,10 +1678,11 @@ function modal_infoSolicitacao(data){
       </div>
     </div>`,
   });
-  tableItensHitorico(data);
+  let table = tableItensHitorico(data);
   $(document).on("click", "#btn-maisInfoCotacoesItens", function(){
     let dadosLinha = table.rows('.selected').data()[0];
-    console.log(dadosLinha)
+    console.log(dadosLinha);
+    requisicao_dadosCotacao(dadosLinha.id_item);
   });
 }
 function tableItensHitorico(data) {
@@ -1727,6 +1728,18 @@ function requisicao_dadosSolicitacao(id_solicitacao){
                                 <div class="msg-valor">${valor}</div>
                               </div>`;
     });
+  })
+  .catch(error => {
+    console.error(error);
+  });
+}
+function requisicao_dadosCotacao(id_item){
+  let dadosCotacaoItens = axios.get("/dadosCotacaoItens",{
+    params: {
+      id_item: id_item,
+    }
+  }).then(response => {
+    console.log(response.data);
   })
   .catch(error => {
     console.error(error);

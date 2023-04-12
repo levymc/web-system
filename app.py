@@ -263,6 +263,13 @@ def dadosSolicitacao():
     print(dados_formatados)
     return dados_formatados
 
+@app.route("/dadosCotacaoItens", methods=["POST", "GET"])
+def dadosCotacaoItens():
+    parametro = request.args.get("id_item")
+    dados = sqlite_funcs.Solicitacao_Compras.dadosCotacaoItens(parametro)[0]
+    print(9898,dados)
+    return dados
+
 
 
 if __name__ == '__main__':

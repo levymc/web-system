@@ -26,6 +26,10 @@ class Solicitacao_Compras():
     @staticmethod
     def dadosSolicitacao(id_solicitacao):
         return Solicitacao.consultaEspecifica('id_solicitacao', id_solicitacao)
+    
+    @staticmethod
+    def dadosCotacaoItens(id_item):
+        return Cotacao.consultaEspecifica('id_item', id_item)
 
     @staticmethod
     def comprasPendentes(status):   ### OKOK
