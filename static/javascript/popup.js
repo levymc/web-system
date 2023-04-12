@@ -1674,7 +1674,7 @@ function modal_infoSolicitacao(data){
             </tr>
           </thead>    
         </table>
-        <button class="btn btn-outline-secondary" type="submit" id="btn-maisInfoFinalizadas">Mais Informações</button>
+        <button class="btn btn-outline-secondary" type="submit" id="btn-maisInfoCotacoesItens">Cotações</button>
       </div>
     </div>`,
   });
