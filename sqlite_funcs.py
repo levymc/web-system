@@ -22,6 +22,9 @@ class Solicitacao_Compras():
         for i in itens:
             Itens.insert(id_solicitacao, i['nomeItem'], i['descricao'], i['categoria'], i['classificacao'], i['quantidade'],i['unidade'])
         return {'value': True}
+    
+    @staticmethod
+    
 
     @staticmethod
     def comprasPendentes(status):   ### OKOK
