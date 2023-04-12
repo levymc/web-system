@@ -1746,7 +1746,7 @@ function requisicao_dadosCotacao(id_item, nomeItem){
         width: '60%',
         showConfirmButton: false,
         titleText: `Cotações do item: ${nomeItem}`, 
-        padding: '2em 1em 1.25em',
+        padding: '1em 1em 3em',
         allowOutsideClick: false,
         showCloseButton: true,
         html: `
@@ -1759,11 +1759,24 @@ function requisicao_dadosCotacao(id_item, nomeItem){
       let containerHistorico = document.querySelector(".container-itenHistorico");
 
       response.data.forEach((cotacao) => {
+        let classe;
+        if(cotacao.status_cotacao == 3){
+          classe = 'itensHistorico3'
+        } else if (cotacao.status_cotacao == 2){
+          classe = 'itensHistorico2'
+        }else{
+          classe = 'itensHistorico'
+        }
         let divHistorico = `
-          <div class="itensHistorico">
-            <p>Item: ${cotacao.item}</p>
-            <p>Fornecedor: ${cotacao.fornecedor}</p>
-            <p>Valor: ${cotacao.valor_un.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+          <div class=${classe}>
+            <p>Fornecedor: <b>${cotacao.fornecedor}</b></p>
+            <p>Contato: <b>${cotacao.contato_fornecedor}</b></p>
+            <p>Unidade Comercializada: <b>${cotacao.unidade}</b></p>
+            <p>Valor: <b>${cotacao.valor_un.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b></p>
+            <p>Frete: <b>${cotacao.frete.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</b></p>
+            <p>Validade da Cotação: <b>${cotacao.validade_cotacao || `-`}</b></p>
+            <p>Informações Extras: <b>${cotacao.inf_extra || `-`}</b></p>
+            <p>Responsável pela Cotação: <b>${cotacao.usuario}</b></p>
             <!-- outros dados da cotação aqui -->
           </div>
         `;

@@ -761,9 +761,15 @@ body.swal2-height-auto {
     align-items: center;
     justify-content: space-around;
 }
-.itensHistorico{
+.itensHistorico,.itensHistorico3,.itensHistorico2{
     padding: 1.2em;
     display: flex; flex-direction: column;
     border: 1px dashed rgba(128, 128, 128, 0.234);;
     border-radius: 5px;
+}
+.itensHistorico3{
+    background-color: #daffe0;
+}
+.itensHistorico2{
+    background-color: #ffdada;
 }
