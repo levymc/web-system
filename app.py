@@ -266,7 +266,7 @@ def dadosSolicitacao():
 @app.route("/dadosCotacaoItens", methods=["POST", "GET"])
 def dadosCotacaoItens():
     parametro = request.args.get("id_item")
-    dados = sqlite_funcs.Solicitacao_Compras.dadosCotacaoItens(parametro)[0]
+    dados = sqlite_funcs.Solicitacao_Compras.dadosCotacaoItens(parametro)
     print(9898,dados)
     return dados
 

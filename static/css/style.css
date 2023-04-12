@@ -751,4 +751,6 @@ body.swal2-height-auto {
 .msg-chave{
     white-space: nowrap;
 }
-
+#btn-maisInfoCotacoesItens{
+    font-size: 1.2rem !important;
+}
