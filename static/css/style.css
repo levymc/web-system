@@ -758,4 +758,12 @@ body.swal2-height-auto {
     height: auto;
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+.itensHistorico{
+    padding: 1.2em;
+    display: flex; flex-direction: column;
+    border: 1px dashed rgba(128, 128, 128, 0.234);;
+    border-radius: 5px;
 }

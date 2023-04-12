@@ -1763,7 +1763,7 @@ function requisicao_dadosCotacao(id_item, nomeItem){
           <div class="itensHistorico">
             <p>Item: ${cotacao.item}</p>
             <p>Fornecedor: ${cotacao.fornecedor}</p>
-            <p>Valor: ${cotacao.valor_un}</p>
+            <p>Valor: ${cotacao.valor_un.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
             <!-- outros dados da cotação aqui -->
           </div>
         `;
