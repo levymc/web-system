@@ -766,6 +766,8 @@ body.swal2-height-auto {
     display: flex; flex-direction: column;
     border: 1px dashed rgba(128, 128, 128, 0.234);;
     border-radius: 5px;
+    margin-bottom: 1.2em;
+    margin-top: 0.75em;
 }
 .itensHistorico3{
     background-color: #daffe0;

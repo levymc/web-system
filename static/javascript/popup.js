@@ -1688,8 +1688,9 @@ function modal_infoSolicitacao(data){
   });
   let table = tableItensHitorico(data);
   $(document).on("click", "#btn-maisInfoCotacoesItens", function(){
+    $(document).off("click", "#btn-maisInfoCotacoesItens");
     let dadosLinha = table.rows('.selected').data()[0];
-    console.log(dadosLinha);
+    console.log(090909, dadosLinha);
     requisicao_dadosCotacao(dadosLinha.id_item, dadosLinha.nomeItem);
   });
 }
