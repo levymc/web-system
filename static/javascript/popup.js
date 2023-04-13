@@ -1770,10 +1770,11 @@ function requisicao_dadosCotacao(id_item, nomeItem){
 
       response.data.forEach((cotacao) => {
         let classe;
+        let vencedor;
         if(cotacao.status_cotacao == 3){
           classe = 'itensHistorico3'
-          const vencedor = `
-          <i class="fa-solid fa-trophy trophyVencedor"></i>
+          vencedor = `
+          <section class='section-trophyVendecor'><i class="fa-solid fa-trophy trophyVencedor"></i></section>
           `
         } else if (cotacao.status_cotacao == 2){
           classe = 'itensHistorico2'
@@ -1794,7 +1795,8 @@ function requisicao_dadosCotacao(id_item, nomeItem){
         `;
         containerHistorico.insertAdjacentHTML("beforeend", divHistorico);
         if(cotacao.status_cotacao == 3){
-          containerHistorico.insertAdjacentHTML("beforeend", vencedor);
+          
+          document.querySelector('.itensHistorico3').insertAdjacentHTML("afterbegin", vencedor);
         }
       });
     }

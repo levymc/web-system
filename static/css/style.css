@@ -762,6 +762,7 @@ body.swal2-height-auto {
     justify-content: space-around;
 }
 .itensHistorico,.itensHistorico3,.itensHistorico2{
+    width: 20em;
     padding: 1.2em;
     display: flex; flex-direction: column;
     border: 1px dashed rgba(128, 128, 128, 0.234);;
@@ -776,9 +777,14 @@ body.swal2-height-auto {
 .itensHistorico2{
     background-color: #ffdada;
 }
-/* .trophyVencedor{
-    position: relative;
-    bottom: 0;
+.trophyVencedor{
+    position: absolute;
+    top: 0;
     right: 0;
-    font-size: 20px;
-} */
+    font-size: 23px;
+    /* transform: translate(50%, -50%); */
+}
+.section-trophyVendecor{
+    /* height: 100%; */
+    position: relative;
+}
