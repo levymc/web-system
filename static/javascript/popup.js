@@ -1760,6 +1760,11 @@ function requisicao_dadosCotacao(id_item, nomeItem){
         allowOutsideClick: false,
         showCloseButton: true,
         html: `
+        <div class="container-legenda">
+          <div class="legenda-verde">Vencedor</div>
+          <div class="legenda-vermelho">Inválida</div>
+          <div class="legenda-branca">Em Andamento</div>
+        </div>
         <div class="container-itenHistorico">
 
         </div>

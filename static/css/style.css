@@ -788,3 +788,35 @@ body.swal2-height-auto {
     /* height: 100%; */
     position: relative;
 }
+.container-legenda{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0.5em;
+    left: 1em;
+    gap: 0.2em;
+}
+.legenda-verde{
+    background-color: #daffe0;
+    color: #000000;
+    border: 1px dashed rgba(128, 128, 128, 0.371);
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 0.2em;
+}
+.legenda-vermelho{
+    background-color: #ffdada;
+    color: #000000;
+    border: 1px dashed rgba(128, 128, 128, 0.371);
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 0.2em;
+}
+.legenda-branca{
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px dashed rgba(128, 128, 128, 0.371);
+    border-radius: 5px;
+    font-size: 13px;
+    padding: 0.2em;
+}
