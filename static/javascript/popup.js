@@ -1513,70 +1513,76 @@ function comprasCotadas(){
   
 }
 
+let table;
+
 function comprasFinalizadas(){
-  Swal.fire({
-    width: '85%',
-    showConfirmButton: false,
-    title: 'Histórico de Compras',
-    titleText: 'Histórico de Compras Realizadas', 
-    padding: '2em 1em 1.25em',
-    allowOutsideClick: false,
-    showCloseButton: true,
-    html: `
+  if (!table) {
+    Swal.fire({
+      width: '85%',
+      showConfirmButton: false,
+      title: 'Histórico de Compras',
+      titleText: 'Histórico de Compras Realizadas', 
+      padding: '2em 1em 1.25em',
+      allowOutsideClick: false,
+      showCloseButton: true,
+      html: `
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col" id="subTitle-comprasPendente">Abaixo estão todas as compras realizadas, ordenadas por período.</div>
+        <div class="col-1"></div>
+      </div>
+      <div class="container-filtros">
+        <div class='text-start filtros'>
+          <label for="statusSolicitacao"><b>Status Solicitação:</b></label>
+          <select id="statusSolicitacao">
+            <option value="3">Concluída</option>
+            <option value="1">Em andamento</option>
+            <option value="0">Inválida</option>
+          </select>
+        </div>
+        <div class='text-start filtros'>
+          <label for="ano"><b>Filtrar por ano:</b></label>
+          <select id="ano">
+            <option value="">Todos</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+          </select>
+        </div>
+      </div>
+      <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Id</th>
+          <th scope="col">Solicitante</th>
+          <th scope="col">Data</th>
+          <th scope="col">Motivo</th>
+          <th scope="col">Quantidade de Itens</th>
+          <th scope="col">Setor</th>
+          <th scope="col">Aprovador</th>
+        </tr>
+      </thead>    
+    </table>
     <div class="row">
-      <div class="col-1"></div>
-      <div class="col" id="subTitle-comprasPendente">Abaixo estão todas as compras realizadas, ordenadas por período.</div>
-      <div class="col-1"></div>
+      <div class="col-sm text-center"><button class="btn btn-outline-secondary" type="submit" id="btn-maisInfoFinalizadas">Mais Informações</button></div>
     </div>
-    <div class="container-filtros">
-      <div class='text-start filtros'>
-        <label for="statusSolicitacao"><b>Status Solicitação:</b></label>
-        <select id="statusSolicitacao">
-          <option value="3">Concluída</option>
-          <option value="1">Em andamento</option>
-          <option value="0">Inválida</option>
-        </select>
-      </div>
-      <div class='text-start filtros'>
-        <label for="ano"><b>Filtrar por ano:</b></label>
-        <select id="ano">
-          <option value="">Todos</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-        </select>
-      </div>
-    </div>
-    <table class="table table-striped display" id="dataTable-comprasFinalizadas" style="width:100%; background-color: rgb(255, 255, 255); border-radius: 10px;">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Id</th>
-        <th scope="col">Solicitante</th>
-        <th scope="col">Data</th>
-        <th scope="col">Motivo</th>
-        <th scope="col">Quantidade de Itens</th>
-        <th scope="col">Setor</th>
-        <th scope="col">Aprovador</th>
-      </tr>
-    </thead>    
-  </table>
-  <div class="row">
-    <div class="col-sm text-center"><button class="btn btn-outline-secondary" type="submit" id="btn-maisInfoFinalizadas">Mais Informações</button></div>
-  </div>
-  <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
-  });
-  tableSolicitacaoHistorico();
+    <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
+    });
+    tableSolicitacaoHistorico();
+  }else{
+    table = null;
+    comprasFinalizadas();
+  }
 }
 
 function tableSolicitacaoHistorico(){
-  let table;
   $(document).ready(function () {
     table = $('#dataTable-comprasFinalizadas').DataTable({
       select: true,
       "processing" : true,
       "serverSide" : false,
-      "serverMethod" : "get",
+      "serverMethod" : "post",
       "ajax" :{
         'url' : '/comprasFinalizadas'
       },
@@ -1613,8 +1619,9 @@ function tableSolicitacaoHistorico(){
     table.column(0).search(statusSolicitacao).draw();
   });
   $(document).on("click", "#btn-maisInfoFinalizadas", function(){
-    // let table = document.querySelector('#dataTable-comprasFinalizadas')
+    $(document).off("click", "#btn-maisInfoFinalizadas"); // IMPORTANTISSSIMOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     let dadosLinha = table.rows('.selected').data()[0];
+    console.log(table.rows('.selected'));
     dadosLinha = JSON.stringify(dadosLinha)
     $.ajax({
       url:"/itensHistorico", 
@@ -1622,6 +1629,7 @@ function tableSolicitacaoHistorico(){
       contentType: "application/json",
       data: JSON.stringify(dadosLinha),
       success: function(result){
+        console.log(result);
         modal_infoSolicitacao(result);
       },
       error: function(error){
@@ -1734,6 +1742,7 @@ function requisicao_dadosSolicitacao(id_solicitacao){
   });
 }
 function requisicao_dadosCotacao(id_item, nomeItem){
+  console.log(`___`,id_item);
   let dadosCotacaoItens = axios.get("/dadosCotacaoItens",{
     params: {
       id_item: id_item,
