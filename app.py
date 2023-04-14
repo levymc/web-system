@@ -28,7 +28,7 @@ def index():
 @app.route("/testeAxios", methods=["POST", 'GET'])
 def testeAxios():
     resp = {'message' : 'aaa'}
-    # print(resp['message'])
+    print(resp['message'])
     return resp
 
 @app.route("/requisicao/", methods=["POST", "GET"])
@@ -268,12 +268,13 @@ def dadosCotacaoItens():
     dados = sqlite_funcs.Solicitacao_Compras.dadosCotacaoItens(parametro)
     return dados
 
-@app.route("/statusSolicitacao", methods=["POST", "GET"])
+@app.route("/statusSolicitacao", methods=["POST"])
 def statusSolicitacao():
-    data = request.args.get("id_solicitacao")
-    # id_solicitacao = data.get("id_solicitacao")
-    print(444444444, data)
-    return {'value': 'oi'}
+    data = request.json
+    id_solicitacao = data["id_solicitacao"]
+    print(id_solicitacao)
+    return "OK"
+
 
 
 if __name__ == '__main__':
