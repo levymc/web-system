@@ -238,9 +238,7 @@ def confere():
 def itensHistorico():
     output = request.get_json()
     result = json.loads(output)
-    print(result)
     data = sqlite_funcs.Solicitacao_Compras.itensHistorico(result['id_solicitacao'])
-    # print(data)
     return jsonify(data)
 
 @app.route("/finalizarCompra", methods=["POST", "GET"])

@@ -1505,10 +1505,8 @@ function comprasCotadas(){
             let info = {
               id_solicitacao : dados.id_solicitacao,
             }
-            console.log(info)
-            // dados = JSON.stringify(dados);
             if (confereVencedor){
-              axios.post("/statusSolicitacao", dados).then(response => {
+              axios.post("/statusSolicitacao", info).then(response => {
                 console.log(response);
               }).catch(error => {
                 console.log("errooo:", error)
