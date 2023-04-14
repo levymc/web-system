@@ -820,3 +820,11 @@ body.swal2-height-auto {
     font-size: 13px;
     padding: 0.2em;
 }
+.btn-selecionado {
+    background-color: #007bff !important;
+    color: #fff !important; 
+  }
+.btn-selecionado:hover{
+    background-color: #b2becb !important;
+    color: #180060 !important; 
+}

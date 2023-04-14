@@ -1579,7 +1579,9 @@ function comprasFinalizadas(){
 function tableSolicitacaoHistorico(){
   $(document).ready(function () {
     table = $('#dataTable-comprasFinalizadas').DataTable({
-      select: true,
+      select: {
+        style: 'single'
+      },
       "processing" : true,
       "serverSide" : false,
       "serverMethod" : "post",
@@ -1610,6 +1612,21 @@ function tableSolicitacaoHistorico(){
       },
     })
   })
+  
+  $('#dataTable-comprasFinalizadas').on('select.dt deselect.dt', function() {
+    // Obtém o botão
+    const btnMaisInfo = $('#btn-maisInfoFinalizadas');
+    // Verifica se há linhas selecionadas
+    if (table.rows('.selected').data().length > 0) {
+      // Adiciona a classe btn-selecionado ao botão
+      btnMaisInfo.addClass('btn-selecionado');
+    } else {
+      // Remove a classe btn-selecionado do botão
+      btnMaisInfo.removeClass('btn-selecionado');
+    }
+  });
+  
+  
   $(document).on('change', '#ano', function() {
     var filtroAno = $('#ano').val();
     table.column(3).search(filtroAno).draw();
@@ -1620,8 +1637,8 @@ function tableSolicitacaoHistorico(){
   });
   $(document).on("click", "#btn-maisInfoFinalizadas", function(){
     $(document).off("click", "#btn-maisInfoFinalizadas"); // IMPORTANTISSSIMOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    console.log(table.rows('.selected').data()[0]);
     let dadosLinha = table.rows('.selected').data()[0];
-    console.log(table.rows('.selected'));
     dadosLinha = JSON.stringify(dadosLinha)
     $.ajax({
       url:"/itensHistorico", 
