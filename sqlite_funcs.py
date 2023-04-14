@@ -119,6 +119,10 @@ class Solicitacao_Compras():
         return Solicitacao.update(id_solicitacao = comprasPara_aprovar['id_solicitacao'], aprovador = aprovador, status = 1)
     
     @staticmethod
+    def updateSolicitacao(id_solicitacao):
+        return Solicitacao.update(id_solicitacao = id_solicitacao, status = 3)
+    
+    @staticmethod
     def finalizarCotacaoDB(id_cotacao):
         return Cotacao.update(id_cotacao, status_cotacao = 3)
 

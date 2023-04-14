@@ -272,6 +272,7 @@ def dadosCotacaoItens():
 def statusSolicitacao():
     data = request.json
     id_solicitacao = data["id_solicitacao"]
+    dados = sqlite_funcs.Solicitacao_Compras.updateSolicitacao(id_solicitacao)
     print(id_solicitacao)
     return "OK"
 

@@ -1505,10 +1505,9 @@ function comprasCotadas(){
             let info = {
               id_solicitacao : dados.id_solicitacao,
             }
-            let x ;
-            if (confereVencedor){
+            if (confereVencedor){ // o status SOlicitacao só deve ir pra 3 caso os itens já tenham vencedor
               console.log(info)
-              axios.post("/statusSolicitacao", info).then(response => {
+              axios.post("/statusSolicitacao", info).then(response => { 
                 console.log(response);
               }).catch(error => {
                 console.log("errooo:", error)
