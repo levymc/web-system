@@ -1407,8 +1407,8 @@ function comprasCotadas(){
   Swal.fire({
     width: '85%',
     showConfirmButton: false,
-    title: 'Compras Cotadas',
-    titleText: 'Compras já Cotadas', 
+    title: 'Itens Cotados',
+    titleText: 'Itens Cotados', 
     padding: '2em 1em 1.25em',
     allowOutsideClick: false,
     showCloseButton: true,
@@ -1434,7 +1434,7 @@ function comprasCotadas(){
     <div class="col-sm text-center"><button class="btn btn-outline-secondary btn-azul" type="submit">Finalizar</button></div>
   </div>
   <div class="col text-center" style="color: rgb(255, 0, 0); font-size: 14px;font-weight: bold; padding-top: 20px;">Qualquer problema Acione o Processo pelo menu.</div>`,
-  });
+  }).then(console.log("EU"))
   $(document).ready(function () {
     var table = $('#dataTable-comprasCotadas').DataTable({
       select: true,
