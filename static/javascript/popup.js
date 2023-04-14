@@ -1737,6 +1737,14 @@ function tableItensHitorico(data) {
     },
   });
   table.clear().rows.add(data.aaData).draw(); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA finalmente porra 11.04
+  $('#dataTable-infoHistorico').on('select.dt deselect.dt', function() {
+    const btnMaisInfo = $('#btn-maisInfoCotacoesItens');
+    if (table.rows('.selected').data().length > 0) {
+      btnMaisInfo.addClass('btn-selecionado');
+    } else {
+      btnMaisInfo.removeClass('btn-selecionado');
+    }
+  });
   return table;
 }
 function requisicao_dadosSolicitacao(id_solicitacao){
