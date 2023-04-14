@@ -261,7 +261,7 @@ def dadosSolicitacao():
         else:
             valor_formatado = valor
         dados_formatados[chave_formatada] = valor_formatado
-    print(dados_formatados)
+    # print(dados_formatados)
     return dados_formatados
 
 @app.route("/dadosCotacaoItens", methods=["POST", "GET"])
@@ -272,9 +272,10 @@ def dadosCotacaoItens():
 
 @app.route("/statusSolicitacao", methods=["POST", "GET"])
 def statusSolicitacao():
-    parametro = request.args.get("id_item")
-    
-    return "OK"
+    data = request.args.get("id_solicitacao")
+    # id_solicitacao = data.get("id_solicitacao")
+    print(444444444, data)
+    return {'value': 'oi'}
 
 
 if __name__ == '__main__':

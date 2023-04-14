@@ -855,14 +855,12 @@ function loginComprador(){
           var title = `${JSON.stringify(data.qnt_cotacao).replace('"', '').replace('"', '')} Cotações Válidas`
         }
         const s = JSON.stringify(data);
-        console.log(s)
         $.ajax({
           url:"/cotacaoInformacoes",
           type: "POST",
           contentType: "application/json",
           data: JSON.stringify(s)
         }).done((response) => {
-          console.log(111111111111111111, response.length)
           if (response.length){
             var html = ``
             for (var i in response){
@@ -1487,7 +1485,7 @@ function comprasCotadas(){
         if (response.value){
           let confereVencedor = false;
           let dadosLinha = table.rows('.selected').data()[0];
-          console.log(77777, dadosLinha.id_solicitacao)
+          let dados = dadosLinha;
           dadosLinha = JSON.stringify(dadosLinha)
           $.ajax({
             url:"/itensHistorico", // Envia status = 3 na tabela COTACAO
@@ -1504,15 +1502,17 @@ function comprasCotadas(){
                 confereVencedor = false;
               }
             });
+            let info = {
+              id_solicitacao : dados.id_solicitacao,
+            }
+            console.log(info)
+            // dados = JSON.stringify(dados);
             if (confereVencedor){
-              axios.post("statusSolicitacao", {
-                id_solicitacao : dadosLinha.id_solicitacao,
-              }).then(response => {
-
+              axios.post("/statusSolicitacao", dados).then(response => {
+                console.log(response);
               }).catch(error => {
-
+                console.log("errooo:", error)
               })
-              console.log(response.aaData)
             }else{
               console.log("gsus")
             }
@@ -1675,7 +1675,6 @@ function tableSolicitacaoHistorico(){
   $(document).on("click", "#btn-maisInfoFinalizadas", function(){
     if (table.rows('.selected').data().length > 0) {
       $(document).off("click", "#btn-maisInfoFinalizadas"); // IMPORTANTISSSIMOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      console.log(table.rows('.selected').data()[0]);
       let dadosLinha = table.rows('.selected').data()[0];
       dadosLinha = JSON.stringify(dadosLinha)
       $.ajax({
@@ -1748,7 +1747,6 @@ function modal_infoSolicitacao(data){
   $(document).on("click", "#btn-maisInfoCotacoesItens", function(){
     $(document).off("click", "#btn-maisInfoCotacoesItens");
     let dadosLinha = table.rows('.selected').data()[0];
-    console.log(090909, dadosLinha);
     requisicao_dadosCotacao(dadosLinha.id_item, dadosLinha.nomeItem);
   });
 }
@@ -1794,7 +1792,6 @@ function requisicao_dadosSolicitacao(id_solicitacao){
       id_solicitacao: id_solicitacao,
     }
   }).then(response => {
-    console.log(response.data);
     let divEsquerda = document.querySelector('.maisInfo-esquerda .infoSolicitacao')
     divEsquerda.innerHTML = ''; // limpa o valor da lista antes de adicionar novos valores
     Object.entries(response.data).forEach(([chave, valor]) => {
@@ -1809,13 +1806,11 @@ function requisicao_dadosSolicitacao(id_solicitacao){
   });
 }
 function requisicao_dadosCotacao(id_item, nomeItem){
-  console.log(`___`,id_item);
   let dadosCotacaoItens = axios.get("/dadosCotacaoItens",{
     params: {
       id_item: id_item,
     }
   }).then(response => {
-    console.log(response.data);
     let abrir = confirm("Deseja abrir para ver mais cotações?")
     if (abrir == true){
       Swal.fire({
