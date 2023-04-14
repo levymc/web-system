@@ -1614,14 +1614,10 @@ function tableSolicitacaoHistorico(){
   })
   
   $('#dataTable-comprasFinalizadas').on('select.dt deselect.dt', function() {
-    // Obtém o botão
     const btnMaisInfo = $('#btn-maisInfoFinalizadas');
-    // Verifica se há linhas selecionadas
     if (table.rows('.selected').data().length > 0) {
-      // Adiciona a classe btn-selecionado ao botão
       btnMaisInfo.addClass('btn-selecionado');
     } else {
-      // Remove a classe btn-selecionado do botão
       btnMaisInfo.removeClass('btn-selecionado');
     }
   });
@@ -1636,25 +1632,29 @@ function tableSolicitacaoHistorico(){
     table.column(0).search(statusSolicitacao).draw();
   });
   $(document).on("click", "#btn-maisInfoFinalizadas", function(){
-    $(document).off("click", "#btn-maisInfoFinalizadas"); // IMPORTANTISSSIMOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    console.log(table.rows('.selected').data()[0]);
-    let dadosLinha = table.rows('.selected').data()[0];
-    dadosLinha = JSON.stringify(dadosLinha)
-    $.ajax({
-      url:"/itensHistorico", 
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify(dadosLinha),
-      success: function(result){
-        console.log(result);
-        modal_infoSolicitacao(result);
-      },
-      error: function(error){
-        console.log(error);
-      }
-    })
-  });
-  return table
+    if (table.rows('.selected').data().length > 0) {
+      $(document).off("click", "#btn-maisInfoFinalizadas"); // IMPORTANTISSSIMOOOOOOOOOOOOOOOOOO!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      console.log(table.rows('.selected').data()[0]);
+      let dadosLinha = table.rows('.selected').data()[0];
+      dadosLinha = JSON.stringify(dadosLinha)
+      $.ajax({
+        url:"/itensHistorico", 
+        type: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(dadosLinha),
+        success: function(result){
+          console.log(result);
+          modal_infoSolicitacao(result);
+        },
+        error: function(error){
+          console.log(error);
+        }
+      })
+    }else{
+      Swal.showValidationMessage("Selecione uma linha para ver mais informações.");
+    }
+    });
+    return table
 }
 
 function testeAxios(){
