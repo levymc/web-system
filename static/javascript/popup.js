@@ -1505,6 +1505,13 @@ function comprasCotadas(){
               }
             });
             if (confereVencedor){
+              axios.post("statusSolicitacao", {
+                id_solicitacao : dadosLinha.id_solicitacao,
+              }).then(response => {
+
+              }).catch(error => {
+
+              })
               console.log(response.aaData)
             }else{
               console.log("gsus")

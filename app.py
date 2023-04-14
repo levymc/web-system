@@ -270,6 +270,11 @@ def dadosCotacaoItens():
     dados = sqlite_funcs.Solicitacao_Compras.dadosCotacaoItens(parametro)
     return dados
 
+@app.route("/statusSolicitacao", methods=["POST", "GET"])
+def statusSolicitacao():
+    parametro = request.args.get("id_item")
+    
+    return "OK"
 
 
 if __name__ == '__main__':
