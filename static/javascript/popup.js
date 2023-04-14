@@ -1483,12 +1483,46 @@ function comprasCotadas(){
         allowOutsideClick: false,
         showCloseButton: true,
         cancelButtonText: "Cancelar",
-      }).then(response => {
+      }).then(response => {  // AQUI ENTRA A LOGICA QUE ALTERA OS STATUS DE CADA TABELA
         if (response.value){
+          let confereVencedor = false;
           let dadosLinha = table.rows('.selected').data()[0];
+          console.log(77777, dadosLinha.id_solicitacao)
           dadosLinha = JSON.stringify(dadosLinha)
           $.ajax({
-            url:"/finalizarCompra", // Envia status = 2 na tabela solicitacao
+            url:"/itensHistorico", // Envia status = 3 na tabela COTACAO
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(dadosLinha)
+          }).done((response) => {
+            let itens = response.aaData;
+            itens.forEach((item) =>{
+              console.log(item)
+              if (item.vencedor == 1){
+                confereVencedor = true;
+              }else{
+                confereVencedor = false;
+              }
+            });
+            if (confereVencedor){
+              console.log(response.aaData)
+            }else{
+              console.log("gsus")
+            }
+          })
+
+          // let promisse = axios.get("/itensHistorico",{params : {
+          //   id_solicitacao: dadosLinha,
+          // }}).then(response => {
+          //   console.log(response)
+          // }).catch(error => {
+
+          // });
+          // COnfere se todos os itens de uma solicitação em específica já ppossuem um vencedor, caso possuam, passar o status SOlicitação para 3
+
+          
+          $.ajax({
+            url:"/finalizarCompra", // Envia status = 3 na tabela COTACAO
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(dadosLinha)
